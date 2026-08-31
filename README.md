@@ -68,7 +68,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 ## 目前進度
 
 - [x] 建立教材結構與統一技術基準
-- [ ] 完成第一篇教材、8 個可見輸出範例與自動編譯驗收
+- [x] 完成第一篇教材、8 個可見輸出範例與自動編譯驗收
 - [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
 - [ ] 先建立 OLED 可視化診斷，再整併感測器與 1602 LCD
 - [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例

@@ -57,3 +57,8 @@
 - 程式不使用 Serial-only 訊息。
 - 每個範例都附接線、預期結果、常見錯誤與安全提醒。
 - 實體板驗證需另外記錄；僅通過編譯不能宣稱硬體已驗證。
+
+## 目前驗證狀態
+
+- 2026-09-01：[GitHub Actions #33413746238](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33413746238) 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、`esp32:esp32:esp32wrover` 與 `Adafruit NeoPixel` 1.15.5，編譯通過全部 8 個 Sketch。
+- 實體板燒錄、接線與可見結果尚未驗證，不與 CI 編譯結果混為一談。

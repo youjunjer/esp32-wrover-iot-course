@@ -1,6 +1,6 @@
 # Conversation Handoff
 
-最後更新：2026-08-31（Asia/Taipei）
+最後更新：2026-09-01（Asia/Taipei）
 
 ## 目前原則
 
@@ -37,7 +37,7 @@
 - 實體板驗證：尚未進行
 - 憑證狀態：不得提交真實憑證
 - 首次 GitHub Actions：已使用 Arduino CLI 編譯通過兩個基礎範例
-- 第一篇：7 章課文、8 個範例、每例接線與可見驗收已完成；當前批次待 GitHub Actions 實際編譯
+- 第一篇：7 章課文、8 個範例、每例接線與可見驗收已完成；[GitHub Actions #33413746238](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33413746238) 已實際編譯通過全部 8 個 Sketch
 
 ## 下一步
 
