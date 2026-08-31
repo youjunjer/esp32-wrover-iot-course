@@ -14,6 +14,8 @@ esp32:esp32:esp32wrover
 
 不將開發板 FQBN 改成 AI Thinker。
 
+本篇所有 ESP32 狀態仍須顯示在 OLED。相機會占用一般 OLED 使用的 GPIO 21/22，因此相機範例必須改用指定課程板上經實測、不與 AI Thinker 相機衝突的替代 I²C 腳位；完成實測前不得標示相機與 OLED 已可同時運作。
+
 規劃收錄：
 
 - Bluetooth Classic

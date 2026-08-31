@@ -25,9 +25,11 @@ cd "/Users/youjunjer/Library/CloudStorage/GoogleDrive-youjunjer@gmail.com/我的
 
 ## 目錄邊界
 
-- `docs/`：安裝、腳位、安全、排錯與交接文件。
+- `docs/course-map.md`：正式章節順序與教材範圍。
+- `docs/oled-status-standard.md`：所有 ESP32 執行階段訊息的 OLED 顯示規範。
+- `docs/` 其他文件：環境、腳位、安全、排錯與交接。
 - `examples/`：依教材六篇分類的 Arduino Sketch。
 - `nodered/`：可匯入的 Flow 與 Dashboard 相關說明。
-- `scripts/`：Arduino CLI 安裝、編譯與驗證輔助工具。
+- `scripts/`：ESP32 Core、函式庫、編譯與驗證輔助工具。
 
 `secrets.h`、`.env`、Token、API Key、本機編譯輸出與原始出版檔不得提交。

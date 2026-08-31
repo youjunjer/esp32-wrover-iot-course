@@ -12,6 +12,8 @@
 
 如果發現已提交的憑證，先廢止與更換憑證，不只是刪除最新版檔案。
 
+OLED 畫面、課堂照片與 Issue 截圖同樣不得顯示 Wi-Fi SSID／密碼、Token、完整 API Key、完整內網 IP、私人 Google Apps Script URL 或其他憑證。狀態畫面只顯示不敏感的代碼與連線結果。
+
 ## 硬體安全
 
 涉及 PZEM-004T 市電側、繼電器負載或外部高電流供電時，請先閱讀 `docs/wiring-safety.md`。

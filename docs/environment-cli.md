@@ -34,7 +34,6 @@ esp32:esp32:esp32wrover
 arduino-cli compile --fqbn esp32:esp32:esp32wrover examples/01_basics/01_hello
 arduino-cli board list
 arduino-cli upload -p <SERIAL_PORT> --fqbn esp32:esp32:esp32wrover examples/01_basics/01_hello
-arduino-cli monitor -p <SERIAL_PORT> -c baudrate=115200
 ```
 
 完成條件：
@@ -42,7 +41,9 @@ arduino-cli monitor -p <SERIAL_PORT> -c baudrate=115200
 1. Core 正確列在 `arduino-cli core list`。
 2. `compile` 無錯誤完成。
 3. `upload` 完成且開發板重新啟動。
-4. 序列監控器以 `115200` 持續看到程式輸出。
+4. GPIO 2 狀態 LED 先快速閃爍三次，再每兩秒顯示一次心跳；若板上沒有該 LED，依安全接線說明外接 LED 與限流電阻。
+
+序列監控器並非 Codex 輔助開發的必要條件。OLED 建立前的基礎範例使用可直接觀察的 LED 動作，不保留 Serial-only 訊息；從 OLED 章開始，感測、網路、雲端、MQTT、相機與能源範例的所有執行階段訊息都必須顯示在 OLED，Serial 只能作為同步副本。
 
 ## 版本政策
 

@@ -12,7 +12,9 @@
 - 所有開發板設定統一為 `ESP32 Wrover Module`。
 - Arduino CLI FQBN 統一為 `esp32:esp32:esp32wrover`。
 - 相機單元仍使用 Wrover FQBN，程式內選擇 `CAMERA_MODEL_AI_THINKER`。
-- 第二篇包含 1602 LCD 與 OLED。
+- 第二篇調整為 OLED 先行：OLED／I²C 啟動自測 → OLED 基礎 → OLED 診斷畫面 → 感測器 → 1602 LCD → 整合顯示。
+- 從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先顯示於 OLED。感測器無資料、網路／雲端／MQTT 失敗、重試、逾時與控制錯誤不得只輸出到 Serial。
+- 相機模式仍要使用 OLED；GPIO 21/22 已被相機占用，因此必須先實測替代 I²C 腳位，未驗證前不宣稱相機與 OLED 可同時運作。
 - ThingSpeak、Google Sheets 與 MQTT 都放在第三篇。
 - Node-RED 獨立為第四篇。
 - 相機、Bluetooth/BLE 與多工整合為第五篇。
@@ -37,9 +39,9 @@
 
 ## 下一步
 
-1. 建立 Wrover 一般／相機模式腳位對照。
-2. 從第一篇開始逐例匯入並以 CLI 編譯。
-3. 再依序整合顯示器、雲端、MQTT、Node-RED、相機與能源監測。
+1. 建立第二篇 I²C、OLED 基礎與 OLED 診斷畫面範例。
+2. 以 OLED 可視化狀態為基準，再逐項整合感測器與 1602 LCD。
+3. 再依序整合雲端、MQTT、Node-RED、相機與能源監測。
 
 ## 已知驗證關卡
 

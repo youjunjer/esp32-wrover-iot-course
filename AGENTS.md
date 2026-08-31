@@ -6,10 +6,12 @@
 
 1. `README.md`
 2. `docs/CONVERSATION_HANDOFF.md`
-3. `docs/PROJECT_LAYOUT.md`
-4. `docs/environment-cli.md`
-5. `docs/hardware-pin-modes.md`
-6. `docs/wiring-safety.md`
+3. `docs/course-map.md`
+4. `docs/PROJECT_LAYOUT.md`
+5. `docs/environment-cli.md`
+6. `docs/hardware-pin-modes.md`
+7. `docs/wiring-safety.md`
+8. `docs/oled-status-standard.md`
 
 ## 技術原則
 
@@ -18,6 +20,17 @@
 - Arduino CLI 是正式編譯、燒錄與驗證工具；Arduino IDE 是輔助工具。
 - 不得把尚未在指定 Core 版本編譯通過的範例標示為已完成。
 - 舊服務與舊 API 不直接搬運；先確認仍可用，再以新版作法重寫。
+
+## Codex 可觀測性
+
+- 第二篇必須先完成 OLED 啟動自測、基礎顯示與診斷畫面，才開始感測器範例。
+- 從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先顯示在 OLED；感測器無資料、Wi-Fi／NTP／HTTP／MQTT 失敗、重試、資料逾時及控制錯誤都不能只寫入 Serial。
+- 新增或修改 `Serial.print*()` 訊息時，必須同時提供對應的 OLED 訊息。序列輸出只是可選的同步副本。
+- 不可在等待連線或重試的迴圈中保持空白畫面；OLED 必須顯示目前階段、錯誤原因與重試進度。
+- OLED 不得顯示密碼、Token、完整 API Key、私人 URL 或其他憑證。
+- 請使用者回傳 OLED 正面照片、完整接線照片與編譯結果，讓 Codex 能對照可見狀態排錯。
+- OLED 尚未初始化成功時，可以使用 GPIO 2 狀態 LED 閃爍碼作為最低限度的替代訊號；是否為板載 LED 必須依指定課程板確認。
+- 相機模式仍必須提供 OLED 狀態，但不得使用已被 AI Thinker 相機占用的 GPIO 21/22；替代 I²C 腳位必須先完成指定課程板實測，未驗證前不得標示完成。
 
 ## 公開安全
 
