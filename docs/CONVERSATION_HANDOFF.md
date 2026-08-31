@@ -28,18 +28,18 @@
 
 ## 目前狀態
 
-- Repository 骨架：建立中
-- GitHub Repository 目標：`https://github.com/youjunjer/esp32-wrover-iot-course`
+- Repository 骨架：已建立並推送
+- GitHub Repository：`https://github.com/youjunjer/esp32-wrover-iot-course`（公開）
 - ESP32 Core 驗證基準：`3.3.11`
 - 實體板驗證：尚未進行
 - 憑證狀態：不得提交真實憑證
+- 首次 GitHub Actions：已使用 Arduino CLI 編譯通過兩個基礎範例
 
 ## 下一步
 
-1. 建立並推送第一版 GitHub Repository。
-2. 建立 Wrover 一般／相機模式腳位對照。
-3. 從第一篇開始逐例匯入並以 CLI 編譯。
-4. 再依序整合顯示器、雲端、MQTT、Node-RED、相機與能源監測。
+1. 建立 Wrover 一般／相機模式腳位對照。
+2. 從第一篇開始逐例匯入並以 CLI 編譯。
+3. 再依序整合顯示器、雲端、MQTT、Node-RED、相機與能源監測。
 
 ## 已知驗證關卡
 
