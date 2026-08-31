@@ -1,0 +1,26 @@
+.DS_Store
+.idea/
+.vscode/
+
+# Arduino build output
+build/
+build-*/
+*.bin
+*.elf
+*.map
+*.hex
+*.partitions.bin
+*.bootloader.bin
+
+# Local credentials and configuration
+**/secrets.h
+**/credentials.h
+.env
+.env.*
+!.env.example
+
+# Temporary and backup files
+*.bak
+*.tmp
+*.swp
+*~

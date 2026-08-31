@@ -1,0 +1,33 @@
+name: Compile Arduino examples
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      - name: Check repository policy
+        run: ./scripts/check-policy.sh
+
+      - name: Install ESP32 toolchain
+        run: ./scripts/install-toolchain.sh
+
+      - name: Install Arduino libraries
+        run: ./scripts/install-libraries.sh
+
+      - name: Compile examples
+        run: ./scripts/compile-all.sh
