@@ -8,3 +8,6 @@
 - 加入兩個 GPIO 2 可見狀態範例；初始工具鏈驗證不再依賴序列監控。
 - 調整第二篇為 OLED 先行，所有後續 ESP32 執行階段訊息以 OLED 為主要介面，Serial 僅作同步副本。
 - 加入感測器、網路、MQTT、相機與能源監測的 OLED 狀態及錯誤碼規範。
+- 完成第一篇 7 章課文與 8 個可見輸出範例，包含按鈕防彈跳、紅綠燈、新版 LEDC PWM、RGB LED 與 WS2812。
+- 統一 AB143 第一篇的腳位與時序，記錄舊版 RGB／PWM 文字矛盾，移除 Serial-only、舊版 PWM API 與不安全的 LED 接線原則。
+- 將 `Adafruit NeoPixel` 鎖定為 1.15.5，並將全部第一篇 Sketch 納入 GitHub Actions 編譯清單。

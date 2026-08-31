@@ -16,7 +16,7 @@
 
 ## 教材架構
 
-1. `01_basics`：Arduino C、GPIO、數位與類比基礎
+1. `01_basics`：Arduino C、GPIO、PWM 與全彩 LED
 2. `02_sensors_display`：I²C、OLED 可視化診斷、感測器與 1602 LCD
 3. `03_network_cloud_mqtt`：Wi-Fi、HTTP、JSON、NTP、ThingSpeak、Google Sheets 與 MQTT
 4. `04_nodered`：Node-RED、MQTT Flow、Dashboard 與資料處理
@@ -25,20 +25,18 @@
 
 ## 快速開始
 
-安裝 Arduino CLI 後，先安裝指定的 ESP32 Core：
+安裝 Arduino CLI 後，在 Repository 根目錄安裝鎖定的 ESP32 Core 與函式庫：
 
 ```bash
-arduino-cli config init
-arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
-arduino-cli core update-index
-arduino-cli core install esp32:esp32@3.3.11
-arduino-cli core list
+arduino-cli version
+./scripts/install-toolchain.sh
+./scripts/install-libraries.sh
 ```
 
 編譯第一個範例：
 
 ```bash
-arduino-cli compile \
+arduino-cli --config-file arduino-cli.yaml compile \
   --fqbn esp32:esp32:esp32wrover \
   examples/01_basics/01_hello
 ```
@@ -47,15 +45,15 @@ arduino-cli compile \
 
 ```bash
 arduino-cli board list
-arduino-cli upload \
-  -p <SERIAL_PORT> \
+arduino-cli --config-file arduino-cli.yaml upload \
+  -p YOUR_SERIAL_PORT \
   --fqbn esp32:esp32:esp32wrover \
   examples/01_basics/01_hello
 ```
 
 重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依安全接線說明外接 LED 與限流電阻。
 
-完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
+第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
 ## 可視化診斷原則
 
@@ -70,7 +68,7 @@ arduino-cli upload \
 ## 目前進度
 
 - [x] 建立教材結構與統一技術基準
-- [x] 建立第一批無外部函式庫基礎範例
+- [ ] 完成第一篇教材、8 個可見輸出範例與自動編譯驗收
 - [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
 - [ ] 先建立 OLED 可視化診斷，再整併感測器與 1602 LCD
 - [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例

@@ -1,2 +1,8 @@
 examples/01_basics/01_hello
 examples/01_basics/02_led
+examples/01_basics/03_button_led
+examples/01_basics/04_button_toggle
+examples/01_basics/05_traffic_light
+examples/01_basics/06_pwm_fade
+examples/01_basics/07_rgb_led
+examples/01_basics/08_ws2812
