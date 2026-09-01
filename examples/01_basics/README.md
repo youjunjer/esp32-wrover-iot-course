@@ -11,6 +11,6 @@
 - [`07_rgb_led`](07_rgb_led/README.md)：使用 R15／G2／B4 三路 PWM 混色。
 - [`08_ws2812`](08_ws2812/README.md)：使用 GPIO 32 控制單顆 WS2812。
 
-每個範例都是獨立 Sketch，只接當前範例需要的元件。如果指定課程板沒有 GPIO 2 板載 LED，必須外接適當限流電阻與 LED。第一篇只使用可直接觀察的硬體動作，不保留 Serial-only 訊息；第二篇會先建立 OLED 訊息介面，再開始感測器與網路章節。
+每個範例都是獨立 Sketch，只接當前範例需要的元件。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。第一篇只使用可直接觀察的硬體動作，不保留 Serial-only 訊息；第二篇會先建立 OLED 訊息介面，再開始感測器與網路章節。
 
 完整章節、材料清單與可見驗收表請見 [`docs/part1/README.md`](../../docs/part1/README.md)。

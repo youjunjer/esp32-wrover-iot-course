@@ -23,7 +23,6 @@ NMK99 與 `esp32-mqtt-energy-meter` 的 GPIO 2 LED、GPIO 32 WS2812 及紅 4／�
 - 舊版 PWM 文字曾出現 GPIO 2，但程式使用 GPIO 15。本教材統一使用 GPIO 15。
 - 舊版範例的 `analogWrite()` 雖仍可用，但不利於明確的 LEDC 初始化與錯誤處理，因此改用 Core 3.x LEDC API。
 - Core 3.x 已移除舊版 LEDC 設定函式，正式 Sketch 中不得使用。
-- 舊版不串限流電阻的說法不安全。所有一般 LED 與 RGB 色彩通道均要獨立使用 220～330Ω 限流電阻。
 
 ## 移到第二篇的內容
 

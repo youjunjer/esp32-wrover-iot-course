@@ -51,7 +51,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
   examples/01_basics/01_hello
 ```
 
-重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依安全接線說明外接 LED 與限流電阻。
+重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。
 
 第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
