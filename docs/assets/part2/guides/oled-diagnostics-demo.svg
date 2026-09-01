@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">OLED 診斷狀態 DEMO 畫面</title>
+  <desc id="desc">四個 OLED 示意畫面，顯示 READY、NO DATA、TIMEOUT 與 ERR；全部標示 DEMO STATUS。</desc>
+  <rect width="1200" height="620" fill="#e2e8f0"/>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <g transform="translate(70,55)"><rect width="480" height="220" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/><text x="25" y="40" font-size="22" stroke="none">DEMO STATUS</text><line x1="25" y1="55" x2="455" y2="55" stroke-width="2"/><text x="25" y="90" font-size="21" stroke="none">OLED</text><text x="25" y="145" font-size="44" font-weight="700" stroke="none">READY</text><text x="25" y="195" font-size="21" stroke="none">Address OK</text></g>
+    <g transform="translate(650,55)"><rect width="480" height="220" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/><text x="25" y="40" font-size="22" stroke="none">DEMO STATUS</text><line x1="25" y1="55" x2="455" y2="55" stroke-width="2"/><text x="25" y="90" font-size="21" stroke="none">SENSOR</text><text x="25" y="145" font-size="44" font-weight="700" stroke="none">NO DATA</text><text x="25" y="195" font-size="21" stroke="none">Value --</text></g>
+    <g transform="translate(70,320)"><rect width="480" height="220" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/><text x="25" y="40" font-size="22" stroke="none">DEMO STATUS</text><line x1="25" y1="55" x2="455" y2="55" stroke-width="2"/><text x="25" y="90" font-size="21" stroke="none">NETWORK</text><text x="25" y="145" font-size="44" font-weight="700" stroke="none">TIMEOUT</text><text x="25" y="195" font-size="21" stroke="none">Retry 2</text></g>
+    <g transform="translate(650,320)"><rect width="480" height="220" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/><text x="25" y="40" font-size="22" stroke="none">DEMO STATUS</text><line x1="25" y1="55" x2="455" y2="55" stroke-width="2"/><text x="25" y="90" font-size="21" stroke="none">SYSTEM</text><text x="25" y="145" font-size="44" font-weight="700" stroke="none">ERR</text><text x="25" y="195" font-size="21" stroke="none">Code E21</text></g>
+  </g>
+  <rect x="0" y="574" width="1200" height="46" fill="#b45309"/>
+  <text x="600" y="605" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#ffffff">DEMO LAYOUTS - NOT SENSOR OR NETWORK RESULTS</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">OLED 基礎顯示三個預期頁面</title>
+  <desc id="desc">三個黑色 OLED 畫面依序示範文字、矩形圓形三角形與進度條。</desc>
+  <rect width="1200" height="520" fill="#e2e8f0"/>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <rect x="35" y="70" width="350" height="300" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/>
+    <text x="60" y="115" font-size="21" stroke="none">PAGE 1  TEXT</text><line x1="60" y1="132" x2="360" y2="132" stroke-width="2"/>
+    <text x="60" y="205" font-size="42" font-weight="700" stroke="none">OLED OK</text><text x="60" y="330" font-size="21" stroke="none">128 x 64 pixels</text>
+    <rect x="425" y="70" width="350" height="300" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/>
+    <text x="450" y="115" font-size="21" stroke="none">PAGE 2  SHAPES</text><line x1="450" y1="132" x2="750" y2="132" stroke-width="2"/>
+    <rect x="470" y="170" width="70" height="70" fill="none" stroke-width="4"/><circle cx="600" cy="205" r="35" fill="#e0f2fe"/>
+    <path d="M670 240 L710 165 L750 240 Z" fill="none" stroke-width="4"/><text x="460" y="330" font-size="18" stroke="none">RECT CIRCLE TRI</text>
+    <rect x="815" y="70" width="350" height="300" rx="12" fill="#020617" stroke="#38bdf8" stroke-width="3"/>
+    <text x="840" y="115" font-size="21" stroke="none">PAGE 3  UPDATE</text><line x1="840" y1="132" x2="1140" y2="132" stroke-width="2"/>
+    <text x="930" y="220" font-size="54" font-weight="700" stroke="none">66%</text>
+    <rect x="850" y="270" width="280" height="38" fill="none" stroke-width="4"/><rect x="857" y="277" width="178" height="24" fill="#e0f2fe" stroke="none"/>
+  </g>
+  <text x="600" y="422" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0f172a">Three pages rotate about every 3 seconds</text>
+  <rect x="0" y="474" width="1200" height="46" fill="#b45309"/>
+  <text x="600" y="505" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#ffffff">EXPECTED SCREENS - NOT HARDWARE PHOTOS</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">OLED 啟動自測預期畫面</title>
+  <desc id="desc">黑色 128×64 OLED 示意畫面，顯示 OLED SELF TEST、INIT OK、ADDR 0x3C 與遞增秒數。</desc>
+  <rect width="900" height="520" fill="#e2e8f0"/>
+  <rect x="80" y="60" width="740" height="390" rx="32" fill="#111827"/>
+  <rect x="145" y="105" width="610" height="300" rx="8" fill="#020617" stroke="#38bdf8" stroke-width="4"/>
+  <g fill="#e0f2fe" font-family="monospace">
+    <text x="180" y="150" font-size="30">OLED SELF TEST</text>
+    <line x1="180" y1="170" x2="720" y2="170" stroke="#e0f2fe" stroke-width="3"/>
+    <text x="180" y="245" font-size="54" font-weight="700">INIT OK</text>
+    <text x="180" y="315" font-size="32">ADDR 0x3C</text>
+    <text x="180" y="365" font-size="32">UP 12s</text>
+  </g>
+  <rect x="0" y="474" width="900" height="46" fill="#b45309"/>
+  <text x="450" y="505" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#ffffff">EXPECTED SCREEN - NOT A HARDWARE PHOTO</text>
+</svg>

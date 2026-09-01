@@ -6,3 +6,6 @@ examples/01_basics/05_traffic_light
 examples/01_basics/06_pwm_fade
 examples/01_basics/07_rgb_led
 examples/01_basics/08_ws2812
+examples/02_sensors_display/01_oled_self_test
+examples/02_sensors_display/02_oled_basics
+examples/02_sensors_display/03_oled_diagnostics

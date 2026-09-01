@@ -53,7 +53,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。
 
-第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
+第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED 起始教材請見 [docs/part2/README.md](docs/part2/README.md)；完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
 ## 可視化診斷原則
 
@@ -69,8 +69,9 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 - [x] 建立教材結構與統一技術基準
 - [x] 完成第一篇教材、8 個可見輸出範例與自動編譯驗收
+- [x] 建立第二篇 OLED 自動尋址、基礎顯示與診斷版型範例
 - [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
-- [ ] 先建立 OLED 可視化診斷，再整併感測器與 1602 LCD
+- [ ] 以 OLED 可視化診斷為基準，整併感測器與 1602 LCD
 - [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例
 - [ ] 整併 Node-RED Flow
 - [ ] 整併相機、BLE 與多工範例
