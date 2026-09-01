@@ -38,4 +38,10 @@
 - 真實 CI 截圖需記錄 Run、Commit、版本與 `CI compile only` 邊界。
 - 實體 OLED、GPIO 2 閃爍碼及完整接線仍需另行拍照驗證。
 
+## 目前驗證狀態
+
+- 2026-09-01：[GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、`esp32:esp32:esp32wrover`、Adafruit BusIO 1.17.4、GFX 1.12.6 與 SSD1306 2.5.17，編譯通過第一篇 8 個與第二篇 3 個 Sketch。
+- 真實 Run Summary 截圖已放入第一章；其證據範圍是 CI 編譯成功。
+- 實體板燒錄、OLED 位址、畫面方向、接線與 GPIO 2 閃爍碼尚未驗證。
+
 教材來源與現代化決策見 [第二篇來源與遷移記錄](source-map.md)，共通訊息規格見 [OLED 執行狀態與除錯訊息規範](../oled-status-standard.md)。

@@ -58,6 +58,12 @@ arduino-cli --config-file arduino-cli.yaml upload \
   examples/02_sensors_display/01_oled_self_test
 ```
 
+![GitHub Actions 顯示 OLED foundation lessons 的 compile 工作成功](../assets/part2/captures/github-actions-part2-success.png)
+
+*圖：Commit `9934db9` 的 GitHub Actions Run 33474648376 已使用鎖定工具鏈編譯全部 11 個 Sketch。這張真實畫面只證明 CI 編譯成功，不代表已燒錄、已接線或 OLED 實機已顯示。*
+
+畫面下方的 `1 warning` 是 GitHub Actions 執行環境的 Node.js 版本提醒，不是 OLED Sketch 的編譯錯誤；本次 Run 結論仍為 `Success`。
+
 截圖只能協助辨識按過哪些步驟；指令仍保留為文字，學生可以直接複製。Windows 的連接埠常見為 `COM4`，macOS 常見為 `/dev/cu.usbserial-*`，Linux 常見為 `/dev/ttyUSB0` 或 `/dev/ttyACM0`，但都必須以 `board list` 的實際結果為準。
 
 ## 閃爍碼與排錯
@@ -76,4 +82,4 @@ GPIO 2 必須是已確認接線的狀態 LED；不能只因某個開發板看起
 - `UP` 秒數持續增加，代表 `loop()` 仍在運作。
 - 畫面方向錯誤時只調整 `OLED_ROTATION`，不要交換 SDA／SCL。
 
-目前 Repository 僅以 CI 驗證編譯；完成實體測試後，請補回 OLED 正面照、完整接線照、板型、Core 版本與燒錄結果。
+目前 Repository 已由 [GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 驗證編譯；完成實體測試後，請補回 OLED 正面照、完整接線照、板型、Core 版本與燒錄結果。

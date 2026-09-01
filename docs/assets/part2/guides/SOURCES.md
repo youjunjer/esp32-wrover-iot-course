@@ -9,4 +9,4 @@
 | `oled-basics-expected.svg` | `02_oled_basics.ino` 的三頁文字與圖形 | 預期畫面；未證明實體更新速度或方向 | `31903fedbbfc68078799335acb0e4e6a224a424fba626e8b498d9ea30192f0e4` |
 | `oled-diagnostics-demo.svg` | `03_oled_diagnostics.ino` 的 `DEMO_STATES` | DEMO 版型；不是感測器或網路結果 | `b3c02040a7c2a06d03c097495a4da2f0080eebb7c22a891a13c0f45935202330` |
 
-所有 SVG 已以 100% 尺寸渲染檢查，確認文字、圖形與警示標籤沒有裁切或重疊。真實 GitHub Actions／CLI 畫面要等本次 CI 成功後另行加入 `../captures/`；目前尚未取得，不得以本目錄的示意圖代替。
+所有 SVG 已以 100% 尺寸渲染檢查，確認文字、圖形與警示標籤沒有裁切或重疊。真實 GitHub Actions 編譯畫面已另存於 `../captures/`；不得以本目錄的示意圖代替實際 CI 或硬體證據。
