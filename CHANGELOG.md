@@ -12,3 +12,4 @@
 - 統一 AB143 第一篇的腳位與時序，記錄舊版 RGB／PWM 文字矛盾，移除 Serial-only 與舊版 PWM API。
 - 將 `Adafruit NeoPixel` 鎖定為 1.15.5，並將全部第一篇 Sketch 納入 GitHub Actions 編譯清單。
 - 第一篇 LED 接線注意事項集中於首頁，後續章節與範例統一採簡化接線圖。
+- 從 AB143 課本工作檔匯入第一批 6 張相容圖像，加入來源記錄、替代文字與章節圖說。

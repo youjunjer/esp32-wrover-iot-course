@@ -6,6 +6,8 @@ esp32-wrover-iot-course/
 ├── README.md
 ├── arduino-cli.yaml
 ├── docs/
+│   ├── assets/
+│   │   └── ab143/
 │   ├── part1/
 │   └── ...
 ├── examples/
@@ -28,6 +30,7 @@ cd "/Users/youjunjer/Library/CloudStorage/GoogleDrive-youjunjer@gmail.com/我的
 ## 目錄邊界
 
 - `docs/course-map.md`：正式章節順序與教材範圍。
+- `docs/assets/ab143/`：由 AB143 課本取出的教材圖像及來源記錄，不放整頁課本或原始出版檔。
 - `docs/part1/`：第一篇正式課文、驗收與 AB143 遷移記錄。
 - `docs/oled-status-standard.md`：所有 ESP32 執行階段訊息的 OLED 顯示規範。
 - `docs/` 其他文件：環境、腳位、安全、排錯與交接。

@@ -13,6 +13,10 @@ ledcWrite(PWM_PIN, duty);
 
 8 位元解析度的 duty 範圍為 0～255。`06_pwm_fade` 使用 `for` 迴圈逐步增加及減少 duty，形成平滑呼吸效果。
 
+![PWM 在 20、50、80 與 100 百分比工作週期下的波形](../assets/ab143/part1/pwm-waveform.png)
+
+*圖：工作週期愈大，每個週期保持 HIGH 的時間愈長。來源：AB143 三版，原書頁 P46；由課本向量圖裁切。*
+
 ## 共陰極 RGB LED
 
 本教材的 RGB 範例採共陰極接法：
@@ -23,6 +27,10 @@ ledcWrite(PWM_PIN, duty);
 | G | 2 | GPIO 2 接綠色腳 |
 | B | 4 | GPIO 4 接藍色腳 |
 | 共陰極 | — | 接 GND |
+
+![共陰極 RGB LED 的 Red、GND、Green、Blue 腳位順序](../assets/ab143/part1/rgb-led-pinout.jpg)
+
+*圖：課本中的共陰極 RGB LED 腳位示意；不同廠牌的腳序可能不同，接線前要核對零件規格。來源：AB143 第四版第 4 章，原書頁 P53。*
 
 本範例只正式支援共陰極 RGB LED；共陽極接法可將啟動綁定腳位拉高，必須另選腳位與驅動方式並實測後才能使用。
 

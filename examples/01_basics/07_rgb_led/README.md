@@ -8,6 +8,10 @@
 
 - 四腳共陰極 RGB LED 一顆。
 
+![共陰極 RGB LED 的 Red、GND、Green、Blue 腳位順序](../../../docs/assets/ab143/part1/rgb-led-pinout.jpg)
+
+*圖：AB143 課本的共陰極 RGB LED 腳位示意；不同廠牌腳序可能不同。*
+
 ## 接線
 
 | RGB LED | ESP32 |

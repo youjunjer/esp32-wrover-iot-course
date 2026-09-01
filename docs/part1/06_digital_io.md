@@ -4,12 +4,30 @@
 
 `pinMode(pin, OUTPUT)` 將 GPIO 設為輸出；`digitalWrite()` 輸出 `HIGH` 或 `LOW`。
 
+![數位訊號在 HIGH 與 LOW 之間切換的波形](../assets/ab143/part1/digital-high-low.png)
+
+*圖：數位輸出只在 HIGH 與 LOW 兩種狀態間切換。來源：AB143 第四版第 3 章。*
+
+### 認識麵包板與課程板燈號
+
+![麵包板兩側電源軌與中央孔位的導通方向](../assets/ab143/part1/breadboard-connections.jpg)
+
+*圖：麵包板中央每排五孔相通，兩側電源軌縱向相通；實際使用前仍要確認手邊麵包板是否有中途斷開。來源：AB143 第四版第 3 章，原書頁 P31。*
+
+![AB143 課程板上的 WS2812、綠色內建 LED 與紅色電源 LED 位置](../assets/ab143/part1/onboard-led-location.jpg)
+
+*圖：AB143 課本所示課程板的燈號位置；不同批次板子仍需依實物確認。來源：AB143 第四版第 3 章，原書頁 P30。*
+
 一般 LED 接線：
 
 ```text
 GPIO ── LED 正極
 LED 負極 ── GND
 ```
+
+![一般 LED 長短腳與內部電極結構示意](../assets/ab143/part1/led-polarity.png)
+
+*圖：一般 LED 長腳為正極、短腳為負極；若零件已剪腳，應再從外殼平邊或內部電極辨識。來源：AB143 第四版第 3 章，原書頁 P32。*
 
 ## 數位輸入與內建上拉
 

@@ -2,6 +2,10 @@
 
 這個範例驗證開發板、編譯、燒錄、重啟、`setup()` 與 `loop()`。不使用序列監控器；GPIO 2 LED 就是執行狀態。
 
+![AB143 課程板上的 WS2812、綠色內建 LED 與紅色電源 LED 位置](../../../docs/assets/ab143/part1/onboard-led-location.jpg)
+
+*圖：AB143 課本所示課程板的燈號位置；不同批次板子仍需依實物確認。*
+
 ## 接線
 
 若指定課程板沒有 GPIO 2 板載 LED，請外接：

@@ -7,6 +7,10 @@
 
 不再使用 Core 2.x 教材常見的 `ledcSetup()` 與 `ledcAttachPin()`。程式也不把訊息只送到 Serial；LED 本身就是可見狀態。
 
+![PWM 在不同工作週期下的波形](../../../docs/assets/ab143/part1/pwm-waveform.png)
+
+*圖：工作週期愈大，每個週期保持 HIGH 的時間愈長；圖像只說明 PWM 概念，程式仍使用 Core 3.x LEDC API。*
+
 ## 接線
 
 | 元件 | 接線 |

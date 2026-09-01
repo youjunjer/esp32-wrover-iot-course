@@ -17,6 +17,12 @@
 
 NMK99 與 `esp32-mqtt-energy-meter` 的 GPIO 2 LED、GPIO 32 WS2812 及紅 4／黃 2／綠 15 燈號也用來交叉確認一般模式腳位。
 
+## 圖像遷移
+
+第一篇只匯入與目前板型、腳位及 Core 3.x 教學相容的單張課本圖。圖片優先由第四版分章 DOCX 的 `word/media/` 原樣取出；PWM 波形因原圖是 PDF 向量排版，改由三版 PDF 第 52 頁高解析渲染後裁切。完整來源與雜湊值見 [`docs/assets/ab143/part1/SOURCES.md`](../assets/ab143/part1/SOURCES.md)。
+
+舊版 Arduino IDE 操作畫面、Serial-only 範例、GPIO 2 舊 PWM 接線、MQ-2 與 RGB 混合接線、不同板型腳位圖及來源不明的商品照片均未匯入。
+
 ## 已解決的舊版矛盾
 
 - AB143 四版的 RGB 接線文字與程式不一致。本教材以三版及四版程式一致的 R15／G2／B4 為準。
