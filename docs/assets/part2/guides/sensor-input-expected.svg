@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">感測器輸入診斷 OLED 預期畫面</title>
+  <desc id="desc">OLED版型顯示GPIO14數位狀態、GPIO33原始ADC值及浮接無定義提醒；數字不是實測值。</desc>
+  <rect width="1200" height="520" fill="#e2e8f0"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">EXPECTED OLED LAYOUT</text>
+  <rect x="80" y="82" width="650" height="330" rx="18" fill="#020617" stroke="#38bdf8" stroke-width="5"/>
+  <g font-family="monospace" fill="#e0f2fe">
+    <text x="120" y="132" font-size="28">INPUT CHECK</text>
+    <line x1="120" y1="150" x2="690" y2="150" stroke="#e0f2fe" stroke-width="3"/>
+    <text x="120" y="205" font-size="31">D14  HIGH</text>
+    <text x="120" y="255" font-size="31">A33  2048</text>
+    <text x="120" y="305" font-size="27">OPEN = UNDEFINED</text>
+    <rect x="120" y="340" width="570" height="34" fill="none" stroke="#e0f2fe" stroke-width="3"/>
+    <rect x="126" y="346" width="282" height="22" fill="#e0f2fe"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#334155">
+    <text x="790" y="145" font-size="25" font-weight="700">D14</text><text x="860" y="145" font-size="22">digital HIGH / LOW</text>
+    <text x="790" y="215" font-size="25" font-weight="700">A33</text><text x="860" y="215" font-size="22">12-bit raw ADC</text>
+    <text x="790" y="285" font-size="25" font-weight="700">OPEN</text><text x="880" y="285" font-size="22">floating values are invalid</text>
+    <text x="790" y="355" font-size="25" font-weight="700">BAR</text><text x="860" y="355" font-size="22">raw 0 to 4095 only</text>
+  </g>
+  <rect x="0" y="450" width="1200" height="70" fill="#b45309"/>
+  <text x="600" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">EXPECTED LAYOUT - NOT A REAL OLED PHOTO</text>
+  <text x="600" y="507" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#ffedd5">ADC 2048 IS ILLUSTRATIVE, NOT MEASURED DATA</text>
+</svg>

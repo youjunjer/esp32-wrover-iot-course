@@ -8,5 +8,11 @@
 | `oled-self-test-expected.svg` | `01_oled_self_test.ino` 的實際文字與版型 | 預期畫面；位址與秒數不是實機讀值 | `c7c38ce214ace7de0702a9e168fb084bb55f4ac6554980c012f5d1f3353d3bdd` |
 | `oled-basics-expected.svg` | `02_oled_basics.ino` 的三頁文字與圖形 | 預期畫面；未證明實體更新速度或方向 | `31903fedbbfc68078799335acb0e4e6a224a424fba626e8b498d9ea30192f0e4` |
 | `oled-diagnostics-demo.svg` | `03_oled_diagnostics.ino` 的 `DEMO_STATES` | DEMO 版型；不是感測器或網路結果 | `b3c02040a7c2a06d03c097495a4da2f0080eebb7c22a891a13c0f45935202330` |
+| `sensor-input-wiring.svg` | GPIO 14 數位輸入、GPIO 33 ADC1、OLED GPIO 21／22、共地與 3.3V 輸入上限 | 一般模式接線示意；未證明實體接線 | `486eff2c2f04f4628b0f465e3e4d0cd36ae381f29fb4cc1c223c7f151bf56e58` |
+| `sensor-input-expected.svg` | `04_sensor_input_basics.ino` 的 `D14`、`A33` 與浮接提醒 | 預期畫面；`2048` 不是實測資料 | `eed900b65f3fa948558428b58a833806b4f1ed1d25c0f918db79294674e7b684` |
+| `pir-wrover-wiring.svg` | GPIO 14 PIR、課程模組 5V、OLED GPIO 21／22 與共地規則 | 指定一般模式接線示意；未確認模組批次或輸出電壓 | `a68d2bcac14cacc0712778a8f5a858dbfff565de02acc09114cdf0f2b712b74b` |
+| `pir-expected.svg` | `05_pir_oled.ino` 的 60 秒暖機、150 ms 穩定判定與事件版型 | 預期畫面；事件數與 RAW 不是實測資料 | `a738eaf3c127b3224b784db10df8d1a1e45ff46d3e4c83494189cdd45de17b2b` |
+| `light-wrover-wiring.svg` | 光敏模組 3.3V、AO GPIO 33、DO 不接與 OLED GPIO 21／22 | 一般模式接線示意；未證明實體 ADC 讀值 | `e5780255fd441d7c4d3ad209a257bea72bd5c426261289f519b85f6bac1480d0` |
+| `light-expected.svg` | `06_light_oled.ino` 的 `UNCAL` 預設與校正後版型；校正說明置於 OLED 框外 | 預期畫面；原始值、門檻與明暗分級不是實測資料 | `348e362829272d06090d663364ae2cbf4a90eb2897c212c76671dad54964f93e` |
 
-所有 SVG 已以 100% 尺寸渲染檢查，確認文字、圖形與警示標籤沒有裁切或重疊。真實 GitHub Actions 編譯畫面已另存於 `../captures/`；不得以本目錄的示意圖代替實際 CI 或硬體證據。
+所有 SVG 已以檔案宣告尺寸渲染檢查，確認文字、圖形與警示標籤沒有裁切或重疊。真實 GitHub Actions 編譯畫面另存於 `../captures/`；不得以本目錄的示意圖代替實際 CI 或硬體證據。

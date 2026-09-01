@@ -9,3 +9,6 @@ examples/01_basics/08_ws2812
 examples/02_sensors_display/01_oled_self_test
 examples/02_sensors_display/02_oled_basics
 examples/02_sensors_display/03_oled_diagnostics
+examples/02_sensors_display/04_sensor_input_basics
+examples/02_sensors_display/05_pir_oled
+examples/02_sensors_display/06_light_oled

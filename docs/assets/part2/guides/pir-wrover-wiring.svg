@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ESP32 Wrover OLED 與 PIR GPIO14 接線</title>
+  <desc id="desc">OLED使用3.3伏特與GPIO21、22；課程PIR模組使用5伏特供電、OUT接GPIO14並共地。</desc>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">PIR + OLED WIRING - GENERAL MODE</text>
+
+  <rect x="70" y="105" width="380" height="500" rx="26" fill="#0f172a"/>
+  <text x="260" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">ESP32 Wrover</text>
+  <text x="260" y="188" text-anchor="middle" font-family="monospace" font-size="17" fill="#cbd5e1">power off before wiring</text>
+  <g font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#fff">
+    <text x="325" y="255">3V3</text><text x="325" y="315">5V</text><text x="325" y="375">GND</text>
+    <text x="290" y="435">GPIO 21</text><text x="290" y="495">GPIO 22</text><text x="290" y="555">GPIO 14</text>
+  </g>
+  <g fill="#e2e8f0">
+    <circle cx="450" cy="248" r="8"/><circle cx="450" cy="308" r="8"/><circle cx="450" cy="368" r="8"/>
+    <circle cx="450" cy="428" r="8"/><circle cx="450" cy="488" r="8"/><circle cx="450" cy="548" r="8"/>
+  </g>
+
+  <rect x="800" y="88" width="330" height="220" rx="22" fill="#111827" stroke="#2563eb" stroke-width="4"/>
+  <text x="965" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#fff">SSD1306 OLED</text>
+  <g font-family="monospace" font-size="20" fill="#dbeafe">
+    <text x="840" y="178">VCC  ← 3.3V</text><text x="840" y="211">GND  ← GND</text>
+    <text x="840" y="244">SDA  ← GPIO21</text><text x="840" y="277">SCL  ← GPIO22</text>
+  </g>
+
+  <rect x="760" y="375" width="390" height="230" rx="28" fill="#dcfce7" stroke="#16a34a" stroke-width="5"/>
+  <circle cx="955" cy="440" r="48" fill="#f1f5f9" stroke="#64748b" stroke-width="4"/>
+  <text x="955" y="448" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#334155">PIR</text>
+  <text x="955" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#14532d">COURSE MODULE</text>
+  <g font-family="monospace" font-size="20" fill="#14532d">
+    <text x="810" y="555">VCC ← 5V</text><text x="950" y="555">OUT ← GPIO14</text><text x="810" y="588">GND ← GND</text>
+  </g>
+
+  <path d="M458 248 C610 248 690 155 792 155" fill="none" stroke="#ef4444" stroke-width="6"/>
+  <path d="M458 368 C610 368 680 211 792 211" fill="none" stroke="#111827" stroke-width="6"/>
+  <path d="M458 428 C610 428 690 244 792 244" fill="none" stroke="#22c55e" stroke-width="6"/>
+  <path d="M458 488 C650 488 720 277 792 277" fill="none" stroke="#f59e0b" stroke-width="6"/>
+  <path d="M458 308 C610 308 650 548 752 548" fill="none" stroke="#ef4444" stroke-width="6"/>
+  <path d="M458 548 C610 548 650 565 752 565" fill="none" stroke="#16a34a" stroke-width="6"/>
+  <path d="M458 368 C610 368 650 588 752 588" fill="none" stroke="#111827" stroke-width="6"/>
+
+  <rect x="0" y="640" width="1200" height="80" fill="#b45309"/>
+  <text x="600" y="671" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#fff">VERIFY YOUR MODULE PIN ORDER AND CONFIRM OUT HIGH IS AT MOST 3.3V</text>
+  <text x="600" y="701" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#ffedd5">TEACHING DIAGRAM - NOT A HARDWARE PHOTO OR VERIFIED PIR RESULT</text>
+</svg>

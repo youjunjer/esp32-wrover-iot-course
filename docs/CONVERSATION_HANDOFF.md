@@ -43,16 +43,18 @@
 - 第一篇：7 章課文、8 個範例、每例接線與可見驗收已完成；[GitHub Actions #33413746238](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33413746238) 已實際編譯通過全部 8 個 Sketch
 - 第一篇圖像：已加入 6 張 AB143 課本圖，涵蓋板載 LED、數位訊號、麵包板、LED 極性、PWM 波形與 RGB 腳位；來源記錄位於 `docs/assets/ab143/part1/SOURCES.md`
 - 第二篇 OLED 基礎層：已建立自動尋址、基礎繪圖與診斷 DEMO 三章及三個 Sketch；[GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 已編譯通過全部 11 個 Sketch，真實 Run Summary 截圖已加入第一章
-- 第二篇實體驗證：尚未燒錄，OLED 正面、完整接線與 GPIO 2 錯誤閃爍碼照片待補
+- 第二篇感測器起始層：已新增輸入診斷、PIR 與光敏三章及三個 OLED-first Sketch，使用 GPIO 14／33；需等待新 CI 才能標示編譯完成
+- 第二篇圖像：新增 3 張 AB143 PIR／光敏單圖及 6 張明確標示非實機／非實測的接線與 OLED 指引圖
+- 第二篇實體驗證：尚未燒錄，OLED 正面、完整接線、GPIO 2 錯誤閃爍碼、PIR 暖機／事件及光敏校正照片待補
 
 ## 下一步
 
-1. 以指定課程板實測第二篇三個 OLED 範例，補正面、接線及錯誤閃爍碼照片。
-2. 實測通過後，抽出共用 OLED 狀態介面，再逐項整合感測器與 1602 LCD。
-3. 再依序整合雲端、MQTT、Node-RED、相機與能源監測。
+1. 提交第二篇第 4～6 章並等待 GitHub Actions 編譯全部 14 個 Sketch，補真實 Run 截圖。
+2. 以指定課程板依序實測 OLED、GPIO 14 PIR 與 GPIO 33 光敏，補正面、接線、錯誤碼及校正照片。
+3. 實測 OLED 基礎後再決定共用狀態介面，接續 MQ-2、超音波、蜂鳴器、DHT11 與 1602 LCD。
 
 ## 已知驗證關卡
 
 - 原能源專案使用 GPIO 16/17 作為 PZEM UART2；必須先以指定課程板確認 PSRAM 與實際腳位狀態。
-- AI Thinker 相機腳位會與 OLED、WS2812、光敏電阻、SG90 與繼電器的部分舊接線衝突，一般模式與相機模式不宣稱可全部同時運作。
+- AI Thinker 相機腳位會與 OLED、WS2812、SG90、繼電器及部分舊感測器接線衝突；新版光敏一般模式改用 GPIO 33，但仍不宣稱可與相機及 GPIO 21／22 OLED 同時運作。
 - 本機目前沒有 Arduino CLI 與 ESP32 Core，第一次完整編譯由 GitHub Actions 執行，之後再補本機與實體板驗證。
