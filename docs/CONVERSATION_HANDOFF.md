@@ -43,15 +43,15 @@
 - 第一篇：7 章課文、8 個範例、每例接線與可見驗收已完成；[GitHub Actions #33413746238](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33413746238) 已實際編譯通過全部 8 個 Sketch
 - 第一篇圖像：已加入 6 張 AB143 課本圖，涵蓋板載 LED、數位訊號、麵包板、LED 極性、PWM 波形與 RGB 腳位；來源記錄位於 `docs/assets/ab143/part1/SOURCES.md`
 - 第二篇 OLED 基礎層：已建立自動尋址、基礎繪圖與診斷 DEMO 三章及三個 Sketch；[GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 已編譯通過全部 11 個 Sketch，真實 Run Summary 截圖已加入第一章
-- 第二篇感測器起始層：已新增輸入診斷、PIR 與光敏三章及三個 OLED-first Sketch，使用 GPIO 14／33；需等待新 CI 才能標示編譯完成
-- 第二篇圖像：新增 3 張 AB143 PIR／光敏單圖及 6 張明確標示非實機／非實測的接線與 OLED 指引圖
+- 第二篇感測器起始層：已新增輸入診斷、PIR 與光敏三章及三個 OLED-first Sketch，使用 GPIO 14／33；[GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 已編譯通過全部 14 個 Sketch
+- 第二篇圖像：新增 3 張 AB143 PIR／光敏單圖、6 張明確標示非實機／非實測的接線與 OLED 指引圖，以及 Commit `dad0084` 的未登入公開 Run Summary 截圖
 - 第二篇實體驗證：尚未燒錄，OLED 正面、完整接線、GPIO 2 錯誤閃爍碼、PIR 暖機／事件及光敏校正照片待補
 
 ## 下一步
 
-1. 提交第二篇第 4～6 章並等待 GitHub Actions 編譯全部 14 個 Sketch，補真實 Run 截圖。
-2. 以指定課程板依序實測 OLED、GPIO 14 PIR 與 GPIO 33 光敏，補正面、接線、錯誤碼及校正照片。
-3. 實測 OLED 基礎後再決定共用狀態介面，接續 MQ-2、超音波、蜂鳴器、DHT11 與 1602 LCD。
+1. 以指定課程板依序實測 OLED、GPIO 14 PIR 與 GPIO 33 光敏，補正面、接線、錯誤碼及校正照片。
+2. 實測 OLED 基礎後再決定共用狀態介面，接續 MQ-2、超音波、蜂鳴器、DHT11 與 1602 LCD。
+3. 每一批新 Sketch 仍先由 GitHub Actions 編譯，再另行記錄燒錄與實體證據。
 
 ## 已知驗證關卡
 

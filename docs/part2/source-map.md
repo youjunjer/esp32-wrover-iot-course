@@ -29,6 +29,6 @@
 
 AB143 第四版只有低解析 OLED 商品小圖，沒有符合目前 CLI、Core 3.3.11、Wrover GPIO 21／22 與 OLED 優先診斷流程的操作圖，因此前三章不直接匯入舊 OLED 圖。
 
-本篇使用目前腳位重畫的接線圖、依程式版型產生且明確標示的預期畫面，以及 Commit `9934db9` 的真實 GitHub Actions 編譯截圖。第 4～6 章另匯入三張相容的 PIR／光敏單圖並建立 `docs/assets/ab143/part2/SOURCES.md`；舊 WROOM 接線與 Serial-only 畫面不沿用。後續進入 1602 LCD 時，再評估 AB143 第四版第 6 章的 I²C 背板、行列座標與完成畫面單圖。
+本篇使用目前腳位重畫的接線圖、依程式版型產生且明確標示的預期畫面，以及 Commit `9934db9`、`dad0084` 的真實 GitHub Actions 編譯截圖。第 4～6 章另匯入三張相容的 PIR／光敏單圖並建立 `docs/assets/ab143/part2/SOURCES.md`；舊 WROOM 接線與 Serial-only 畫面不沿用。後續進入 1602 LCD 時，再評估 AB143 第四版第 6 章的 I²C 背板、行列座標與完成畫面單圖。
 
 不納入舊 Arduino IDE、Library Manager、Serial Monitor、WROOM 板型、5V I²C 直連及來源不明商品圖。各教學圖的來源、用途與雜湊值記錄在圖檔同目錄的 `SOURCES.md`。

@@ -18,3 +18,4 @@
 - 加入 Commit `9934db9` 的 GitHub Actions 成功畫面與來源雜湊，圖說明確限定為 CI 編譯證據。
 - 建立第二篇第 4～6 章與三個 OLED-first 範例：GPIO 14／33 輸入診斷、PIR 暖機與事件顯示、光敏 ADC 校正流程。
 - 匯入三張相容的 AB143 PIR／光敏單圖，加入六張目前接線／預期畫面 SVG 與來源、雜湊、非實機證據標示。
+- 加入 Commit `dad0084` 的 GitHub Actions Run 33478348736 成功畫面；鎖定工具鏈已編譯全部 14 個 Sketch，實機驗證仍獨立保留。

@@ -56,6 +56,10 @@ arduino-cli --config-file arduino-cli.yaml upload \
   examples/02_sensors_display/04_sensor_input_basics
 ```
 
+![GitHub Actions 顯示 PIR 與光敏教材的 compile 工作成功](../assets/part2/captures/github-actions-part2-sensors-success.png)
+
+*圖：Commit `dad0084` 的 GitHub Actions Run 33478348736 已使用鎖定工具鏈編譯全部 14 個 Sketch。這張未登入公開頁面的真實截圖只證明 CI 編譯成功，不代表已燒錄、已接線或感測器已有實測資料。*
+
 ## 可見驗收
 
 - OLED 標題顯示 `INPUT CHECK`。
@@ -68,4 +72,4 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 GPIO 14 使用內建下拉，未接數位來源時通常仍會顯示 `LOW`；這也不能證明模組已接妥或已供電。
 
-目前本章只接受 CI 編譯與示意圖作為 Repository 證據；實體輸入與 OLED 畫面仍待指定課程板驗證。
+目前 Repository 已由 [GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 驗證本章程式可編譯；實體輸入與 OLED 畫面仍待指定課程板驗證。

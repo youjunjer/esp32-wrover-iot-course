@@ -20,4 +20,4 @@ Codex 輔助實機開發時不一定能直接取得序列監控畫面，因此�
 11. 1602 LCD 與 DHT11 整合
 12. DHT11＋光敏電阻＋OLED 多頁顯示
 
-從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先呈現在 OLED，包括暖機、未校正、原始值、連線失敗、重試、資料逾時與錯誤碼；Serial 只能同步複製。前三個 OLED 範例已由 [GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 驗證編譯；新增的第 4～6 章須等待本次提交後的新 CI。實體接線、OLED、PIR、光敏及 GPIO 2 備援閃爍碼仍需另行拍照驗證。
+從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先呈現在 OLED，包括暖機、未校正、原始值、連線失敗、重試、資料逾時與錯誤碼；Serial 只能同步複製。前六個範例已由 [GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 以鎖定工具鏈驗證編譯，連同第一篇共 14 個 Sketch。實體接線、OLED、PIR、光敏及 GPIO 2 備援閃爍碼仍需另行拍照驗證。
