@@ -52,8 +52,8 @@ MQ-2 與 HC-SR04 使用 5V 工作時，訊號進入 ESP32 前必須先限壓至 
 ## 目前驗證狀態
 
 - 2026-09-01：[GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、`esp32:esp32:esp32wrover`、Adafruit BusIO 1.17.4、GFX 1.12.6 與 SSD1306 2.5.17，編譯通過第一篇 8 個與第二篇 6 個，共 14 個 Sketch。
-- 第 7～12 章已加入編譯清單；本批 Commit 與 GitHub Actions Run 尚待建立，成功前不得標示為編譯通過。
-- 真實 Run Summary 截圖已放入第一章與第四章；其證據範圍只到 CI 編譯成功。
+- 2026-09-05：[GitHub Actions Run 33950027529](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33950027529) 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、`esp32:esp32:esp32wrover` 及全部鎖定函式庫，編譯通過第一篇 8 個與第二篇 12 個，共 20 個 Sketch；Run log 沒有 Sketch `warning:` 或 `error:`。
+- 真實 Run Summary 截圖已放入第一章、第四章與第七章；其證據範圍只到 CI 編譯成功。
 - 實體板燒錄、OLED 位址、畫面方向、所有感測器／顯示器接線與 GPIO 2 閃爍碼尚未驗證。
 
 教材來源與現代化決策見 [第二篇來源與遷移記錄](source-map.md)，共通訊息規格見 [OLED 執行狀態與除錯訊息規範](../oled-status-standard.md)。

@@ -73,6 +73,12 @@ arduino-cli --config-file arduino-cli.yaml upload \
   examples/02_sensors_display/07_mq2_oled
 ```
 
+![GitHub Actions 顯示第二篇 12 個範例的 compile 工作成功](../assets/part2/captures/github-actions-part2-complete-success.png)
+
+*圖：Commit `08e2c84` 的 [GitHub Actions Run 33950027529](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33950027529) 使用鎖定工具鏈編譯全部 20 個 Sketch。這張真實 Run Summary 只證明 CI 編譯成功，不代表已燒錄、已接線、MQ-2 已校正或其他硬體已實測。*
+
+畫面中的 `1 warning` 是 GitHub Actions 對 `arduino/setup-arduino-cli@v2` 所用 Node 執行環境的淘汰提醒，不是 Sketch 編譯警告；擷取時 Arduino 官方 action 的最新正式版仍為 [`v2.0.0`](https://github.com/arduino/setup-arduino-cli/releases/tag/v2.0.0)，本次 Run 結論為 `Success`，且 20 個 Sketch 的編譯紀錄均無 `warning:` 或 `error:`。
+
 ## 可見驗收與證據邊界
 
 - OLED 在暖機期間持續顯示階段與剩餘時間，不保持空白。

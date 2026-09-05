@@ -17,4 +17,4 @@ Codex 輔助實機開發時不一定能直接取得序列監控畫面，因此�
 11. [1602 LCD 與 DHT11](../../docs/part2/11_lcd1602.md)－I²C 位址、電壓安全與 OLED 診斷
 12. [多感測顯示整合](../../docs/part2/12_multisensor_display.md)－DHT11、光敏電阻、OLED 多頁與 1602 LCD 對照
 
-從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先呈現在 OLED，包括暖機、未校正、原始值、連線失敗、重試、資料逾時與錯誤碼；Serial 只能同步複製。前六個範例已由 [GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 以鎖定工具鏈驗證編譯，連同第一篇共 14 個 Sketch。第 7～12 個範例已納入編譯清單，但本批 CI 尚待執行。所有實體接線、OLED 畫面與感測結果仍需另行拍照驗證。
+從 OLED 章開始，每一個 ESP32 執行階段訊息都必須先呈現在 OLED，包括暖機、未校正、原始值、連線失敗、重試、資料逾時與錯誤碼；Serial 只能同步複製。[GitHub Actions Run 33950027529](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33950027529) 已用鎖定工具鏈編譯通過本篇 12 個範例，連同第一篇共 20 個 Sketch。所有實體接線、OLED 畫面與感測結果仍需另行拍照驗證。
