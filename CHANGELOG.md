@@ -19,3 +19,6 @@
 - 建立第二篇第 4～6 章與三個 OLED-first 範例：GPIO 14／33 輸入診斷、PIR 暖機與事件顯示、光敏 ADC 校正流程。
 - 匯入三張相容的 AB143 PIR／光敏單圖，加入六張目前接線／預期畫面 SVG 與來源、雜湊、非實機證據標示。
 - 加入 Commit `dad0084` 的 GitHub Actions Run 33478348736 成功畫面；鎖定工具鏈已編譯全部 14 個 Sketch，實機驗證仍獨立保留。
+- 建立第二篇第 7～12 章與 6 個 OLED-first 範例：MQ-2 相對門檻、HC-SR04 逾時、蜂鳴器失效靜音、DHT11 資料新鮮度、1602 I²C 診斷與多感測顯示。
+- 新增 MQ-2／Echo 5V 訊號限壓、1602 I²C 位準轉換及蜂鳴器驅動邊界，避免沿用 AB143 舊版 5V 直連與 Wrover 不適用腳位。
+- 鎖定 Adafruit Unified Sensor 1.1.15、DHT sensor library 1.4.7 與 LiquidCrystal_PCF8574 2.3.0，並將第二篇 12 個 Sketch 全部納入 CI 清單。

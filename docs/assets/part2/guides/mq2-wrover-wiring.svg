@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ESP32 Wrover OLED 與 MQ-2 安全分壓接線</title>
+  <desc id="desc">OLED 使用 GPIO21 與 GPIO22。MQ-2 使用 5V 供電，AO 經 10k 與 12k 分壓後接 GPIO33，DO 不接，所有裝置共地。</desc>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">MQ-2 + OLED WIRING - GENERAL MODE</text>
+
+  <rect x="55" y="100" width="350" height="500" rx="26" fill="#0f172a"/>
+  <text x="230" y="148" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">ESP32 Wrover</text>
+  <text x="230" y="181" text-anchor="middle" font-family="monospace" font-size="17" fill="#cbd5e1">3.3V GPIO - ADC1</text>
+  <g font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#fff">
+    <text x="285" y="250">3V3</text><text x="295" y="310">5V</text><text x="285" y="370">GND</text>
+    <text x="250" y="430">GPIO 21</text><text x="250" y="490">GPIO 22</text><text x="250" y="550">GPIO 33</text>
+  </g>
+  <g fill="#e2e8f0"><circle cx="405" cy="243" r="8"/><circle cx="405" cy="303" r="8"/><circle cx="405" cy="363" r="8"/><circle cx="405" cy="423" r="8"/><circle cx="405" cy="483" r="8"/><circle cx="405" cy="543" r="8"/></g>
+
+  <rect x="790" y="80" width="350" height="205" rx="22" fill="#111827" stroke="#2563eb" stroke-width="4"/>
+  <text x="965" y="124" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#fff">SSD1306 OLED</text>
+  <g font-family="monospace" font-size="20" fill="#dbeafe"><text x="825" y="166">VCC ← 3.3V</text><text x="825" y="198">GND ← GND</text><text x="825" y="230">SDA ← GPIO21</text><text x="825" y="262">SCL ← GPIO22</text></g>
+
+  <rect x="760" y="330" width="410" height="275" rx="26" fill="#fee2e2" stroke="#dc2626" stroke-width="5"/>
+  <circle cx="870" cy="405" r="48" fill="#d1d5db" stroke="#475569" stroke-width="4"/>
+  <path d="M842 385h56M840 405h60M846 425h48" stroke="#64748b" stroke-width="6"/>
+  <text x="1010" y="398" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#7f1d1d">MQ-2</text>
+  <text x="1010" y="433" text-anchor="middle" font-family="monospace" font-size="18" fill="#7f1d1d">VCC 5V / GND</text>
+  <text x="790" y="485" font-family="monospace" font-size="20" fill="#7f1d1d">AO ─ 10kΩ ─●─ GPIO33</text>
+  <text x="929" y="520" font-family="monospace" font-size="20" fill="#7f1d1d">│</text>
+  <text x="880" y="550" font-family="monospace" font-size="20" fill="#7f1d1d">12kΩ</text>
+  <text x="903" y="582" font-family="monospace" font-size="20" fill="#7f1d1d">│ GND</text>
+  <text x="1035" y="550" font-family="monospace" font-size="20" font-weight="700" fill="#991b1b">DO: NC</text>
+
+  <path d="M413 243 C585 243 665 145 782 145" fill="none" stroke="#ef4444" stroke-width="6"/>
+  <path d="M413 363 C590 363 675 198 782 198" fill="none" stroke="#111827" stroke-width="6"/>
+  <path d="M413 423 C620 423 710 230 782 230" fill="none" stroke="#22c55e" stroke-width="6"/>
+  <path d="M413 483 C660 483 730 262 782 262" fill="none" stroke="#f59e0b" stroke-width="6"/>
+  <path d="M413 303 C585 303 635 445 752 445" fill="none" stroke="#ef4444" stroke-width="6"/>
+  <path d="M413 363 C590 363 635 462 752 462" fill="none" stroke="#111827" stroke-width="6"/>
+  <path d="M413 543 C570 543 635 485 752 485" fill="none" stroke="#f97316" stroke-width="6"/>
+
+  <rect x="0" y="640" width="1200" height="80" fill="#b45309"/>
+  <text x="600" y="671" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">MQ-2 AO MUST PASS THROUGH 10kΩ / 12kΩ DIVIDER - DO NOT CONNECT DO</text>
+  <text x="600" y="701" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#ffedd5">TEACHING DIAGRAM - VERIFY MODULE PIN ORDER BEFORE POWERING</text>
+</svg>

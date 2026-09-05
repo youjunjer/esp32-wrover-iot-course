@@ -12,3 +12,9 @@ examples/02_sensors_display/03_oled_diagnostics
 examples/02_sensors_display/04_sensor_input_basics
 examples/02_sensors_display/05_pir_oled
 examples/02_sensors_display/06_light_oled
+examples/02_sensors_display/07_mq2_oled
+examples/02_sensors_display/08_ultrasonic_oled
+examples/02_sensors_display/09_parking_radar
+examples/02_sensors_display/10_dht11_oled
+examples/02_sensors_display/11_lcd1602_dht
+examples/02_sensors_display/12_multisensor_display

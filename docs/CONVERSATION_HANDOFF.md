@@ -1,6 +1,6 @@
 # Conversation Handoff
 
-最後更新：2026-09-01（Asia/Taipei）
+最後更新：2026-09-05（Asia/Taipei）
 
 ## 目前原則
 
@@ -45,13 +45,16 @@
 - 第二篇 OLED 基礎層：已建立自動尋址、基礎繪圖與診斷 DEMO 三章及三個 Sketch；[GitHub Actions Run 33474648376](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33474648376) 已編譯通過全部 11 個 Sketch，真實 Run Summary 截圖已加入第一章
 - 第二篇感測器起始層：已新增輸入診斷、PIR 與光敏三章及三個 OLED-first Sketch，使用 GPIO 14／33；[GitHub Actions Run 33478348736](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/33478348736) 已編譯通過全部 14 個 Sketch
 - 第二篇圖像：新增 3 張 AB143 PIR／光敏單圖、6 張明確標示非實機／非實測的接線與 OLED 指引圖，以及 Commit `dad0084` 的未登入公開 Run Summary 截圖
+- 第二篇第 7～12 章：已整理 MQ-2、HC-SR04、停車雷達、DHT11、1602 LCD 與多感測顯示課文及 6 個 OLED-first Sketch；新增 DHT、Unified Sensor 與 LiquidCrystal_PCF8574 鎖定版本，本批 CI 尚待確認
+- 第二篇安全決策：MQ-2 AO 與 HC-SR04 Echo 不得將 5V 直接送入 GPIO；1602 I²C 背板不得以 5V 上拉直接連 ESP32；超音波資料無效時蜂鳴器必須靜音
 - 第二篇實體驗證：尚未燒錄，OLED 正面、完整接線、GPIO 2 錯誤閃爍碼、PIR 暖機／事件及光敏校正照片待補
 
 ## 下一步
 
-1. 以指定課程板依序實測 OLED、GPIO 14 PIR 與 GPIO 33 光敏，補正面、接線、錯誤碼及校正照片。
-2. 實測 OLED 基礎後再決定共用狀態介面，接續 MQ-2、超音波、蜂鳴器、DHT11 與 1602 LCD。
-3. 每一批新 Sketch 仍先由 GitHub Actions 編譯，再另行記錄燒錄與實體證據。
+1. 先讓第 7～12 章全部通過 GitHub Actions，保存真實 Run Summary 截圖與證據邊界。
+2. 以指定課程板依序實測 OLED、GPIO 14 PIR／DHT11、GPIO 33 光敏／MQ-2、HC-SR04、蜂鳴器及 1602，補正面、接線、錯誤碼與校正照片。
+3. 實測 OLED 基礎後再決定共用狀態介面；不同模組仍以逐章斷電換線方式驗證，不一次全部整合。
+4. 第二篇完成 CI 後進入第三篇 Wi-Fi、HTTP、JSON、NTP、ThingSpeak、Google Sheets 與 MQTT。
 
 ## 已知驗證關卡
 

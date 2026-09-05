@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">多感測整合程式四個 OLED 頁面預期畫面</title>
+  <desc id="desc">四個 OLED 縮圖只使用 12_multisensor_display.ino 實際頁名與欄位：SUMMARY 顯示 DHT、溫濕度與 LIGHT 原始值；DHT11 GPIO14 顯示狀態、讀值、AGE 與 ERR；LIGHT GPIO33 顯示 RAW、UNCAL、MIN 與 MAX；SYSTEM 顯示 OLED 位址、LCD ACK、DHT 與 UP。每頁 footer 都顯示 LCD ACK 0x27；ACK 只代表 PCF8574 位址回應。所有數值均非實測。</desc>
+  <rect width="1200" height="620" fill="#e2e8f0"/>
+  <text x="600" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#0f172a">MULTISENSOR OLED - ACTUAL FOUR-PAGE LAYOUT</text>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <g transform="translate(45,60)">
+      <rect width="535" height="205" rx="14" fill="#020617" stroke="#38bdf8" stroke-width="4"/>
+      <text x="20" y="29" font-size="20" stroke="none">SUMMARY</text>
+      <line x1="20" y1="41" x2="515" y2="41" stroke-width="2"/>
+      <text x="20" y="72" font-size="18" stroke="none">DHT OK</text>
+      <text x="20" y="101" font-size="18" stroke="none">T 24.0C  H 55%</text>
+      <text x="20" y="132" font-size="18" stroke="none">LIGHT 1820 UNCAL</text>
+      <text x="20" y="186" font-size="16" fill="#7dd3fc" stroke="none">LCD ACK 0x27</text>
+    </g>
+    <g transform="translate(620,60)">
+      <rect width="535" height="205" rx="14" fill="#020617" stroke="#22c55e" stroke-width="4"/>
+      <text x="20" y="29" font-size="20" stroke="none">DHT11 GPIO14</text>
+      <line x1="20" y1="41" x2="515" y2="41" stroke-width="2"/>
+      <text x="20" y="84" font-size="30" font-weight="700" stroke="none">OK</text>
+      <text x="140" y="82" font-size="18" stroke="none">T 24.0C H 55%</text>
+      <text x="20" y="132" font-size="18" stroke="none">AGE 0s  ERR 0</text>
+      <text x="20" y="186" font-size="16" fill="#7dd3fc" stroke="none">LCD ACK 0x27</text>
+    </g>
+    <g transform="translate(45,285)">
+      <rect width="535" height="205" rx="14" fill="#020617" stroke="#f59e0b" stroke-width="4"/>
+      <text x="20" y="29" font-size="20" stroke="none">LIGHT GPIO33</text>
+      <line x1="20" y1="41" x2="515" y2="41" stroke-width="2"/>
+      <text x="20" y="72" font-size="18" stroke="none">RAW 1820</text>
+      <text x="20" y="115" font-size="30" font-weight="700" stroke="none">UNCAL</text>
+      <text x="20" y="148" font-size="18" stroke="none">MIN 1790 MAX 1850</text>
+      <text x="20" y="186" font-size="16" fill="#7dd3fc" stroke="none">LCD ACK 0x27</text>
+    </g>
+    <g transform="translate(620,285)">
+      <rect width="535" height="205" rx="14" fill="#020617" stroke="#a78bfa" stroke-width="4"/>
+      <text x="20" y="29" font-size="20" stroke="none">SYSTEM</text>
+      <line x1="20" y1="41" x2="515" y2="41" stroke-width="2"/>
+      <text x="20" y="70" font-size="18" stroke="none">OLED 0x3C OK</text>
+      <text x="260" y="70" font-size="18" stroke="none">LCD ACK 0x27</text>
+      <text x="20" y="111" font-size="18" stroke="none">DHT OK</text>
+      <text x="260" y="111" font-size="18" stroke="none">UP 12s</text>
+      <text x="20" y="186" font-size="16" fill="#7dd3fc" stroke="none">LCD ACK 0x27</text>
+    </g>
+  </g>
+  <text x="600" y="512" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#334155">Four OLED pages rotate; LCD ACK only means the PCF8574 address replied</text>
+  <rect x="0" y="525" width="1200" height="95" fill="#9a3412"/>
+  <text x="600" y="563" text-anchor="middle" font-family="Arial, 'Noto Sans TC', sans-serif" font-size="28" font-weight="700" fill="#fff">非實機／非實測資料</text>
+  <text x="600" y="596" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#ffedd5">EXPECTED LAYOUT ONLY - ADDRESSES, READINGS, AGE AND UPTIME ARE ILLUSTRATIVE</text>
+</svg>

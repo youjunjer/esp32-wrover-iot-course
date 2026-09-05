@@ -71,8 +71,8 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 完成第一篇教材、8 個可見輸出範例與自動編譯驗收
 - [x] 建立第二篇 OLED 自動尋址、基礎顯示與診斷版型範例
 - [x] 完成 GPIO 14／33 輸入診斷、PIR 與光敏 ADC 校正教材；CI 已編譯全部 14 個 Sketch
+- [x] 完成第二篇 MQ-2、超音波、蜂鳴器、DHT11、1602 LCD 與多感測顯示課文及範例；本批 CI 待驗證
 - [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
-- [ ] 接續 MQ-2、超音波、蜂鳴器、DHT11、1602 LCD 與多頁 OLED
 - [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例
 - [ ] 整併 Node-RED Flow
 - [ ] 整併相機、BLE 與多工範例

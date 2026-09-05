@@ -25,12 +25,13 @@ Codex 輔助開發時不保證能直接取得序列監控內容，因此 OLED �
 | 類別 | OLED 訊息範例 |
 |---|---|
 | 系統 | `BOOT`、`INIT`、`READY`、`ERR` |
-| 感測器 | `NO DATA`、`TIMEOUT`、`RANGE ERR`、`STALE` |
+| 感測器 | `WARMUP`、`UNCAL`、`ADC CHECK`、`ADC ERR`、`NO DATA`、`READ ERR`、`TIMEOUT`、`RANGE ERR`、`STALE` |
+| I²C 顯示器 | `LCD SCAN`、`LCD ACK 0x27`、`LCD NO ACK`、`RETRY 3s` |
 | Wi-Fi | `SCAN`、`CONNECT`、`NO AP`、`AUTH ERR`、`RETRY 3`、`ONLINE` |
 | NTP | `SYNC`、`TIMEOUT`、`TIME OK` |
 | HTTP／雲端 | `SEND`、`HTTP 200`、`HTTP 404`、`HTTP ERR` |
 | MQTT | `CONNECT`、`BROKER ERR`、`PUB OK`、`PUB ERR`、`SUB OK` |
-| 控制 | `SAFE OFF`、`CMD OK`、`CMD ERR`、`RETAIN BLOCK` |
+| 控制 | `SAFE OFF`、`BUZZER ERR`、`CMD OK`、`CMD ERR`、`RETAIN BLOCK` |
 | PZEM | `UART ERR`、`CRC ERR`、`NO DATA`、`STALE 12s` |
 
 訊息可以縮寫，但每個範例 README 必須列出所使用的代碼與意義。

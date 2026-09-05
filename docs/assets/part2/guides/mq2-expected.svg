@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">MQ-2 暖機、未校正與警示 OLED 預期畫面</title>
+  <desc id="desc">三個示意 OLED 畫面依序顯示六十秒暖機、未校正的 RAW MIN MAX，以及完成本機校正後的相對警示 REL WARN；OLED 固定標示 NO PPM，外框下方說明第三格為本機校正後情境，數字不是安全濃度或實測資料。</desc>
+  <rect width="1200" height="620" fill="#e2e8f0"/>
+  <text x="600" y="47" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">MQ-2 OLED - EXPECTED STATE FLOW</text>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <g transform="translate(45,90)"><rect width="340" height="350" rx="14" fill="#020617" stroke="#38bdf8" stroke-width="4"/><text x="24" y="44" font-size="24" stroke="none">MQ-2 GPIO33</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/><text x="24" y="140" font-size="43" font-weight="700" stroke="none">WARMUP</text><text x="24" y="215" font-size="27" stroke="none">LEFT 60s</text><text x="24" y="295" font-size="24" stroke="none">STARTUP ONLY</text></g>
+    <g transform="translate(430,90)"><rect width="340" height="350" rx="14" fill="#020617" stroke="#38bdf8" stroke-width="4"/><text x="24" y="44" font-size="24" stroke="none">MQ-2 GPIO33</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/><text x="24" y="112" font-size="23" stroke="none">RAW 820 NO PPM</text><text x="24" y="180" font-size="48" font-weight="700" stroke="none">UNCAL</text><text x="24" y="260" font-size="22" stroke="none">MIN 790</text><text x="24" y="305" font-size="22" stroke="none">MAX 840</text></g>
+    <g transform="translate(815,90)"><rect width="340" height="350" rx="14" fill="#020617" stroke="#fb7185" stroke-width="5"/><text x="24" y="44" font-size="24" stroke="none">MQ-2 GPIO33</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/><text x="24" y="112" font-size="22" stroke="none">RAW 1350 NO PPM</text><text x="24" y="180" font-size="39" font-weight="700" fill="#fecdd3" stroke="none">REL WARN</text><text x="24" y="260" font-size="22" stroke="none">MIN 780</text><text x="24" y="305" font-size="22" stroke="none">MAX 1350</text></g>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155"><text x="215" y="478" text-anchor="middle">1. startup warmup only</text><text x="600" y="478" text-anchor="middle">2. default is uncalibrated</text><text x="985" y="478" text-anchor="middle">3. after local calibration</text></g>
+  <rect x="0" y="520" width="1200" height="100" fill="#9a3412"/>
+  <text x="600" y="558" text-anchor="middle" font-family="Arial, 'Noto Sans TC', sans-serif" font-size="28" font-weight="700" fill="#fff">非實機／非實測資料</text>
+  <text x="600" y="592" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#ffedd5">EXPECTED LAYOUT ONLY - VALUES ARE ILLUSTRATIVE, NOT PPM OR CALIBRATED DATA</text>
+</svg>
