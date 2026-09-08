@@ -55,6 +55,14 @@
 
 這五張圖都是 Repository 原生 SVG，直接標示「非實機／非實測資料」。它們只能說明狀態名稱、欄位與版面，不能證明 Wi-Fi、NTP、TLS、公開 API 或 WebServer 已在實體板上成功。
 
+## GitHub Actions 編譯證據
+
+![第三篇前五章 GitHub Actions 編譯成功](../assets/part3/captures/github-actions-part3-foundations-success.jpg)
+
+上圖是公開 Repository 的真實 [GitHub Actions Run 34241431791](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34241431791) 畫面，對應 Commit `d53bbcaa0168b98e3c8a2e5df2ab688abfdb6135`。該次工作流程使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、FQBN `esp32:esp32:esp32wrover` 與 `config/libraries.lock` 的函式庫版本，編譯通過清單內全部 25 個 Sketch；其中包含第三篇前五章的 5 個 Sketch。
+
+這張圖只證明上述 Commit 能在 CI 以鎖定工具鏈完成編譯。它不代表程式已燒錄，也不證明 OLED、Wi-Fi、NTP、TLS、Open-Meteo、瀏覽器操作或 GPIO 13 已在實體板上通過。截圖來源、時間與 SHA-256 見 [第三篇真實操作截圖來源](../assets/part3/captures/SOURCES.md)。
+
 ## 本篇完成條件
 
 - 五章課文、五個自足式 Sketch、各章 README、接線表／資料流說明與 OLED 預期畫面齊全。
