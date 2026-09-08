@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">憑證驗證 HTTPS 啟動、成功與失敗 OLED 預期畫面</title>
+  <desc id="desc">三個 OLED 示意畫面顯示 Root CA 驗證進度、HTTPS 成功的狀態碼與資料長度，以及 TLS 或網路失敗。所有數值均非實測。</desc>
+  <rect width="1200" height="620" fill="#e2e8f0"/>
+  <text x="600" y="47" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">VERIFIED HTTPS OLED - EXPECTED STATES</text>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <g transform="translate(45,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#38bdf8" stroke-width="4"/>
+      <text x="24" y="44" font-size="24" stroke="none">HTTPS</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="130" font-size="34" font-weight="700" stroke="none">TLS VERIFY</text>
+      <text x="24" y="210" font-size="23" stroke="none">CA ISRG ROOT X1</text>
+      <text x="24" y="285" font-size="20" stroke="none">NO INSECURE MODE</text>
+    </g>
+    <g transform="translate(430,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#22c55e" stroke-width="5"/>
+      <text x="24" y="44" font-size="24" stroke="none">HTTPS GET</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="120" font-size="31" font-weight="700" stroke="none">TLS VERIFIED</text>
+      <text x="24" y="180" font-size="29" stroke="none">HTTP 200</text>
+      <text x="24" y="240" font-size="22" stroke="none">TLS 0 BODY 842</text>
+      <text x="24" y="300" font-size="20" stroke="none">NEXT 900s ERR 0</text>
+    </g>
+    <g transform="translate(815,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#fb7185" stroke-width="5"/>
+      <text x="24" y="44" font-size="24" stroke="none">HTTPS GET</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="120" font-size="31" font-weight="700" fill="#fecdd3" stroke="none">TLS/NET ERR</text>
+      <text x="24" y="180" font-size="29" stroke="none">GET -1</text>
+      <text x="24" y="240" font-size="22" stroke="none">TLS -1 BODY 0</text>
+      <text x="24" y="300" font-size="20" stroke="none">RETRY 30s ERR 1</text>
+    </g>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155"><text x="215" y="478" text-anchor="middle">trusted time then CA check</text><text x="600" y="478" text-anchor="middle">verified response summary</text><text x="985" y="478" text-anchor="middle">never bypass TLS failure</text></g>
+  <rect x="0" y="520" width="1200" height="100" fill="#9a3412"/>
+  <text x="600" y="558" text-anchor="middle" font-family="Arial, 'Noto Sans TC', sans-serif" font-size="28" font-weight="700" fill="#fff">非實機／非實測資料</text>
+  <text x="600" y="592" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#ffedd5">EXPECTED LAYOUT ONLY - STATUS, LENGTH, ERROR AND RETRY VALUES ARE ILLUSTRATIVE</text>
+</svg>

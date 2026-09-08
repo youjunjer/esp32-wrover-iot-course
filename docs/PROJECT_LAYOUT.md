@@ -8,9 +8,11 @@ esp32-wrover-iot-course/
 ├── docs/
 │   ├── assets/
 │   │   ├── ab143/
-│   │   └── part2/
+│   │   ├── part2/
+│   │   └── part3/
 │   ├── part1/
 │   ├── part2/
+│   ├── part3/
 │   └── ...
 ├── examples/
 │   ├── 01_basics/
@@ -23,10 +25,10 @@ esp32-wrover-iot-course/
 └── scripts/
 ```
 
-## 本機路徑
+## 進入 Repository
 
 ```bash
-cd "/Users/youjunjer/Library/CloudStorage/GoogleDrive-youjunjer@gmail.com/我的雲端硬碟/E_Codex/ESP32_Develop/esp32-wrover-iot-course"
+cd /path/to/esp32-wrover-iot-course
 ```
 
 ## 目錄邊界
@@ -34,8 +36,10 @@ cd "/Users/youjunjer/Library/CloudStorage/GoogleDrive-youjunjer@gmail.com/我的
 - `docs/course-map.md`：正式章節順序與教材範圍。
 - `docs/assets/ab143/`：由 AB143 課本取出的教材圖像及來源記錄，不放整頁課本或原始出版檔。
 - `docs/assets/part2/`：第二篇目前接線圖、預期畫面與真實操作截圖；預期圖和實測證據分開記錄。
+- `docs/assets/part3/`：第三篇網路狀態預期畫面與真實 CI／實機證據；示意圖和操作截圖分開存放。
 - `docs/part1/`：第一篇正式課文、驗收與 AB143 遷移記錄。
-- `docs/part2/`：第二篇 OLED、感測器與顯示器課文；目前涵蓋 OLED 基礎、輸入診斷、PIR 與光敏校正。
+- `docs/part2/`：第二篇 OLED、感測器與顯示器課文。
+- `docs/part3/`：第三篇 Wi-Fi、NTP、HTTPS、JSON／公開 API、WebServer、雲端與 MQTT 課文。
 - `docs/oled-status-standard.md`：所有 ESP32 執行階段訊息的 OLED 顯示規範。
 - `docs/` 其他文件：環境、腳位、安全、排錯與交接。
 - `examples/`：依教材六篇分類的 Arduino Sketch。

@@ -38,10 +38,10 @@
 ## 第三篇：Wi-Fi、雲端與 MQTT
 
 1. Wi-Fi 掃描與連線：訊號強度、連線狀態、重連與憑證分離。
-2. HTTPClient：HTTP GET、狀態碼、回應內容與錯誤處理。
-3. JSON 與公開資料 API：ArduinoJson、欄位解析與空氣品質資料。
-4. NTP 網路校時：時區、日期時間、同步狀態與 OLED 時鐘。
-5. ESP32 網頁伺服器：顯示感測資料並控制 LED 或設備。
+2. NTP 網路校時：時區、日期時間、同步狀態與 OLED 時鐘；先取得可信時間，供後續 HTTPS 憑證日期驗證。
+3. HTTPS 與 HTTPClient：CA 驗證、HTTP GET、狀態碼、有界回應與錯誤處理。
+4. JSON 與公開資料 API：ArduinoJson、欄位驗證、資料新鮮度與空氣品質模式資料。
+5. ESP32 網頁伺服器：顯示裝置狀態，並以安全 POST 控制低風險 LED 輸出。
 6. ThingSpeak：資料上傳、Channel、Field、更新頻率與圖表。
 7. Google Sheets：Apps Script Web App、資料新增、讀取及 OLED 顯示。
 8. MQTT 基礎：Broker、Client、Topic、QoS、Retain 與 Client ID。

@@ -18,7 +18,7 @@
 
 1. `01_basics`：Arduino C、GPIO、PWM 與全彩 LED
 2. `02_sensors_display`：I²C、OLED 可視化診斷、感測器與 1602 LCD
-3. `03_network_cloud_mqtt`：Wi-Fi、HTTP、JSON、NTP、ThingSpeak、Google Sheets 與 MQTT
+3. `03_network_cloud_mqtt`：Wi-Fi、NTP、verified HTTPS、JSON、WebServer、ThingSpeak、Google Sheets 與 MQTT
 4. `04_nodered`：Node-RED、MQTT Flow、Dashboard 與資料處理
 5. `05_camera_ble_multitasking`：相機、Bluetooth、BLE 與 FreeRTOS 多工
 6. `06_energy_monitoring`：PZEM-004T、OLED、MQTT、繼電器、SG90 與能源監測整合
@@ -53,7 +53,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。
 
-第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED 起始教材請見 [docs/part2/README.md](docs/part2/README.md)；完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
+第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED、感測器與顯示器請見 [docs/part2/README.md](docs/part2/README.md)；第三篇網路起始教材請見 [docs/part3/README.md](docs/part3/README.md)。完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
 ## 可視化診斷原則
 
@@ -72,6 +72,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 建立第二篇 OLED 自動尋址、基礎顯示與診斷版型範例
 - [x] 完成 GPIO 14／33 輸入診斷、PIR 與光敏 ADC 校正教材；CI 已編譯全部 14 個 Sketch
 - [x] 完成第二篇 MQ-2、超音波、蜂鳴器、DHT11、1602 LCD 與多感測顯示課文及範例；CI 已編譯全部 20 個 Sketch
+- [ ] 完成第三篇前五章：Wi-Fi、NTP、verified HTTPS、ArduinoJson／Open-Meteo 與 WebServer；目前程式及課文整理中，尚待 GitHub Actions 驗證
 - [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
 - [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例
 - [ ] 整併 Node-RED Flow

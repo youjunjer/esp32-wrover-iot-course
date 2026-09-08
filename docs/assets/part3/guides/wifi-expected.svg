@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Wi-Fi 掃描、連線與上線 OLED 預期畫面</title>
+  <desc id="desc">三個 OLED 示意畫面使用程式中的 WIFI OLED 表頭，以及 SCAN、CONNECT 與 ONLINE 狀態；不顯示 SSID 或完整 IP。所有數值均非實測。</desc>
+  <rect width="1200" height="620" fill="#e2e8f0"/>
+  <text x="600" y="47" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a">WI-FI OLED - EXPECTED STATES</text>
+  <g font-family="monospace" fill="#e0f2fe" stroke="#e0f2fe">
+    <g transform="translate(45,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#38bdf8" stroke-width="4"/>
+      <text x="24" y="44" font-size="24" stroke="none">WIFI OLED</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="130" font-size="42" font-weight="700" stroke="none">SCAN</text>
+      <text x="24" y="210" font-size="27" stroke="none">SEARCH AP 4s</text>
+      <text x="24" y="290" font-size="20" stroke="none">SSID HIDDEN ON OLED</text>
+    </g>
+    <g transform="translate(430,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#f59e0b" stroke-width="5"/>
+      <text x="24" y="44" font-size="24" stroke="none">WIFI OLED</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="130" font-size="42" font-weight="700" stroke="none">CONNECT</text>
+      <text x="24" y="210" font-size="25" stroke="none">AP 5 TARGET YES</text>
+      <text x="24" y="290" font-size="24" stroke="none">LEFT 3s RSSI -48</text>
+    </g>
+    <g transform="translate(815,90)">
+      <rect width="340" height="350" rx="14" fill="#020617" stroke="#22c55e" stroke-width="5"/>
+      <text x="24" y="44" font-size="24" stroke="none">WIFI OLED</text><line x1="24" y1="61" x2="316" y2="61" stroke-width="2"/>
+      <text x="24" y="130" font-size="42" font-weight="700" stroke="none">ONLINE</text>
+      <text x="24" y="210" font-size="28" stroke="none">IP ASSIGNED</text>
+      <text x="24" y="290" font-size="24" stroke="none">RSSI -48 UP 12s</text>
+    </g>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155"><text x="215" y="478" text-anchor="middle">scan without exposing SSID</text><text x="600" y="478" text-anchor="middle">bounded attempt with progress</text><text x="985" y="478" text-anchor="middle">online without complete IP</text></g>
+  <rect x="0" y="520" width="1200" height="100" fill="#9a3412"/>
+  <text x="600" y="558" text-anchor="middle" font-family="Arial, 'Noto Sans TC', sans-serif" font-size="28" font-weight="700" fill="#fff">非實機／非實測資料</text>
+  <text x="600" y="592" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#ffedd5">EXPECTED LAYOUT ONLY - AP COUNT, RSSI, TIMER AND UPTIME VALUES ARE ILLUSTRATIVE</text>
+</svg>

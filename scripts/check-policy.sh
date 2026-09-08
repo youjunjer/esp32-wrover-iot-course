@@ -41,6 +41,36 @@ if rg -n --glob '*.ino' --glob '*.h' --glob '*.hpp' --glob '*.cpp' \
   failed=1
 fi
 
+if rg -n --glob '*.ino' --glob '*.h' --glob '*.hpp' --glob '*.cpp' \
+  'setInsecure[[:space:]]*\(' examples; then
+  echo "TLS certificate verification bypass detected." >&2
+  failed=1
+fi
+
+if rg -n --glob '*.ino' 'http://[^"[:space:]]+' examples/03_network_cloud_mqtt; then
+  echo "Plain HTTP URL detected in a network sketch; client endpoints must use HTTPS." >&2
+  failed=1
+fi
+
+if rg -n -U --glob '*.ino' \
+  'while[[:space:]]*\([^)]*WiFi\.(status|waitForConnectResult)' \
+  examples/03_network_cloud_mqtt; then
+  echo "Blocking Wi-Fi connection loop detected; use a timed OLED-visible state machine." >&2
+  failed=1
+fi
+
+while IFS= read -r network_ino; do
+  network_dir="${network_ino%/*}"
+  if [[ ! -f "$network_dir/secrets.example.h" ]]; then
+    echo "Network sketch is missing secrets.example.h: $network_dir" >&2
+    failed=1
+  fi
+  if ! grep -Fq '__has_include("secrets.h")' "$network_ino"; then
+    echo "Network sketch does not use the secrets.h fallback pattern: $network_ino" >&2
+    failed=1
+  fi
+done < <(find examples/03_network_cloud_mqtt -type f -name '*.ino' | LC_ALL=C sort)
+
 while IFS= read -r sketch || [[ -n "$sketch" ]]; do
   [[ -z "$sketch" || "$sketch" == \#* ]] && continue
   sketch_name="$(basename "$sketch")"

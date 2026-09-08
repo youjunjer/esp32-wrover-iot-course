@@ -4,5 +4,6 @@ Adafruit GFX Library@1.12.6
 Adafruit SSD1306@2.5.17
 Adafruit NeoPixel@1.15.5
 Adafruit Unified Sensor@1.1.15
+ArduinoJson@7.4.3
 DHT sensor library@1.4.7
 LiquidCrystal_PCF8574@2.3.0

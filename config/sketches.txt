@@ -18,3 +18,8 @@ examples/02_sensors_display/09_parking_radar
 examples/02_sensors_display/10_dht11_oled
 examples/02_sensors_display/11_lcd1602_dht
 examples/02_sensors_display/12_multisensor_display
+examples/03_network_cloud_mqtt/01_wifi_oled
+examples/03_network_cloud_mqtt/02_ntp_clock_oled
+examples/03_network_cloud_mqtt/03_https_get_oled
+examples/03_network_cloud_mqtt/04_air_quality_json_oled
+examples/03_network_cloud_mqtt/05_webserver_oled
