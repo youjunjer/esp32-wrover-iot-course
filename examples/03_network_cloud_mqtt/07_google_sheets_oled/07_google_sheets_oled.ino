@@ -201,7 +201,7 @@ void readSensor(unsigned long now) {
 }
 
 String urlEncode(const String &input) {
-  static constexpr char HEX[] = "0123456789ABCDEF";
+  static constexpr char HEX_DIGITS[] = "0123456789ABCDEF";
   String encoded;
   encoded.reserve(input.length() * 3);
   for (size_t index = 0; index < input.length(); ++index) {
@@ -211,8 +211,8 @@ String urlEncode(const String &input) {
       encoded += static_cast<char>(c);
     } else {
       encoded += '%';
-      encoded += HEX[c >> 4];
-      encoded += HEX[c & 0x0F];
+      encoded += HEX_DIGITS[c >> 4];
+      encoded += HEX_DIGITS[c & 0x0F];
     }
   }
   return encoded;
