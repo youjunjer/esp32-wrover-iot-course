@@ -6,4 +6,6 @@ Adafruit NeoPixel@1.15.5
 Adafruit Unified Sensor@1.1.15
 ArduinoJson@7.4.3
 DHT sensor library@1.4.7
+ESP32Servo@3.2.1
 LiquidCrystal_PCF8574@2.3.0
+MQTT@2.5.3

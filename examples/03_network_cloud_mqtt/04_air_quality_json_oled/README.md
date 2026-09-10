@@ -38,7 +38,7 @@ Copy-Item examples/03_network_cloud_mqtt/04_air_quality_json_oled/secrets.exampl
 - TLS 使用官方 ISRG Root X1 CA；禁止 `setInsecure()`，HTTPS 前必須先完成 NTP。
 - JSON body 最多 2048 bytes；實收長度短於已宣告的 `Content-Length`，或讀取停止前進 5 秒，都立即失敗。
 - ArduinoJson 7.4.3 只保留 `current`／`current_units` 需要的欄位，並限制巢狀深度為 4。
-- 程式驗證物件存在、欄位型別、API 單位、有限數值、PM 0–5000 µg/m³、European AQI 0–1000、interval 1–86400 秒與來源時間；來源不得超前可信時間 5 分鐘以上或老於 2 小時。這些是防禦性資料界線，不是健康或法規標準。
+- 程式驗證物件存在、欄位型別、API 單位、有限數值、PM 0–5000 µg/m³、European AQI 0–1000、interval 1–86400 秒與來源時間；來源不得超前本機已同步時間 5 分鐘以上或老於 2 小時。這些是防禦性資料界線，不是健康或法規標準。
 - 同一 NAT 下的每台裝置成功後都至少等待 15 分鐘，再加 0–30 秒 jitter；失敗採 60 秒至 15 分鐘 backoff，HTTP 429 直接拉長為 15 分鐘。
 
 ## 主要 OLED 狀態
@@ -46,7 +46,7 @@ Copy-Item examples/03_network_cloud_mqtt/04_air_quality_json_oled/secrets.exampl
 | 狀態 | 意義 |
 |---|---|
 | `CONFIG ERR` | 本機 Wi-Fi 設定未完成 |
-| `WIFI` / `NTP` | 前置連線或可信時間未完成 |
+| `WIFI` / `NTP` | 前置連線或時間同步未完成 |
 | `TLS VERIFY` / `HTTPS GET` | CA 驗證及有限時 GET |
 | `JSON READ` | 接收不超過 2048 bytes 的 body |
 | `JSON PARSE` | 套用 Filter 與 NestingLimit |

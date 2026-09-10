@@ -73,8 +73,8 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 完成 GPIO 14／33 輸入診斷、PIR 與光敏 ADC 校正教材；CI 已編譯全部 14 個 Sketch
 - [x] 完成第二篇 MQ-2、超音波、蜂鳴器、DHT11、1602 LCD 與多感測顯示課文及範例；CI 已編譯全部 20 個 Sketch
 - [x] 完成第三篇前五章：Wi-Fi、NTP、verified HTTPS、ArduinoJson／Open-Meteo 與 WebServer；[GitHub Actions Run 34241431791](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34241431791) 已以鎖定工具鏈編譯通過全部 25 個 Sketch
-- [ ] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照
-- [ ] 整併 ThingSpeak、Google Sheets 與 MQTT 範例
+- [x] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照與衝突邊界
+- [ ] 第三篇後六章程式與課文已重建：ThingSpeak、教師既有 GAS、MQTT TLS／PubSub／JSON／安全控制；等待新 GitHub Actions 編譯證據
 - [ ] 整併 Node-RED Flow
 - [ ] 整併相機、BLE 與多工範例
 - [ ] 整併能源監測專題

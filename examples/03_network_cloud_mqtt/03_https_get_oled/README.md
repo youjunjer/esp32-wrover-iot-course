@@ -34,7 +34,7 @@ Copy-Item examples/03_network_cloud_mqtt/03_https_get_oled/secrets.example.h `
 ## TLS 與 body 邊界
 
 - `open_meteo_root_ca.h` 來自 [Let's Encrypt 官方 ISRG Root X1](https://letsencrypt.org/certificates/)。若服務端日後更換憑證鏈，應重新查證官方來源後更新，不能改用 `setInsecure()`。
-- HTTPS 開始前必須先有可信任的 NTP 時間。
+- HTTPS 開始前必須先有已同步且落在合理範圍、足供憑證日期檢查的 NTP 時間；一般 SNTP 並非密碼學認證時間。
 - 同步 `HTTPClient::GET()` 設有 8 秒逾時，呼叫前 OLED 會先顯示最長等待。
 - HTTP 200 body 必須為 1–2048 bytes，每次主迴圈最多讀 128 bytes；空 body、實收長度短於 `Content-Length`，或無進度 5 秒都判定失敗。
 - 成功畫面同時保留 HTTP code、TLS error code 與實際 body bytes；不把 body 或私人網路資料輸出到 Serial。
@@ -49,7 +49,7 @@ Copy-Item examples/03_network_cloud_mqtt/03_https_get_oled/secrets.example.h `
 |---|---|
 | `CONFIG ERR` | `secrets.h` 未完成 |
 | `WIFI CONNECT` / `OFFLINE` | Wi-Fi 連線或退避中 |
-| `NTP SYNC` / `TIMEOUT` | 等待可信任時間或校時失敗 |
+| `NTP SYNC` / `TIMEOUT` | 等待已同步時間或校時失敗 |
 | `JITTER` / `START IN Ns` | 分散同一 NAT 下的首次請求 |
 | `TLS VERIFY` | 已載入 CA，準備驗證伺服器 |
 | `GET` / `MAX WAIT 8s` | 有限時的同步 HTTPS GET |

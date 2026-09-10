@@ -1,6 +1,6 @@
 # Conversation Handoff
 
-最後更新：2026-09-08（Asia/Taipei）
+最後更新：2026-09-10（Asia/Taipei）
 
 ## 目前原則
 
@@ -52,18 +52,22 @@
 - 第三篇前五章：已完成 Wi-Fi 非同步掃描／連線、NTP、CA 驗證 HTTPS、ArduinoJson 7／Open-Meteo 空氣品質模式資料及區網 WebServer；章序調整為先校時再做 HTTPS，禁止以 `setInsecure()` 繞過驗證
 - 第三篇安全基準：網路範例只提交 `secrets.example.h`；實機缺少 `secrets.h` 時固定顯示 `CONFIG ERR`。WebServer 開機與斷線預設 `SAFE OFF`，只允許經驗證的 POST 控制，且不得公開到 Internet 或控制市電
 - 第三篇驗證狀態：[GitHub Actions Run 34241431791](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34241431791) 已在 Commit `d53bbca` 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、Wrover FQBN 與鎖定函式庫編譯通過全部 25 個 Sketch；真實 Run Summary 截圖已加入第三篇首頁。CI 不等於 Wi-Fi、NTP、TLS、API、瀏覽器或 GPIO 實測
+- 第三篇第 6～11 章：已重建 ThingSpeak、教師既有 GAS、MQTT TLS 基礎、Publish／Subscribe、JSON 與安全控制程式／課文；Google Sheets 明確不新增 `Code.gs` 或部署步驟，只沿用原教材的 `type/dateInclude/sheetId/sheetTag/data` 合約
+- 第三篇後半驗證狀態：已加入 `MQTT@2.5.3` 與 `ESP32Servo@3.2.1` 鎖定版本；policy、diff、Shell 語法、相對連結、SVG XML／SHA-256 與 31 筆 manifest 靜態檢查已通過。31 個 Sketch 的新 GitHub Actions Run 與真實截圖尚未取得，不可沿用舊 25-Sketch Run 宣稱已編譯
+- 舊來源安全待辦：公開的 `esp32-mqtt-energy-meter` 歷史中仍有曾提交的 AQI query credential 與 MQTT credential。新版未複製其值；專案負責人應撤銷／輪替，清除目前檔案不等於清除 Git 歷史
 
 ## 下一步
 
 1. 以指定課程板依序實測 OLED、GPIO 14 PIR／DHT11、GPIO 33 光敏／MQ-2、HC-SR04、蜂鳴器及 1602，補正面、接線、錯誤碼與校正照片。
 2. 實測 OLED 基礎後再決定共用狀態介面；不同模組仍以逐章斷電換線方式驗證，不一次全部整合。
-3. 以相同 OLED／憑證、逾時、重試及證據邊界規則，繼續加入 ThingSpeak、Google Sheets 與 MQTT。
+3. 完成第三篇 31 個 Sketch 的 GitHub Actions 編譯，修正 API 差異後保存新的真實 Run 截圖；再進行 ThingSpeak、既有 GAS、MQTT Broker／ACL 與第 11 章無負載控制實測。
+4. 依 Node.js 24、Node-RED 5 與 FlowFuse Dashboard 2 的新版基準建立第四篇，不搬入舊 `.node-red` userDir、credentials 或已淘汰 Dashboard。
 
 ## 已知驗證關卡
 
 - 原能源專案使用 GPIO 16/17 作為 PZEM UART2；必須先以指定課程板確認 PSRAM 與實際腳位狀態。
 - AI Thinker 相機腳位會與 OLED、WS2812、SG90、繼電器及部分舊感測器接線衝突；新版光敏一般模式改用 GPIO 33，但仍不宣稱可與相機及 GPIO 21／22 OLED 同時運作。
 - 本機目前沒有 Arduino CLI 與 ESP32 Core，第一次完整編譯由 GitHub Actions 執行，之後再補本機與實體板驗證。
-- verified HTTPS 使用的根憑證是公開信任錨，不是秘密；但伺服器憑證鏈可能變更，若 OLED 顯示 TLS 錯誤，需先核對可信時間與服務端最新憑證鏈，不能改用 `setInsecure()`。
+- verified HTTPS 使用的根憑證是公開信任錨，不是秘密；但伺服器憑證鏈可能變更，若 OLED 顯示 TLS 錯誤，需先核對時間已同步且合理，以及服務端最新憑證鏈，不能改用 `setInsecure()`。一般 SNTP 不等於密碼學認證時間。
 - Open-Meteo Air Quality API 是 CAMS 模式預報／估算資料，不是課程板或現地測站的即時量測；需保留來源標示、控制請求頻率，且不得用該值直接驅動安全關鍵設備。
 - 教室 WebServer 使用明文 HTTP，只能放在隔離或可信任區網。Digest 與 CSRF 可降低誤操作，但不等於傳輸加密。

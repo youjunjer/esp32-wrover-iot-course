@@ -1,6 +1,6 @@
 # 3. 經過憑證驗證的 HTTPS GET
 
-本章建立在第 1 章 Wi-Fi 與第 2 章 NTP 已通過實機驗收的前提上。ESP32 必須先取得可信任時間，才開始驗證 HTTPS 伺服器憑證；若時間尚未校正，程式保留在 NTP 錯誤與重試畫面，不會用跳過驗證的方式假裝成功。
+本章建立在第 1 章 Wi-Fi 與第 2 章 NTP 已通過實機驗收的前提上。ESP32 必須先取得已同步且落在合理範圍、足供憑證日期檢查的時間，才開始驗證 HTTPS 伺服器憑證；一般 SNTP 並非密碼學認證時間。若時間尚未校正，程式保留在 NTP 錯誤與重試畫面，不會用跳過驗證的方式假裝成功。
 
 ![verified HTTPS OLED 預期狀態](../assets/part3/guides/https-expected.svg)
 
@@ -76,7 +76,7 @@ Root CA 不是永遠不變的程式常數。教材所附 ISRG Root X1 的官方�
 |---|---|---|
 | `CONFIG ERR` | 未建立有效的本機 `secrets.h` | 複製範本並填入 Wi-Fi 設定 |
 | `WIFI CONNECT` / `OFFLINE` | Wi-Fi 連線或退避中 | 接續第 1 章排錯 |
-| `NTP SYNC` / `TIMEOUT` | 尚未取得可信任時間 | 接續第 2 章排錯 |
+| `NTP SYNC` / `TIMEOUT` | 尚未取得已同步時間 | 接續第 2 章排錯 |
 | `JITTER` / `START IN Ns` | 首次請求分散等待 | 不要用重開開發板繞過限制 |
 | `TLS VERIFY` | 已載入 Root CA，準備驗證 | 不可改用 `setInsecure()` |
 | `GET` / `MAX WAIT 8s` | 正在執行有限時的同步 GET | 等待逾時或 HTTP 結果 |
@@ -86,7 +86,7 @@ Root CA 不是永遠不變的程式常數。教材所附 ISRG Root X1 的官方�
 | `HTTP ERR` | 已取得 HTTP 回應，但不是 200 | 記錄狀態碼，勿把它誤判成 JSON 錯誤 |
 | `BODY EMPTY` / `BODY SHORT` / `BODY TOO LARGE` / `BODY TIMEOUT` | 回應為空、短於宣告長度、超限或停止前進 | 保留實際 bytes 與重試倒數 |
 
-負值 GET 結果與 TLS `lastError()` 數字是排錯線索，不足以單獨證明根因。回報時應同時提供 OLED 完整畫面、當時網路條件與可信時間證據。
+負值 GET 結果與 TLS `lastError()` 數字是排錯線索，不足以單獨證明根因。回報時應同時提供 OLED 完整畫面、當時網路條件與時間同步證據。
 
 ## CLI 編譯與燒錄
 

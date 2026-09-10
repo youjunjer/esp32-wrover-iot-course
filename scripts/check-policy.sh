@@ -11,9 +11,25 @@ if git ls-files | grep -E '(^|/)secrets\.h$|(^|/)credentials\.h$|(^|/)\.env($|\.
   failed=1
 fi
 
-if rg -n --glob '*.ino' --glob '*.h' --glob '*.cpp' \
-  '(BEGIN (RSA |OPENSSH )?PRIVATE KEY|AIza[0-9A-Za-z_-]{30,}|gh[pousr]_[0-9A-Za-z]{20,})' .; then
+if rg -l --glob '*.ino' --glob '*.h' --glob '*.cpp' \
+  --glob '!**/secrets.h' --glob '!**/credentials.h' \
+  '(BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|AIza[0-9A-Za-z_-]{30,}|gh[pousr]_[0-9A-Za-z]{20,})' .; then
   echo "Possible secret detected." >&2
+  failed=1
+fi
+
+if rg -l -U --pcre2 --glob '*.ino' --glob '*.h' --glob '*.hpp' --glob '*.cpp' \
+  --glob '!**/secrets.h' --glob '!**/credentials.h' \
+  '(WIFI_SSID|WIFI_PASSWORD|MQTT_USERNAME|MQTT_PASSWORD|THINGSPEAK_WRITE_API_KEY|GOOGLE_SHEETS_GAS_URL|GOOGLE_SHEET_ID|GOOGLE_SHEET_TAG)[^=\n]*=[[:space:]]*"(?![^"\n]*(?:REPLACE_WITH_|YOUR_))[^"\n]+"' \
+  examples; then
+  echo "Non-placeholder credential assignment detected." >&2
+  failed=1
+fi
+
+if rg -l --pcre2 --glob '!**/secrets.h' --glob '!**/credentials.h' \
+  'https://script\.google\.com/macros/s/(?!(?:REPLACE_WITH_|YOUR_))[0-9A-Za-z_-]+/exec' \
+  examples; then
+  echo "Hard-coded Google Apps Script deployment URL detected." >&2
   failed=1
 fi
 
@@ -49,6 +65,29 @@ fi
 
 if rg -n --glob '*.ino' 'http://[^"[:space:]]+' examples/03_network_cloud_mqtt; then
   echo "Plain HTTP URL detected in a network sketch; client endpoints must use HTTPS." >&2
+  failed=1
+fi
+
+if rg -n --glob '*.ino' --glob '*.h' \
+  '(PubSubClient|MQTT_PORT[[:space:]]*=[[:space:]]*1883|eric1030/class70)' \
+  examples/03_network_cloud_mqtt; then
+  echo "Legacy or plaintext MQTT configuration detected in part 03." >&2
+  failed=1
+fi
+
+while IFS= read -r mqtt_ino; do
+  if ! grep -Fq '#include <NetworkClientSecure.h>' "$mqtt_ino" ||
+     ! grep -Fq 'setCACert(MQTT_ROOT_CA)' "$mqtt_ino"; then
+    echo "MQTT sketch must use NetworkClientSecure with a configured CA: $mqtt_ino" >&2
+    failed=1
+  fi
+done < <(find examples/03_network_cloud_mqtt -type f -name '*mqtt*.ino' | LC_ALL=C sort)
+
+control_ino="examples/03_network_cloud_mqtt/11_mqtt_control_oled/11_mqtt_control_oled.ino"
+if [[ -f "$control_ino" ]] &&
+   { ! grep -Fq 'digitalWrite(RELAY_PIN, HIGH)' "$control_ino" ||
+     ! grep -Fq 'safeOutputs();' "$control_ino"; }; then
+  echo "MQTT control lesson is missing the active-low relay safe-off path." >&2
   failed=1
 fi
 

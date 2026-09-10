@@ -2,7 +2,7 @@
 
 NTP（Network Time Protocol）讓 ESP32 在連上網路後取得日期與時間。本章排在 HTTP 之前，先建立後續 HTTPS 憑證驗證、雲端資料時間戳與 MQTT 時間欄位會使用的網路時鐘。
 
-![NTP 同步、可信時間與同步過期 OLED 預期畫面](../assets/part3/guides/ntp-expected.svg)
+![NTP 同步、已同步時間與同步過期 OLED 預期畫面](../assets/part3/guides/ntp-expected.svg)
 
 *圖：依本章程式字串繪製的預期版型，不是實機照片；日期、時間、倒數與同步年齡均非實測。*
 
@@ -49,7 +49,7 @@ NTP callback 可能在網路任務中執行，所以本章 callback 只設定一
 | `CONFIG ERR` | Wi-Fi 憑證未完成 |
 | `WIFI` / `CONNECT LEFT Ns` | 15 秒 Wi-Fi 連線視窗 |
 | `NTP SYNC` / `LEFT Ns` | 15 秒校時視窗 |
-| `NTP T/O` / `NO TIME` | 從開機至今還沒有可信的時間 |
+| `NTP T/O` / `NO TIME` | 從開機至今還沒有可用的已同步時間 |
 | `TIME OK` | 已成功取得 UTC+8 日期時間 |
 | `SYNC Ns` | 最後校時通知的年齡，最多顯示 `9999s` |
 | `NTP STALE` | 校時通知已超過 90 分鐘 |

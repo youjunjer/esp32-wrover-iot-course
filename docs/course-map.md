@@ -38,16 +38,16 @@
 ## 第三篇：Wi-Fi、雲端與 MQTT
 
 1. Wi-Fi 掃描與連線：訊號強度、連線狀態、重連與憑證分離。
-2. NTP 網路校時：時區、日期時間、同步狀態與 OLED 時鐘；先取得可信時間，供後續 HTTPS 憑證日期驗證。
+2. NTP 網路校時：時區、日期時間、同步狀態與 OLED 時鐘；先建立系統時間，供後續 HTTPS 憑證日期驗證。
 3. HTTPS 與 HTTPClient：CA 驗證、HTTP GET、狀態碼、有界回應與錯誤處理。
 4. JSON 與公開資料 API：ArduinoJson、欄位驗證、資料新鮮度與空氣品質模式資料。
 5. ESP32 網頁伺服器：顯示裝置狀態，並以安全 POST 控制低風險 LED 輸出。
 6. ThingSpeak：資料上傳、Channel、Field、更新頻率與圖表。
-7. Google Sheets：Apps Script Web App、資料新增、讀取及 OLED 顯示。
+7. Google Sheets：沿用教師既有公開 GAS 合約、資料新增與 OLED 狀態；不重新建立或部署 GAS。
 8. MQTT 基礎：Broker、Client、Topic、QoS、Retain 與 Client ID。
-9. MQTT Publish／Subscribe：發布感測資料、接收命令與斷線重連。
+9. MQTT Publish／Subscribe：heartbeat、PING／PONG、精確 Topic 與斷線重連。
 10. MQTT JSON Payload：封裝溫度、濕度、亮度與設備狀態。
-11. MQTT 遠端控制：紅黃綠燈、繼電器與 SG90，每組使用獨立 Topic。
+11. MQTT 遠端控制：紅黃綠燈、繼電器與 SG90；boot ID、命令序號、TTL／lease 與獨立 Topic。
 
 ## 第四篇：Node-RED
 
