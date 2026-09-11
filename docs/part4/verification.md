@@ -2,6 +2,16 @@
 
 驗證日期：2026-09-11（Asia/Taipei）。教材基準為 Node.js 24、Node-RED 5.0.7、FlowFuse Dashboard 1.31.0；本機實際 Node.js 為 24.19.0，使用 npm 11.19.1 的 `npm ci` 安裝既有 lockfile。
 
+## GitHub Actions 成功紀錄
+
+[Run 34605058274](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34605058274) 已在 2026-09-11 21:46（Asia/Taipei）完成，對應程式與工作流程 Commit `200f84a0066193956662075a67843100a218c355`。
+
+- `nodered` job：1 分 5 秒成功；GitHub Runner 使用 Node.js 24.20.0、Node-RED 5.0.7、Dashboard 1.31.0，四組 Runtime 測試全部 PASS。
+- `compile` job：12 分 3 秒成功；policy 檢查與鎖定 Arduino 工具鏈通過，log 中共 31 行 `Compiling examples/`，全部 Sketch 編譯完成。
+- 本次使用 `actions/setup-node@v7`，Action 本身也執行於 Node.js 24。
+
+本段及教材入口連結在成功後以文件提交補記，沒有改動已驗證的 Flow、測試、lockfile、Arduino 程式或 CI 工作流程。
+
 ## 已完成
 
 | 層級 | 實際驗證 | 能證明的範圍 |

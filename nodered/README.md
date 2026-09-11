@@ -24,6 +24,8 @@ npm start
 
 `npm start` 會以 `.node-red-course/` 作為 userDir，限定監聽 `127.0.0.1:1880`，並關閉 telemetry；該 userDir 只能留在本機，不得提交。瀏覽器開啟 Node-RED 編輯器後，先到 Palette 確認 FlowFuse Dashboard 版本，再匯入 `flows/` 內的 JSON。若舊 Flow 使 Runtime 無法啟動，使用 `npm run start:safe` 開啟不自動執行 Flow 的編輯器。
 
+這是快速練習入口。[第 1 章的完整操作](../docs/part4/01_environment.md)則使用外部 `ESP32_NodeRED_Runtime` 目錄；兩種方式的 Flow／settings／context 各自獨立。請選定一種 userDir 持續使用，切換時先停止原 Runtime，並重新匯入公開 Flow，不要把空白新目錄誤認為資料遺失。
+
 ## 教學 Flow
 
 | Flow | 教學重點 | 可見驗收 |

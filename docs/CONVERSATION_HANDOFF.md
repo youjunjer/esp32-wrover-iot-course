@@ -55,6 +55,7 @@
 - 第三篇第 6～11 章：已重建 ThingSpeak、教師既有 GAS、MQTT TLS 基礎、Publish／Subscribe、JSON 與安全控制程式／課文；Google Sheets 明確不新增 `Code.gs` 或部署步驟，只沿用原教材的 `type/dateInclude/sheetId/sheetTag/data` 合約
 - 第三篇完整驗證狀態：已加入 `MQTT@2.5.3` 與 `ESP32Servo@3.2.1` 鎖定版本；policy、diff、Shell 語法、相對連結、SVG XML／SHA-256 與 31 筆 manifest 靜態檢查已通過。[GitHub Actions Run 34484466016](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34484466016) 已在 Commit `01435e8` 用鎖定工具鏈編譯通過 31 個 Sketch，真實 Run 截圖已追溯至 `docs/assets/part3/captures/SOURCES.md`。這只是 CI 編譯，不等於教師 GAS、MQTT、OLED 或實體控制驗收
 - 第四篇：7 章、6 份公開 Flow、本機操作截圖與自動驗證已完成；使用 Node.js 24.19.0、Node-RED 5.0.7、Dashboard 1.31.0，驗證 clean userDir、跨章 Link、45 秒 OFFLINE、控制阻擋及持久序號重啟。見 `docs/part4/verification.md`。外部 Broker／TLS／ACL 與 ESP32 實測尚未進行。
+- 第四篇 CI：[Run 34605058274](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34605058274) 已在 Commit `200f84a` 通過 Node-RED Runtime 測試（Runner Node.js 24.20.0）與全部 31 個 Arduino Sketch 編譯；18 張本機操作截圖、6 份 Flow 與 CLI 紀錄共 25 個證據檔案的雜湊檢查通過。
 - 舊來源安全待辦：公開的 `esp32-mqtt-energy-meter` 歷史中仍有曾提交的 AQI query credential 與 MQTT credential。新版未複製其值；專案負責人應撤銷／輪替，清除目前檔案不等於清除 Git 歷史
 
 ## 下一步
