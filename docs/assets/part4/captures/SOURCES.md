@@ -2,7 +2,7 @@
 
 擷取日期：2026-09-11（Asia/Taipei）。所有圖片由本機 Google Chrome 對實際 Node-RED Editor／Dashboard 擷取，未重畫內容，沒有生成圖片或舊版教材畫面。
 
-- 實作基準 Commit：`01435e8fd49b3a63b5c68ce1b02d723aefc87c48`；本次第四篇 Flow 以文末 Git blob／SHA-256 精確識別，正式提交後補上其 Commit。
+- 第四篇 Flow／測試程式 Commit：[`4d516486304577c1a5ce48c3e2754c609b8ca619`](https://github.com/youjunjer/esp32-wrover-iot-course/commit/4d516486304577c1a5ce48c3e2754c609b8ca619)。擷取時載入的公開 JSON 與該 Commit 的 Git blob／SHA-256 相同，詳見文末。
 - 作業系統：macOS Darwin 25.5.0 arm64。
 - Node.js 24.19.0、npm 11.19.1、Node-RED 5.0.7、FlowFuse Dashboard 1.31.0；透過 npm ci 安裝 Repository lockfile。
 - Google Chrome 152.0.7977.84、Playwright Core 1.62.1、headless、zh-TW，1600 × 1000 viewport；Dashboard 依實際內容使用 full-page screenshot。
