@@ -1,0 +1,265 @@
+[
+  {
+    "id": "4030000000000001",
+    "type": "tab",
+    "label": "04-03 基礎節點",
+    "disabled": false,
+    "info": "用 Inject、Change、Function、Switch 與 Debug 完成型別驗證和溫度分流。"
+  },
+  {
+    "id": "4030000000000002",
+    "type": "comment",
+    "z": "4030000000000001",
+    "name": "合法與無效輸入要走不同路徑",
+    "info": "Function 不把原始無效資料寫進 Debug，只回傳可公開的拒絕原因。",
+    "x": 310,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "4030000000000003",
+    "type": "inject",
+    "z": "4030000000000001",
+    "name": "合法溫濕度",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"temp\":28,\"humi\":65}",
+    "payloadType": "json",
+    "x": 150,
+    "y": 140,
+    "wires": [
+      [
+        "4030000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000004",
+    "type": "inject",
+    "z": "4030000000000001",
+    "name": "錯誤型別範例",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"temp\":\"unknown\",\"humi\":65}",
+    "payloadType": "json",
+    "x": 160,
+    "y": 200,
+    "wires": [
+      [
+        "4030000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "403000000000000c",
+    "type": "inject",
+    "z": "4030000000000001",
+    "name": "範圍錯誤範例",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"temp\":-99,\"humi\":65}",
+    "payloadType": "json",
+    "x": 160,
+    "y": 260,
+    "wires": [
+      [
+        "4030000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000005",
+    "type": "change",
+    "z": "4030000000000001",
+    "name": "加上資料來源",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.source",
+        "pt": "msg",
+        "to": "課堂模擬",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 380,
+    "y": 170,
+    "wires": [
+      [
+        "4030000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000006",
+    "type": "function",
+    "z": "4030000000000001",
+    "name": "驗證溫度並換算",
+    "func": "const value = msg.payload?.temp;\nif (typeof value !== \"number\" || !Number.isFinite(value)) {\n    return [null, { payload: { ok: false, reason: \"temp_not_number\" } }];\n}\nif (value < -20 || value > 80) {\n    return [null, { payload: { ok: false, reason: \"temp_out_of_range\" } }];\n}\nmsg.payload.temp_f = Math.round((value * 9 / 5 + 32) * 10) / 10;\nreturn [msg, null];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 620,
+    "y": 170,
+    "wires": [
+      [
+        "4030000000000007"
+      ],
+      [
+        "403000000000000b"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000007",
+    "type": "switch",
+    "z": "4030000000000001",
+    "name": "30 C 分流",
+    "property": "payload.temp",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "gte",
+        "v": "30",
+        "vt": "num"
+      },
+      {
+        "t": "lt",
+        "v": "30",
+        "vt": "num"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 840,
+    "y": 140,
+    "wires": [
+      [
+        "4030000000000008"
+      ],
+      [
+        "4030000000000009"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000008",
+    "type": "change",
+    "z": "4030000000000001",
+    "name": "高溫標記",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.level",
+        "pt": "msg",
+        "to": "high",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1030,
+    "y": 110,
+    "wires": [
+      [
+        "403000000000000a"
+      ]
+    ]
+  },
+  {
+    "id": "4030000000000009",
+    "type": "change",
+    "z": "4030000000000001",
+    "name": "正常標記",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.level",
+        "pt": "msg",
+        "to": "normal",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1030,
+    "y": 170,
+    "wires": [
+      [
+        "403000000000000a"
+      ]
+    ]
+  },
+  {
+    "id": "403000000000000a",
+    "type": "debug",
+    "z": "4030000000000001",
+    "name": "通過：只顯示 payload",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1270,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "403000000000000b",
+    "type": "debug",
+    "z": "4030000000000001",
+    "name": "拒絕：只顯示原因",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 870,
+    "y": 230,
+    "wires": []
+  }
+]

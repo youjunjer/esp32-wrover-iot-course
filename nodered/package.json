@@ -1,0 +1,18 @@
+{
+  "name": "esp32-wrover-iot-course-nodered",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ESP32 Wrover 物聯網教材的 Node-RED 可重現環境",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "start": "node-red --userDir .node-red-course --port 1880 -D uiHost=127.0.0.1 --no-telemetry",
+    "start:safe": "node-red --safe --userDir .node-red-course --port 1880 -D uiHost=127.0.0.1 --no-telemetry"
+  },
+  "dependencies": {
+    "@flowfuse/node-red-dashboard": "1.31.0",
+    "node-red": "5.0.7"
+  }
+}

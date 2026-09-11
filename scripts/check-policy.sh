@@ -131,8 +131,12 @@ while IFS= read -r ino_file; do
   fi
 done < <(find examples -type f -name '*.ino' | LC_ALL=C sort)
 
-if find . -type f -size +10M -not -path './.git/*' -print -quit | grep -q .; then
+if find . -type d \( -name .git -o -name node_modules -o -name .node-red-course \) -prune -o -type f -size +10M -print | grep -q .; then
   echo "File larger than 10 MiB detected." >&2
+  failed=1
+fi
+
+if [[ -x scripts/check-nodered.sh ]] && ! scripts/check-nodered.sh; then
   failed=1
 fi
 

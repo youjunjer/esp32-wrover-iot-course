@@ -1,0 +1,335 @@
+[
+  {
+    "id": "4040000000000001",
+    "type": "tab",
+    "label": "04-04 MQTT TLS 發布與訂閱",
+    "disabled": false,
+    "info": "使用 8883 與驗證憑證的 TLS，訂閱精確 data、status、ack Topic，並用非 Retain cmd 測試 PING／PONG。MQTT In 固定輸出 raw UTF-8 字串，供下一章在 JSON 解析前先檢查 bytes。"
+  },
+  {
+    "id": "4040000000000002",
+    "type": "comment",
+    "z": "4040000000000001",
+    "name": "匯入後先替換所有 REPLACE_WITH_ 佔位值",
+    "info": "帳號與密碼只能在本機 MQTT Broker 憑證欄位輸入。Broker 預設 autoConnect=false；占位值未全部替換前不得啟用。不得關閉 TLS 主機憑證，不得把 cmd 設為 Retain，不得使用 `#` 或 `+` 訂閱全班資料。三個 MQTT In 的 Output 必須保持 UTF-8 string。",
+    "x": 360,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "4040000000000003",
+    "type": "mqtt in",
+    "z": "4040000000000001",
+    "name": "訂閱資料 data",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/data",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "40400000000000f1",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 180,
+    "y": 140,
+    "wires": [
+      [
+        "4040000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "4040000000000004",
+    "type": "mqtt in",
+    "z": "4040000000000001",
+    "name": "訂閱上線狀態 status",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/status",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "40400000000000f1",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 210,
+    "y": 200,
+    "wires": [
+      [
+        "4040000000000007"
+      ]
+    ]
+  },
+  {
+    "id": "4040000000000005",
+    "type": "mqtt in",
+    "z": "4040000000000001",
+    "name": "訂閱回覆 ack",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/ack",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "40400000000000f1",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 180,
+    "y": 260,
+    "wires": [
+      [
+        "4040000000000008"
+      ]
+    ]
+  },
+  {
+    "id": "4040000000000006",
+    "type": "debug",
+    "z": "4040000000000001",
+    "name": "資料內容（data）",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 470,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "4040000000000007",
+    "type": "debug",
+    "z": "4040000000000001",
+    "name": "上線狀態（status）",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 480,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "4040000000000008",
+    "type": "debug",
+    "z": "4040000000000001",
+    "name": "回覆內容（ack）",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 470,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "4040000000000009",
+    "type": "inject",
+    "z": "4040000000000001",
+    "name": "送出 PING（非 Retain）",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "PING",
+    "payloadType": "str",
+    "x": 210,
+    "y": 360,
+    "wires": [
+      [
+        "404000000000000a"
+      ]
+    ]
+  },
+  {
+    "id": "404000000000000a",
+    "type": "mqtt out",
+    "z": "4040000000000001",
+    "name": "發布至精確 cmd",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/cmd",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "40400000000000f1",
+    "x": 480,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "404000000000000b",
+    "type": "status",
+    "z": "4040000000000001",
+    "name": "監看 MQTT 節點狀態",
+    "scope": [
+      "4040000000000003",
+      "4040000000000004",
+      "4040000000000005",
+      "404000000000000a"
+    ],
+    "x": 190,
+    "y": 440,
+    "wires": [
+      [
+        "404000000000000c"
+      ]
+    ]
+  },
+  {
+    "id": "404000000000000c",
+    "type": "function",
+    "z": "4040000000000001",
+    "name": "清理 MQTT 狀態",
+    "func": "const text = String(msg.status?.text || \"\").toLowerCase();\nlet state = \"UNKNOWN\";\nlet fill = \"grey\";\nif (text.includes(\"connecting\")) {\n    state = \"CONNECTING\";\n    fill = \"yellow\";\n} else if (text.includes(\"disconnected\")) {\n    state = \"DISCONNECTED\";\n    fill = \"red\";\n} else if (text.includes(\"connected\")) {\n    state = \"CONNECTED\";\n    fill = \"green\";\n} else if (text.includes(\"failed\") || text.includes(\"error\")) {\n    state = \"ERROR\";\n    fill = \"red\";\n}\nmsg.diagnostic = {\n    kind: \"MQTT_STATUS\",\n    state,\n    checked_at: new Date().toISOString()\n};\ndelete msg.payload;\ndelete msg.status;\ndelete msg.source;\nnode.status({fill, shape: \"dot\", text: state});\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 430,
+    "y": 440,
+    "wires": [
+      [
+        "404000000000000d"
+      ]
+    ]
+  },
+  {
+    "id": "404000000000000d",
+    "type": "debug",
+    "z": "4040000000000001",
+    "name": "MQTT 狀態摘要",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "diagnostic",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 680,
+    "y": 440,
+    "wires": []
+  },
+  {
+    "id": "404000000000000e",
+    "type": "catch",
+    "z": "4040000000000001",
+    "name": "捕捉 MQTT 節點錯誤",
+    "scope": [
+      "4040000000000003",
+      "4040000000000004",
+      "4040000000000005",
+      "404000000000000a"
+    ],
+    "uncaught": false,
+    "x": 200,
+    "y": 500,
+    "wires": [
+      [
+        "404000000000000f"
+      ]
+    ]
+  },
+  {
+    "id": "404000000000000f",
+    "type": "function",
+    "z": "4040000000000001",
+    "name": "MQTT 錯誤安全摘要",
+    "func": "msg.diagnostic = {\n    kind: \"MQTT_ERROR\",\n    code: \"MQTT_NODE_ERROR\",\n    checked_at: new Date().toISOString()\n};\ndelete msg.payload;\ndelete msg.error;\ndelete msg.source;\nnode.status({fill: \"red\", shape: \"ring\", text: \"MQTT_NODE_ERROR\"});\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 500,
+    "wires": [
+      [
+        "4040000000000010"
+      ]
+    ]
+  },
+  {
+    "id": "4040000000000010",
+    "type": "debug",
+    "z": "4040000000000001",
+    "name": "MQTT 錯誤摘要",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "diagnostic",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 690,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "40400000000000f1",
+    "type": "mqtt-broker",
+    "name": "課程 TLS Broker（請替換）",
+    "broker": "REPLACE_WITH_MQTT_HOST",
+    "port": 8883,
+    "clientid": "REPLACE_WITH_UNIQUE_NODERED_CLIENT_ID",
+    "autoConnect": false,
+    "usetls": true,
+    "tls": "40400000000000f2",
+    "protocolVersion": 4,
+    "keepalive": 60,
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthRetain": "false",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closeRetain": "false",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willRetain": "false",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  },
+  {
+    "id": "40400000000000f2",
+    "type": "tls-config",
+    "name": "驗證 Broker 憑證",
+    "cert": "",
+    "key": "",
+    "ca": "",
+    "certname": "",
+    "keyname": "",
+    "caname": "",
+    "servername": "",
+    "verifyservercert": true,
+    "alpnprotocol": ""
+  }
+]

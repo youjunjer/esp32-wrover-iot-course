@@ -1,6 +1,6 @@
 # Conversation Handoff
 
-最後更新：2026-09-10（Asia/Taipei）
+最後更新：2026-09-11（Asia/Taipei）
 
 ## 目前原則
 
@@ -53,15 +53,16 @@
 - 第三篇安全基準：網路範例只提交 `secrets.example.h`；實機缺少 `secrets.h` 時固定顯示 `CONFIG ERR`。WebServer 開機與斷線預設 `SAFE OFF`，只允許經驗證的 POST 控制，且不得公開到 Internet 或控制市電
 - 第三篇驗證狀態：[GitHub Actions Run 34241431791](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34241431791) 已在 Commit `d53bbca` 使用 Arduino CLI 1.5.1、ESP32 Core 3.3.11、Wrover FQBN 與鎖定函式庫編譯通過全部 25 個 Sketch；真實 Run Summary 截圖已加入第三篇首頁。CI 不等於 Wi-Fi、NTP、TLS、API、瀏覽器或 GPIO 實測
 - 第三篇第 6～11 章：已重建 ThingSpeak、教師既有 GAS、MQTT TLS 基礎、Publish／Subscribe、JSON 與安全控制程式／課文；Google Sheets 明確不新增 `Code.gs` 或部署步驟，只沿用原教材的 `type/dateInclude/sheetId/sheetTag/data` 合約
-- 第三篇後半驗證狀態：已加入 `MQTT@2.5.3` 與 `ESP32Servo@3.2.1` 鎖定版本；policy、diff、Shell 語法、相對連結、SVG XML／SHA-256 與 31 筆 manifest 靜態檢查已通過。31 個 Sketch 的新 GitHub Actions Run 與真實截圖尚未取得，不可沿用舊 25-Sketch Run 宣稱已編譯
+- 第三篇完整驗證狀態：已加入 `MQTT@2.5.3` 與 `ESP32Servo@3.2.1` 鎖定版本；policy、diff、Shell 語法、相對連結、SVG XML／SHA-256 與 31 筆 manifest 靜態檢查已通過。[GitHub Actions Run 34484466016](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34484466016) 已在 Commit `01435e8` 用鎖定工具鏈編譯通過 31 個 Sketch，真實 Run 截圖已追溯至 `docs/assets/part3/captures/SOURCES.md`。這只是 CI 編譯，不等於教師 GAS、MQTT、OLED 或實體控制驗收
+- 第四篇：7 章、6 份公開 Flow、本機操作截圖與自動驗證已完成；使用 Node.js 24.19.0、Node-RED 5.0.7、Dashboard 1.31.0，驗證 clean userDir、跨章 Link、45 秒 OFFLINE、控制阻擋及持久序號重啟。見 `docs/part4/verification.md`。外部 Broker／TLS／ACL 與 ESP32 實測尚未進行。
 - 舊來源安全待辦：公開的 `esp32-mqtt-energy-meter` 歷史中仍有曾提交的 AQI query credential 與 MQTT credential。新版未複製其值；專案負責人應撤銷／輪替，清除目前檔案不等於清除 Git 歷史
 
 ## 下一步
 
 1. 以指定課程板依序實測 OLED、GPIO 14 PIR／DHT11、GPIO 33 光敏／MQ-2、HC-SR04、蜂鳴器及 1602，補正面、接線、錯誤碼與校正照片。
 2. 實測 OLED 基礎後再決定共用狀態介面；不同模組仍以逐章斷電換線方式驗證，不一次全部整合。
-3. 完成第三篇 31 個 Sketch 的 GitHub Actions 編譯，修正 API 差異後保存新的真實 Run 截圖；再進行 ThingSpeak、既有 GAS、MQTT Broker／ACL 與第 11 章無負載控制實測。
-4. 依 Node.js 24、Node-RED 5 與 FlowFuse Dashboard 2 的新版基準建立第四篇，不搬入舊 `.node-red` userDir、credentials 或已淘汰 Dashboard。
+3. 進行 ThingSpeak、既有 GAS、MQTT Broker／ACL 與第 11 章無負載控制實測；此驗收不能由已成功的 CI 取代。
+4. 接續第五篇 Bluetooth／BLE、FreeRTOS 與相機教材；相機與 OLED 共存仍須先驗證替代 I²C 腳位。第四篇的實體 Broker／ESP32 對接依驗收清單另行測試。
 
 ## 已知驗證關卡
 

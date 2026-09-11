@@ -1,0 +1,273 @@
+[
+  {
+    "id": "4050000000000001",
+    "type": "tab",
+    "label": "04-05 JSON 驗證",
+    "disabled": false,
+    "info": "解析第三篇 Schema v1。JSON 解析前先限制 UTF-8 字串為 1～384 bytes，再驗證精確 Topic、裝置別名、完整欄位、型別、數值範圍與資料新鮮度。錯誤路徑只輸出固定摘要，不回顯原始 payload。"
+  },
+  {
+    "id": "4050000000000002",
+    "type": "comment",
+    "z": "4050000000000001",
+    "name": "Schema v1：精確 Topic／device、八欄、未來 5 秒、stale 10 秒",
+    "info": "先以 Buffer.byteLength 計算 UTF-8 bytes；只接受 1～384 bytes 的字串。合法資料必須只有 v、device、seq、ts、temp、humi、light、status 八欄。請把 EXPECTED_TOPIC 與 EXPECTED_DEVICE 的 placeholder 換成本組非敏感值；公開版本不得寫入真實 Topic 或裝置名稱。",
+    "x": 430,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "4050000000000003",
+    "type": "inject",
+    "z": "4050000000000001",
+    "name": "合法 DEMO（非實測）",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "valid",
+    "payloadType": "str",
+    "x": 170,
+    "y": 140,
+    "wires": [
+      [
+        "4050000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000004",
+    "type": "inject",
+    "z": "4050000000000001",
+    "name": "範圍錯誤 DEMO",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "bad-range",
+    "payloadType": "str",
+    "x": 170,
+    "y": 200,
+    "wires": [
+      [
+        "4050000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000005",
+    "type": "inject",
+    "z": "4050000000000001",
+    "name": "無效 JSON DEMO",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      },
+      {
+        "p": "demo",
+        "v": "true",
+        "vt": "bool"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/data",
+    "payload": "{\"v\":1,\"device\":",
+    "payloadType": "str",
+    "x": 160,
+    "y": 260,
+    "wires": [
+      [
+        "405000000000000d"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000006",
+    "type": "function",
+    "z": "4050000000000001",
+    "name": "產生目前時間 DEMO JSON",
+    "func": "const EXPECTED_TOPIC = \"REPLACE_WITH_UNIQUE_TOPIC_ROOT/data\";\nconst EXPECTED_DEVICE = \"REPLACE-WITH-DEVICE-ID\";\nconst badRange = msg.payload === \"bad-range\";\n\nmsg.topic = EXPECTED_TOPIC;\nmsg.demo = true;\nmsg.payload = JSON.stringify({\n    v: 1,\n    device: EXPECTED_DEVICE,\n    seq: 1,\n    ts: Math.floor(Date.now() / 1000),\n    temp: badRange ? 120 : 26.4,\n    humi: 63.0,\n    light: 2048,\n    status: \"ok\"\n});\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 170,
+    "wires": [
+      [
+        "405000000000000d"
+      ]
+    ]
+  },
+  {
+    "id": "405000000000000d",
+    "type": "function",
+    "z": "4050000000000001",
+    "name": "Payload 1～384 UTF-8 bytes",
+    "func": "const MAX_JSON_BYTES = 384;\nconst receivedAt = Date.now();\n\nfunction reject(code, detail, bytes) {\n    const validation = {\n        ok: false,\n        code,\n        detail,\n        checked_at: new Date(receivedAt).toISOString()\n    };\n    if (Number.isInteger(bytes)) validation.bytes = bytes;\n    node.status({ fill: \"red\", shape: \"ring\", text: code });\n    return [null, { validation, demo: msg.demo === true }];\n}\n\nif (typeof msg.payload !== \"string\") {\n    return reject(\"PAYLOAD_TYPE\", \"payload must be a UTF-8 string\");\n}\n\nconst bytes = Buffer.byteLength(msg.payload, \"utf8\");\nif (bytes < 1 || bytes > MAX_JSON_BYTES) {\n    return reject(\"PAYLOAD_SIZE\", \"payload must be 1..384 UTF-8 bytes\", bytes);\n}\n\nmsg._receivedAt = receivedAt;\nmsg._payloadBytes = bytes;\nnode.status({ fill: \"blue\", shape: \"dot\", text: bytes + \" B\" });\nreturn [msg, null];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 700,
+    "y": 200,
+    "wires": [
+      [
+        "4050000000000007"
+      ],
+      [
+        "405000000000000a",
+        "405000000000000e"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000007",
+    "type": "json",
+    "z": "4050000000000001",
+    "name": "解析 payload JSON",
+    "property": "payload",
+    "action": "obj",
+    "pretty": false,
+    "x": 950,
+    "y": 170,
+    "wires": [
+      [
+        "4050000000000008"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000008",
+    "type": "function",
+    "z": "4050000000000001",
+    "name": "驗證 Schema v1／Topic／age",
+    "func": "const EXPECTED_TOPIC = \"REPLACE_WITH_UNIQUE_TOPIC_ROOT/data\";\nconst EXPECTED_DEVICE = \"REPLACE-WITH-DEVICE-ID\";\nconst MIN_VALID_EPOCH = 1700000000;\nconst MAX_FUTURE_SECONDS = 5;\nconst MAX_AGE_SECONDS = 10;\nconst checkedAt = Math.floor(Date.now() / 1000);\nconst bytes = msg._payloadBytes;\n\nfunction reject(code, detail, age) {\n    const validation = {\n        ok: false,\n        code,\n        detail,\n        checked_at: new Date(checkedAt * 1000).toISOString()\n    };\n    if (Number.isInteger(bytes)) validation.bytes = bytes;\n    if (Number.isInteger(age)) validation.age_s = age;\n    node.status({ fill: \"red\", shape: \"ring\", text: code });\n    return [null, { validation, demo: msg.demo === true }];\n}\n\nif (msg.topic !== EXPECTED_TOPIC) {\n    return reject(\"TOPIC_MISMATCH\", \"msg.topic does not match EXPECTED_TOPIC\");\n}\n\nconst p = msg.payload;\nif (p === null || typeof p !== \"object\" || Array.isArray(p)) {\n    return reject(\"PAYLOAD_TYPE\", \"JSON root must be an object\");\n}\n\nconst expectedFields = [\"device\", \"humi\", \"light\", \"seq\", \"status\", \"temp\", \"ts\", \"v\"];\nconst actualFields = Object.keys(p).sort();\nif (actualFields.length !== expectedFields.length ||\n    actualFields.some((key, index) => key !== expectedFields[index])) {\n    return reject(\"FIELDS\", \"schema must contain exactly the eight v1 fields\");\n}\nif (!Number.isSafeInteger(p.v) || p.v !== 1) {\n    return reject(\"VERSION\", \"v must be safe integer 1\");\n}\nif (typeof p.device !== \"string\" || !/^[A-Za-z0-9-]{1,23}$/.test(p.device)) {\n    return reject(\"DEVICE_FORMAT\", \"device must be 1..23 alphanumeric or hyphen characters\");\n}\nif (p.device !== EXPECTED_DEVICE) {\n    return reject(\"DEVICE_MISMATCH\", \"device does not match EXPECTED_DEVICE\");\n}\nif (!Number.isSafeInteger(p.seq) || p.seq < 1 || p.seq > 4294967295) {\n    return reject(\"SEQ\", \"seq must be safe integer 1..4294967295\");\n}\nif (!Number.isSafeInteger(p.ts) || p.ts <= MIN_VALID_EPOCH) {\n    return reject(\"TIME_INVALID\", \"ts must be Unix seconds greater than 1700000000\");\n}\nif (typeof p.temp !== \"number\" || !Number.isFinite(p.temp) || p.temp < -20 || p.temp > 80) {\n    return reject(\"TEMP_RANGE\", \"temp must be finite number -20..80\");\n}\nif (typeof p.humi !== \"number\" || !Number.isFinite(p.humi) || p.humi < 0 || p.humi > 100) {\n    return reject(\"HUMI_RANGE\", \"humi must be finite number 0..100\");\n}\nif (!Number.isInteger(p.light) || p.light < 0 || p.light > 4095) {\n    return reject(\"LIGHT_RANGE\", \"light must be integer 0..4095\");\n}\nif (typeof p.status !== \"string\" || p.status !== \"ok\") {\n    return reject(\"STATUS\", \"status must be string ok\");\n}\n\nconst age = checkedAt - p.ts;\nif (age < -MAX_FUTURE_SECONDS) {\n    return reject(\"TIME_FUTURE\", \"ts is more than 5 seconds in the future\", age);\n}\nif (age > MAX_AGE_SECONDS) {\n    return reject(\"STALE\", \"age exceeds 10 seconds\", age);\n}\n\nmsg.payload = { ...p };\nmsg.validation = { ok: true, code: \"OK\", bytes, age_s: age };\ndelete msg._receivedAt;\ndelete msg._payloadBytes;\nnode.status({ fill: \"green\", shape: \"dot\", text: \"OK age \" + age + \"s\" });\nreturn [msg, null];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1190,
+    "y": 170,
+    "wires": [
+      [
+        "4050000000000009",
+        "405000000000000e"
+      ],
+      [
+        "405000000000000a",
+        "405000000000000e"
+      ]
+    ]
+  },
+  {
+    "id": "4050000000000009",
+    "type": "debug",
+    "z": "4050000000000001",
+    "name": "ACCEPT：已驗證 payload",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1470,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "405000000000000a",
+    "type": "debug",
+    "z": "4050000000000001",
+    "name": "REJECT：只顯示安全摘要",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "validation",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1480,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "405000000000000b",
+    "type": "catch",
+    "z": "4050000000000001",
+    "name": "捕捉 JSON 解析錯誤",
+    "scope": [
+      "4050000000000007"
+    ],
+    "uncaught": false,
+    "x": 950,
+    "y": 280,
+    "wires": [
+      [
+        "405000000000000c"
+      ]
+    ]
+  },
+  {
+    "id": "405000000000000c",
+    "type": "function",
+    "z": "4050000000000001",
+    "name": "清理解析錯誤",
+    "func": "const checkedAt = Date.now();\nconst validation = {\n    ok: false,\n    code: \"JSON_PARSE\",\n    detail: \"JSON syntax rejected; raw payload suppressed\",\n    checked_at: new Date(checkedAt).toISOString()\n};\nif (Number.isInteger(msg._payloadBytes)) validation.bytes = msg._payloadBytes;\nnode.status({ fill: \"red\", shape: \"ring\", text: \"JSON_PARSE\" });\nreturn { validation, demo: msg.demo === true };",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1200,
+    "y": 280,
+    "wires": [
+      [
+        "405000000000000a",
+        "405000000000000e"
+      ]
+    ]
+  },
+  {
+    "id": "405000000000000e",
+    "type": "link out",
+    "z": "4050000000000001",
+    "name": "驗證結果送往 Dashboard",
+    "mode": "link",
+    "links": [
+      "d600000000000015"
+    ],
+    "x": 1695,
+    "y": 300,
+    "wires": []
+  }
+]

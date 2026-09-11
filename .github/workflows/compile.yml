@@ -20,7 +20,12 @@ jobs:
           version: "1.5.1"
 
       - name: Install ripgrep
-        run: sudo apt-get update && sudo apt-get install -y ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep jq
+
+      - name: Set up Node.js for Flow contract checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
 
       - name: Check repository policy
         run: ./scripts/check-policy.sh
@@ -33,3 +38,18 @@ jobs:
 
       - name: Compile examples
         run: ./scripts/compile-all.sh
+
+  nodered:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: nodered/package-lock.json
+      - name: Install locked Node-RED environment
+        working-directory: nodered
+        run: npm ci --no-audit --no-fund
+      - name: Exercise public Flows in clean runtimes
+        run: node scripts/test-nodered-runtime.mjs

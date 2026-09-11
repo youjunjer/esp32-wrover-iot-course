@@ -19,6 +19,14 @@ build-*/
 .env.*
 !.env.example
 
+# Node-RED local runtime and credentials
+node_modules/
+.node-red/
+.node-red-course/
+**/flows_cred.json
+**/flows_cred.json.*
+**/.flows_cred.json*
+
 # Temporary and backup files
 *.bak
 *.tmp

@@ -9,10 +9,12 @@ esp32-wrover-iot-course/
 │   ├── assets/
 │   │   ├── ab143/
 │   │   ├── part2/
-│   │   └── part3/
+│   │   ├── part3/
+│   │   └── part4/
 │   ├── part1/
 │   ├── part2/
 │   ├── part3/
+│   ├── part4/
 │   └── ...
 ├── examples/
 │   ├── 01_basics/
@@ -43,7 +45,8 @@ cd /path/to/esp32-wrover-iot-course
 - `docs/oled-status-standard.md`：所有 ESP32 執行階段訊息的 OLED 顯示規範。
 - `docs/` 其他文件：環境、腳位、安全、排錯與交接。
 - `examples/`：依教材六篇分類的 Arduino Sketch。
-- `nodered/`：可匯入的 Flow 與 Dashboard 相關說明。
+- `docs/part4/`：Node-RED 7 章、來源與驗證紀錄；操作圖在 `docs/assets/part4/captures/`。
+- `nodered/`：6 份可公開 Flow、套件版本與 lockfile；Runtime／credentials／context 留在專用 userDir。
 - `scripts/`：ESP32 Core、函式庫、編譯與驗證輔助工具。
 
 `secrets.h`、`.env`、Token、API Key、本機編譯輸出與原始出版檔不得提交。

@@ -53,7 +53,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。
 
-第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED、感測器與顯示器請見 [docs/part2/README.md](docs/part2/README.md)；第三篇網路起始教材請見 [docs/part3/README.md](docs/part3/README.md)。完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
+第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED、感測器與顯示器請見 [docs/part2/README.md](docs/part2/README.md)；第三篇 Wi-Fi、雲端與 MQTT 請見 [docs/part3/README.md](docs/part3/README.md)；第四篇 Node-RED 請見 [docs/part4/README.md](docs/part4/README.md)。完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
 ## 可視化診斷原則
 
@@ -74,8 +74,8 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 完成第二篇 MQ-2、超音波、蜂鳴器、DHT11、1602 LCD 與多感測顯示課文及範例；CI 已編譯全部 20 個 Sketch
 - [x] 完成第三篇前五章：Wi-Fi、NTP、verified HTTPS、ArduinoJson／Open-Meteo 與 WebServer；[GitHub Actions Run 34241431791](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34241431791) 已以鎖定工具鏈編譯通過全部 25 個 Sketch
 - [x] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照與衝突邊界
-- [ ] 第三篇後六章程式與課文已重建：ThingSpeak、教師既有 GAS、MQTT TLS／PubSub／JSON／安全控制；等待新 GitHub Actions 編譯證據
-- [ ] 整併 Node-RED Flow
+- [x] 完成第三篇全部 11 章：ThingSpeak、教師既有 GAS、MQTT TLS／PubSub／JSON／安全控制；[GitHub Actions Run 34484466016](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34484466016) 已編譯通過全部 31 個 Sketch
+- [x] 完成第四篇 7 章、6 份 Node-RED Flow、操作截圖與本機 Runtime 驗證；外部 Broker／ESP32 實測另列
 - [ ] 整併相機、BLE 與多工範例
 - [ ] 整併能源監測專題
 - [ ] 對所有範例完成實體板驗證；目前 CI 編譯不等於燒錄或硬體成功

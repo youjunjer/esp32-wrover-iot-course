@@ -43,7 +43,7 @@
 4. JSON 與公開資料 API：ArduinoJson、欄位驗證、資料新鮮度與空氣品質模式資料。
 5. ESP32 網頁伺服器：顯示裝置狀態，並以安全 POST 控制低風險 LED 輸出。
 6. ThingSpeak：資料上傳、Channel、Field、更新頻率與圖表。
-7. Google Sheets：沿用教師既有公開 GAS 合約、資料新增與 OLED 狀態；不重新建立或部署 GAS。
+7. Google Sheets：沿用教師範例中已開放的既有 GAS 合約、資料新增與 OLED 狀態；不重新設計、建立或部署 GAS。
 8. MQTT 基礎：Broker、Client、Topic、QoS、Retain 與 Client ID。
 9. MQTT Publish／Subscribe：heartbeat、PING／PONG、精確 Topic 與斷線重連。
 10. MQTT JSON Payload：封裝溫度、濕度、亮度與設備狀態。

@@ -1,0 +1,701 @@
+[
+  {
+    "id": "d700000000000001",
+    "type": "tab",
+    "label": "07 MQTT Safe Control",
+    "disabled": false,
+    "info": "Node-RED 5.0.7 + @flowfuse/node-red-dashboard 1.31.0\n\nFail-closed classroom controller for the Part 3 status/cmd/ack contract. Replace every placeholder before enabling the MQTT broker configuration."
+  },
+  {
+    "id": "d700000000000002",
+    "type": "comment",
+    "z": "d700000000000001",
+    "name": "STOP: configure placeholders and safety first",
+    "info": "Requires Node-RED 5.0.7 and @flowfuse/node-red-dashboard 1.31.0.\n\nThe MQTT broker is intentionally set to autoConnect=false. Before enabling it:\n1. Replace REPLACE_WITH_MQTT_HOSTNAME and REPLACE_WITH_UNIQUE_NODERED_CLIENT_ID.\n2. Replace the SAME REPLACE_WITH_UNIQUE_TOPIC_ROOT in the three exact status/cmd/ack topics. Do not use + or #.\n3. Add credentials in Node-RED's credential UI; never put them in this exported flow.\n4. Obtain the broker CA only from the broker operator or issuing CA, verify it, and keep verify-server-certificate enabled.\n5. Apply least-privilege ACLs: this controller subscribes only to exact status/ack and publishes only to exact cmd.\n\nThe flow waits for online status with the current boot_id. Commands are fixed eight-field JSON, QoS 1, non-retained. ACK means firmware acceptance/application only; it is not physical feedback.\n\nHARDWARE SAFETY: relay testing must have NO MAINS connected. SG90 must use a suitable independent 5 V supply with common ground and must not drive a dangerous mechanism.",
+    "x": 280,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "d700000000000003",
+    "type": "comment",
+    "z": "d700000000000001",
+    "name": "Required persistent seq store (not configured by this flow)",
+    "info": "cmd_seq must survive Node-RED restarts. This flow deliberately DOES NOT claim or create a persistent store. Add a named file store in your local settings.js, then restart Node-RED:\n\ncontextStorage: {\n  default: \"memoryOnly\",\n  memoryOnly: { module: \"memory\" },\n  file: { module: \"localfilesystem\" }\n}\n\nThe command Function explicitly reads/writes flow context with store name \"file\". If that store is absent, every command is BLOCKED; it never silently falls back to memory. The localfilesystem store is cached and is not a transactional or hardware-safety mechanism. Verify sequence persistence after a Node-RED restart before classroom control.",
+    "x": 320,
+    "y": 110,
+    "wires": []
+  },
+  {
+    "id": "d700000000000004",
+    "type": "inject",
+    "z": "d700000000000001",
+    "name": "Show fail-closed startup guidance",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.5,
+    "topic": "",
+    "payload": "startup",
+    "payloadType": "str",
+    "x": 220,
+    "y": 180,
+    "wires": [
+      [
+        "d700000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000005",
+    "type": "function",
+    "z": "d700000000000001",
+    "name": "Startup dashboard messages",
+    "func": "function hasSeparateFileStore() {\n    const key = `__course_store_probe_${Date.now()}_${Math.random().toString(16).slice(2)}`;\n    const defaultMarker = `default_${key}`;\n    const fileMarker = `file_${key}`;\n    try {\n        flow.set(key, defaultMarker);\n        flow.set(key, fileMarker, \"file\");\n        const separated = flow.get(key) === defaultMarker && flow.get(key, \"file\") === fileMarker;\n        flow.set(key, undefined);\n        flow.set(key, undefined, \"file\");\n        return separated;\n    } catch {\n        try { flow.set(key, undefined); } catch {}\n        try { flow.set(key, undefined, \"file\"); } catch {}\n        return false;\n    }\n}\n\nlet sequenceReadiness;\nif (!hasSeparateFileStore()) {\n    sequenceReadiness = \"BLOCKED: named persistent context store 'file' is absent or aliases the default store\";\n} else {\n    const previous = flow.get(\"part4CmdSeq\", \"file\");\n    const value = previous === undefined || previous === null ? 0 : previous;\n    if (!Number.isSafeInteger(value) || value < 0 || value >= 4294967295) {\n        sequenceReadiness = \"BLOCKED: named file context contains an invalid/exhausted cmd_seq\";\n    } else {\n        sequenceReadiness = `READY: named file context is separate and available; next cmd_seq ${value + 1}`;\n    }\n}\n\nreturn [\n    { payload: \"WAIT: subscribe to the exact retained status topic and obtain this boot_id before control\" },\n    { payload: sequenceReadiness },\n    { payload: \"命令已接受不等於實體回授；relay 必須無市電，SG90 必須獨立 5V 供電並共地\" }\n];",
+    "outputs": 3,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 510,
+    "y": 180,
+    "wires": [
+      [
+        "d700000000000020"
+      ],
+      [
+        "d700000000000021"
+      ],
+      [
+        "d700000000000022"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000006",
+    "type": "mqtt in",
+    "z": "d700000000000001",
+    "name": "Exact retained status",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/status",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "d700000000000030",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 200,
+    "y": 280,
+    "wires": [
+      [
+        "d700000000000007"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000007",
+    "type": "function",
+    "z": "d700000000000001",
+    "name": "Validate status + capture boot_id",
+    "func": "function block(text) {\n    flow.set(\"controllerBootId\", null);\n    flow.set(\"deviceOnline\", false);\n    flow.set(\"statusReceivedAt\", 0);\n    flow.set(\"pendingCommand\", null);\n    node.status({ fill: \"red\", shape: \"ring\", text: \"CONTROL BLOCKED\" });\n    return { payload: text };\n}\n\nlet raw = msg.payload;\nif (Buffer.isBuffer(raw)) {\n    if (raw.length > 128) return block(\"BLOCKED: status payload exceeds 128 UTF-8 bytes\");\n    raw = raw.toString(\"utf8\");\n} else if (typeof raw === \"string\") {\n    if (Buffer.byteLength(raw, \"utf8\") > 128) return block(\"BLOCKED: status payload exceeds 128 UTF-8 bytes\");\n} else {\n    return block(\"BLOCKED: status payload must be UTF-8 text\");\n}\n\nlet p;\ntry {\n    p = JSON.parse(raw);\n} catch {\n    return block(\"BLOCKED: status JSON parse error\");\n}\nif (!p || typeof p !== \"object\" || Array.isArray(p) || typeof p.online !== \"boolean\") {\n    return block(\"BLOCKED: invalid status schema\");\n}\nif (p.online === false) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"DEVICE OFFLINE\" });\n    flow.set(\"controllerBootId\", null);\n    flow.set(\"deviceOnline\", false);\n    flow.set(\"statusReceivedAt\", Date.now());\n    flow.set(\"pendingCommand\", null);\n    return { payload: \"BLOCKED: device status is offline; physical outputs are not inferred\" };\n}\nconst keys = Object.keys(p);\nif (keys.length !== 2 || !Object.prototype.hasOwnProperty.call(p, \"boot_id\") ||\n    typeof p.boot_id !== \"string\" || !/^[0-9a-fA-F]{8}$/.test(p.boot_id)) {\n    return block(\"BLOCKED: online status must contain exactly online + 8-hex boot_id\");\n}\nif (flow.get(\"controllerBootId\") !== p.boot_id) {\n    flow.set(\"pendingCommand\", null);\n}\nflow.set(\"controllerBootId\", p.boot_id);\nflow.set(\"deviceOnline\", true);\nflow.set(\"statusReceivedAt\", Date.now());\nconst source = msg.retain === true ? \"retained snapshot\" : \"live status update\";\nnode.status({ fill: \"green\", shape: \"dot\", text: `READY ${p.boot_id}` });\nreturn { payload: `READY: ${source}; current boot_id ${p.boot_id}; status is not physical output feedback` };",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "flow.set(\"controllerBootId\", null);\nflow.set(\"deviceOnline\", false);\nflow.set(\"statusReceivedAt\", 0);\nflow.set(\"pendingCommand\", null);",
+    "finalize": "",
+    "libs": [],
+    "x": 500,
+    "y": 280,
+    "wires": [
+      [
+        "d700000000000020"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000008",
+    "type": "mqtt in",
+    "z": "d700000000000001",
+    "name": "Exact non-retained ack",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/ack",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "d700000000000030",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 200,
+    "y": 340,
+    "wires": [
+      [
+        "d700000000000009"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000009",
+    "type": "function",
+    "z": "d700000000000001",
+    "name": "Validate ACK (not physical feedback)",
+    "func": "function invalid(text, statusText) {\n    node.status({ fill: \"red\", shape: \"ring\", text: statusText });\n    return { payload: `${text} | 命令已接受不等於實體回授` };\n}\n\nif (msg.retain === true) {\n    return invalid(\"ACK INVALID: retained ACK is prohibited\", \"ACK RETAINED\");\n}\n\nlet raw = msg.payload;\nif (Buffer.isBuffer(raw)) {\n    if (raw.length > 256) return invalid(\"ACK INVALID: payload exceeds 256 UTF-8 bytes\", \"ACK TOO LARGE\");\n    raw = raw.toString(\"utf8\");\n} else if (typeof raw === \"string\") {\n    if (Buffer.byteLength(raw, \"utf8\") > 256) return invalid(\"ACK INVALID: payload exceeds 256 UTF-8 bytes\", \"ACK TOO LARGE\");\n} else {\n    return invalid(\"ACK INVALID: payload must be UTF-8 text\", \"ACK TYPE ERR\");\n}\n\nlet p;\ntry {\n    p = JSON.parse(raw);\n} catch {\n    return invalid(\"ACK INVALID: JSON parse error\", \"ACK JSON ERR\");\n}\nconst keys = [\"v\", \"cmd_id\", \"cmd_seq\", \"ok\", \"reason\", \"boot_id\", \"ts\"];\nconst valid = p && typeof p === \"object\" && !Array.isArray(p) &&\n    Object.keys(p).length === keys.length && keys.every((key) => Object.prototype.hasOwnProperty.call(p, key)) &&\n    p.v === 1 && typeof p.cmd_id === \"string\" && /^[A-Za-z0-9_-]{1,24}$/.test(p.cmd_id) &&\n    Number.isSafeInteger(p.cmd_seq) && p.cmd_seq >= 0 && typeof p.ok === \"boolean\" &&\n    typeof p.reason === \"string\" && /^[A-Za-z0-9 _\\/-]{1,32}$/.test(p.reason) &&\n    typeof p.boot_id === \"string\" && /^[0-9a-fA-F]{8}$/.test(p.boot_id) &&\n    Number.isSafeInteger(p.ts) && p.ts > 1700000000;\nif (!valid) {\n    return invalid(\"ACK INVALID: schema mismatch\", \"ACK SCHEMA ERR\");\n}\nconst currentBoot = flow.get(\"controllerBootId\");\nconst pending = flow.get(\"pendingCommand\");\nconst sameBoot = currentBoot === p.boot_id;\nconst matched = pending && typeof pending === \"object\" &&\n    pending.cmd_id === p.cmd_id && pending.cmd_seq === p.cmd_seq && pending.boot_id === p.boot_id;\nif (!sameBoot || !matched) {\n    return invalid(\"ACK UNMATCHED: no matching pending cmd_id/cmd_seq/boot_id\", \"ACK UNMATCHED\");\n}\nflow.set(\"pendingCommand\", null);\nnode.status({ fill: p.ok ? \"green\" : \"yellow\", shape: p.ok ? \"dot\" : \"ring\", text: p.ok ? \"ACK MATCHED OK\" : \"ACK MATCHED REJECT\" });\nreturn {\n    payload: `ACK MATCHED ${p.ok ? \"ACCEPTED\" : \"REJECTED\"} | ${p.cmd_id} seq ${p.cmd_seq} | ${p.reason} | 命令已接受不等於實體回授`\n};",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 510,
+    "y": 340,
+    "wires": [
+      [
+        "d700000000000023"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000016",
+    "type": "status",
+    "z": "d700000000000001",
+    "name": "Watch MQTT transport",
+    "scope": [
+      "d700000000000006",
+      "d700000000000008",
+      "d700000000000015"
+    ],
+    "x": 200,
+    "y": 400,
+    "wires": [
+      [
+        "d700000000000017"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000017",
+    "type": "function",
+    "z": "d700000000000001",
+    "name": "Fail-close on MQTT disconnect",
+    "func": "const text = typeof msg.status?.text === \"string\" ? msg.status.text.trim().toLowerCase() : \"unknown\";\nconst isConnected = /(^|[.:])connected$/.test(text);\nif (isConnected) {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"MQTT CONNECTED\" });\n    return null;\n}\nflow.set(\"controllerBootId\", null);\nflow.set(\"deviceOnline\", false);\nflow.set(\"statusReceivedAt\", 0);\nflow.set(\"pendingCommand\", null);\nnode.status({ fill: \"red\", shape: \"ring\", text: \"CONTROL BLOCKED\" });\nreturn { payload: \"BLOCKED: MQTT transport is not connected; wait for a new online status and current boot_id\" };",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 500,
+    "y": 400,
+    "wires": [
+      [
+        "d700000000000020"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000010",
+    "type": "ui-button",
+    "z": "d700000000000001",
+    "group": "d700000000000042",
+    "name": "Traffic green",
+    "label": "綠燈",
+    "order": 1,
+    "width": 3,
+    "height": 1,
+    "emulateClick": false,
+    "tooltip": "只限低電壓 LED 教學測試",
+    "color": "#ffffff",
+    "bgcolor": "#2e7d32",
+    "className": "",
+    "icon": "traffic-light",
+    "iconPosition": "left",
+    "payload": "{\"target\":\"traffic\",\"value\":\"green\",\"ttl\":10}",
+    "payloadType": "json",
+    "topic": "",
+    "topicType": "str",
+    "buttonColor": "",
+    "textColor": "",
+    "iconColor": "",
+    "enableClick": true,
+    "enablePointerdown": false,
+    "pointerdownPayload": "",
+    "pointerdownPayloadType": "str",
+    "enablePointerup": false,
+    "pointerupPayload": "",
+    "pointerupPayloadType": "str",
+    "x": 190,
+    "y": 460,
+    "wires": [
+      [
+        "d700000000000014"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000011",
+    "type": "ui-button",
+    "z": "d700000000000001",
+    "group": "d700000000000042",
+    "name": "All outputs off",
+    "label": "全部關閉 SAFE OFF",
+    "order": 2,
+    "width": 3,
+    "height": 1,
+    "emulateClick": false,
+    "tooltip": "命令韌體進入安全關閉狀態",
+    "color": "#ffffff",
+    "bgcolor": "#455a64",
+    "className": "",
+    "icon": "power-settings-new",
+    "iconPosition": "left",
+    "payload": "{\"target\":\"traffic\",\"value\":\"off\",\"ttl\":10}",
+    "payloadType": "json",
+    "topic": "",
+    "topicType": "str",
+    "buttonColor": "",
+    "textColor": "",
+    "iconColor": "",
+    "enableClick": true,
+    "enablePointerdown": false,
+    "pointerdownPayload": "",
+    "pointerdownPayloadType": "str",
+    "enablePointerup": false,
+    "pointerupPayload": "",
+    "pointerupPayloadType": "str",
+    "x": 190,
+    "y": 520,
+    "wires": [
+      [
+        "d700000000000014"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000012",
+    "type": "ui-button",
+    "z": "d700000000000001",
+    "group": "d700000000000042",
+    "name": "Relay 5 second lease",
+    "label": "Relay ON 5s（無市電）",
+    "order": 3,
+    "width": 3,
+    "height": 1,
+    "emulateClick": false,
+    "tooltip": "只可無負載或低電壓負載，禁止市電",
+    "color": "#ffffff",
+    "bgcolor": "#c62828",
+    "className": "",
+    "icon": "timer",
+    "iconPosition": "left",
+    "payload": "{\"target\":\"relay\",\"value\":\"on\",\"ttl\":5}",
+    "payloadType": "json",
+    "topic": "",
+    "topicType": "str",
+    "buttonColor": "",
+    "textColor": "",
+    "iconColor": "",
+    "enableClick": true,
+    "enablePointerdown": false,
+    "pointerdownPayload": "",
+    "pointerdownPayloadType": "str",
+    "enablePointerup": false,
+    "pointerupPayload": "",
+    "pointerupPayloadType": "str",
+    "x": 210,
+    "y": 580,
+    "wires": [
+      [
+        "d700000000000014"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000013",
+    "type": "ui-button",
+    "z": "d700000000000001",
+    "group": "d700000000000042",
+    "name": "Servo 90 degrees",
+    "label": "SG90 90°（獨立 5V）",
+    "order": 4,
+    "width": 3,
+    "height": 1,
+    "emulateClick": false,
+    "tooltip": "SG90 使用適當的獨立 5 V 供電並與 ESP32 共地",
+    "color": "#ffffff",
+    "bgcolor": "#1565c0",
+    "className": "",
+    "icon": "rotate-right",
+    "iconPosition": "left",
+    "payload": "{\"target\":\"servo\",\"value\":90,\"ttl\":10}",
+    "payloadType": "json",
+    "topic": "",
+    "topicType": "str",
+    "buttonColor": "",
+    "textColor": "",
+    "iconColor": "",
+    "enableClick": true,
+    "enablePointerdown": false,
+    "pointerdownPayload": "",
+    "pointerdownPayloadType": "str",
+    "enablePointerup": false,
+    "pointerupPayload": "",
+    "pointerupPayloadType": "str",
+    "x": 200,
+    "y": 640,
+    "wires": [
+      [
+        "d700000000000014"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000014",
+    "type": "function",
+    "z": "d700000000000001",
+    "name": "Build exact 8-field safe command",
+    "func": "function display(text, color = \"red\") {\n    node.status({ fill: color, shape: color === \"green\" ? \"dot\" : \"ring\", text });\n    return [null, { payload: text }];\n}\n\nfunction hasSeparateFileStore() {\n    const key = `__course_store_probe_${Date.now()}_${Math.random().toString(16).slice(2)}`;\n    const defaultMarker = `default_${key}`;\n    const fileMarker = `file_${key}`;\n    try {\n        flow.set(key, defaultMarker);\n        flow.set(key, fileMarker, \"file\");\n        const separated = flow.get(key) === defaultMarker && flow.get(key, \"file\") === fileMarker;\n        flow.set(key, undefined);\n        flow.set(key, undefined, \"file\");\n        return separated;\n    } catch {\n        try { flow.set(key, undefined); } catch {}\n        try { flow.set(key, undefined, \"file\"); } catch {}\n        return false;\n    }\n}\n\nlet req = msg.payload;\nif (typeof req === \"string\") {\n    try { req = JSON.parse(req); } catch { return display(\"BLOCKED: button payload parse error\"); }\n}\nif (!req || typeof req !== \"object\" || Array.isArray(req) || Object.keys(req).length !== 3) {\n    return display(\"BLOCKED: request must contain only target, value, ttl\");\n}\nconst validTraffic = req.target === \"traffic\" && [\"red\", \"yellow\", \"green\", \"off\"].includes(req.value);\nconst validRelay = req.target === \"relay\" && [\"on\", \"off\"].includes(req.value);\nconst validServo = req.target === \"servo\" && Number.isInteger(req.value) && req.value >= 0 && req.value <= 180;\nif (!(validTraffic || validRelay || validServo) || !Number.isInteger(req.ttl) || req.ttl < 5 || req.ttl > 30) {\n    return display(\"BLOCKED: target/value/ttl is outside the Part 3 allowlist\");\n}\n\nconst bootId = flow.get(\"controllerBootId\");\nif (flow.get(\"deviceOnline\") !== true || typeof bootId !== \"string\" || !/^[0-9a-fA-F]{8}$/.test(bootId)) {\n    return display(\"BLOCKED: wait for online status and current boot_id\");\n}\nconst statusAgeMs = Date.now() - Number(flow.get(\"statusReceivedAt\") || 0);\nif (!Number.isFinite(statusAgeMs) || statusAgeMs < 0) {\n    return display(\"BLOCKED: invalid status time\");\n}\n\nconst now = Math.floor(Date.now() / 1000);\nif (now < 1700000000) {\n    return display(\"BLOCKED: Node-RED system time is not valid\");\n}\nif (!hasSeparateFileStore()) {\n    return display(\"BLOCKED: named persistent context store 'file' is absent or aliases the default store\");\n}\n\nconst maxCmdSeq = 4294967295;\nlet previous = flow.get(\"part4CmdSeq\", \"file\");\nif (previous === undefined || previous === null) previous = 0;\nif (!Number.isSafeInteger(previous) || previous < 0 || previous >= maxCmdSeq) {\n    return display(\"BLOCKED: persistent cmd_seq is invalid/exhausted; inspect file context\");\n}\nflow.set(\"part4CmdSeq\", previous + 1, \"file\");\n\nconst seq = previous + 1;\nconst command = {\n    v: 1,\n    cmd_id: `nr-${bootId}-${seq}`,\n    cmd_seq: seq,\n    boot_id: bootId,\n    ts: now,\n    ttl: req.ttl,\n    target: req.target,\n    value: req.value\n};\nconst encoded = JSON.stringify(command);\nif (Buffer.byteLength(encoded, \"utf8\") > 320 || command.cmd_id.length > 24) {\n    return display(\"BLOCKED: encoded command exceeds firmware limits\");\n}\n\nflow.set(\"pendingCommand\", {\n    cmd_id: command.cmd_id,\n    cmd_seq: command.cmd_seq,\n    boot_id: command.boot_id,\n    issued_at_ms: Date.now()\n});\n\nmsg.payload = encoded;\nmsg.topic = \"REPLACE_WITH_UNIQUE_TOPIC_ROOT/cmd\";\nmsg.qos = 1;\nmsg.retain = false;\nnode.status({ fill: \"green\", shape: \"dot\", text: `PUBLISH seq ${seq}` });\nreturn [msg, { payload: `PUBLISH REQUESTED: ${command.target}=${command.value}, seq ${seq}, ttl ${command.ttl}s | wait for ACK; no physical feedback is implied` }];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 530,
+    "y": 550,
+    "wires": [
+      [
+        "d700000000000015"
+      ],
+      [
+        "d700000000000024"
+      ]
+    ]
+  },
+  {
+    "id": "d700000000000015",
+    "type": "mqtt out",
+    "z": "d700000000000001",
+    "name": "Exact cmd: QoS 1, retain FALSE",
+    "topic": "REPLACE_WITH_UNIQUE_TOPIC_ROOT/cmd",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "application/json",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "d700000000000030",
+    "x": 860,
+    "y": 550,
+    "wires": []
+  },
+  {
+    "id": "d700000000000020",
+    "type": "ui-text",
+    "z": "d700000000000001",
+    "group": "d700000000000041",
+    "order": 1,
+    "width": 12,
+    "height": 2,
+    "name": "Controller readiness",
+    "label": "控制準備狀態",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 830,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "d700000000000021",
+    "type": "ui-text",
+    "z": "d700000000000001",
+    "group": "d700000000000041",
+    "order": 2,
+    "width": 12,
+    "height": 2,
+    "name": "Persistent sequence readiness",
+    "label": "cmd_seq 持久化",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 850,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "d700000000000022",
+    "type": "ui-text",
+    "z": "d700000000000001",
+    "group": "d700000000000040",
+    "order": 1,
+    "width": 12,
+    "height": 2,
+    "name": "Permanent physical safety warning",
+    "label": "安全警告",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#b71c1c",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 830,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "d700000000000023",
+    "type": "ui-text",
+    "z": "d700000000000001",
+    "group": "d700000000000043",
+    "order": 1,
+    "width": 12,
+    "height": 2,
+    "name": "ACK display",
+    "label": "ACK（不是實體回授）",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 810,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "d700000000000024",
+    "type": "ui-text",
+    "z": "d700000000000001",
+    "group": "d700000000000043",
+    "order": 2,
+    "width": 12,
+    "height": 2,
+    "name": "Last command request",
+    "label": "最後命令請求",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 840,
+    "y": 610,
+    "wires": []
+  },
+  {
+    "id": "d700000000000030",
+    "type": "mqtt-broker",
+    "name": "REPLACE: TLS MQTT broker (disabled)",
+    "broker": "REPLACE_WITH_MQTT_HOSTNAME",
+    "port": "8883",
+    "tls": "d700000000000031",
+    "clientid": "REPLACE_WITH_UNIQUE_NODERED_CLIENT_ID",
+    "autoConnect": false,
+    "usetls": true,
+    "verifyservercert": true,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthRetain": "false",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closeRetain": "false",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willRetain": "false",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": "0"
+  },
+  {
+    "id": "d700000000000031",
+    "type": "tls-config",
+    "name": "Verified broker TLS (CA not embedded)",
+    "certType": "files",
+    "cert": "",
+    "key": "",
+    "p12": "",
+    "p12name": "",
+    "ca": "",
+    "certname": "",
+    "keyname": "",
+    "caname": "",
+    "servername": "",
+    "verifyservercert": true,
+    "alpnprotocol": "",
+    "certEnv": "",
+    "keyEnv": "",
+    "caEnv": ""
+  },
+  {
+    "id": "d700000000000032",
+    "type": "ui-base",
+    "name": "Part 4 safe control dashboard",
+    "path": "/control-dashboard",
+    "appIcon": "",
+    "includeClientData": true,
+    "acceptsClientConfig": [
+      "ui-notification",
+      "ui-control"
+    ],
+    "showPathInSidebar": false,
+    "headerContent": "page",
+    "navigationStyle": "default",
+    "titleBarStyle": "default",
+    "showReconnectNotification": true,
+    "notificationDisplayTime": 1,
+    "showDisconnectNotification": true,
+    "allowInstall": false
+  },
+  {
+    "id": "d700000000000033",
+    "type": "ui-theme",
+    "name": "ESP32 safe control theme",
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#b71c1c",
+      "bgPage": "#f3f5f7",
+      "groupBg": "#ffffff",
+      "groupOutline": "#d9e1e8"
+    },
+    "sizes": {
+      "density": "default",
+      "pagePadding": "12px",
+      "groupGap": "12px",
+      "groupBorderRadius": "4px",
+      "widgetGap": "12px"
+    }
+  },
+  {
+    "id": "d700000000000034",
+    "type": "ui-page",
+    "name": "07 Safe Control",
+    "ui": "d700000000000032",
+    "path": "/safe-control",
+    "icon": "verified-user",
+    "layout": "grid",
+    "theme": "d700000000000033",
+    "breakpoints": [
+      {
+        "name": "Default",
+        "px": "0",
+        "cols": "3"
+      },
+      {
+        "name": "Tablet",
+        "px": "576",
+        "cols": "6"
+      },
+      {
+        "name": "Small Desktop",
+        "px": "768",
+        "cols": "9"
+      },
+      {
+        "name": "Desktop",
+        "px": "1024",
+        "cols": "12"
+      }
+    ],
+    "order": 1,
+    "className": "",
+    "visible": "true",
+    "disabled": "false"
+  },
+  {
+    "id": "d700000000000040",
+    "type": "ui-group",
+    "name": "安全界線",
+    "page": "d700000000000034",
+    "width": 12,
+    "height": 1,
+    "order": 1,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  },
+  {
+    "id": "d700000000000041",
+    "type": "ui-group",
+    "name": "控制器準備",
+    "page": "d700000000000034",
+    "width": 12,
+    "height": 1,
+    "order": 2,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  },
+  {
+    "id": "d700000000000042",
+    "type": "ui-group",
+    "name": "教學控制（低風險／無市電）",
+    "page": "d700000000000034",
+    "width": 12,
+    "height": 1,
+    "order": 3,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  },
+  {
+    "id": "d700000000000043",
+    "type": "ui-group",
+    "name": "命令與 ACK（不是實體回授）",
+    "page": "d700000000000034",
+    "width": 12,
+    "height": 1,
+    "order": 4,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  }
+]

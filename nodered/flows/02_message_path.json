@@ -1,0 +1,65 @@
+[
+  {
+    "id": "4020000000000001",
+    "type": "tab",
+    "label": "04-02 Flow 與 Message",
+    "disabled": false,
+    "info": "從 Inject 產生完整 msg object，直接經 Wire 送到 Debug，用來辨識 msg.payload、msg.topic 與 _msgid。"
+  },
+  {
+    "id": "4020000000000002",
+    "type": "comment",
+    "z": "4020000000000001",
+    "name": "訊息路徑：Inject → Debug",
+    "info": "本例不含網路、憑證或硬體控制。點擊 Inject 後，在 Debug sidebar 展開完整 msg，確認 payload 是 object 而不是看起來相像的 JSON 字串。",
+    "x": 290,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "4020000000000003",
+    "type": "inject",
+    "z": "4020000000000001",
+    "name": "DEMO SENSOR",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "classroom/demo/sensor",
+    "payload": "{\"temp\":26.4,\"humi\":63,\"light\":2048}",
+    "payloadType": "json",
+    "x": 180,
+    "y": 160,
+    "wires": [
+      [
+        "4020000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "4020000000000005",
+    "type": "debug",
+    "z": "4020000000000001",
+    "name": "WHOLE MESSAGE",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 500,
+    "y": 160,
+    "wires": []
+  }
+]

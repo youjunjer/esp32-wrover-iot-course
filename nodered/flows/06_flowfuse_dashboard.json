@@ -1,0 +1,657 @@
+[
+  {
+    "id": "d600000000000001",
+    "type": "tab",
+    "label": "04-06 FlowFuse Dashboard",
+    "disabled": false,
+    "info": "Node-RED 5.0.7 + @flowfuse/node-red-dashboard 1.31.0\n\nThe built-in Inject path is DEMO only. A separate Link In accepts only the sanitized validation envelope from lesson 05; no broker or ESP32 result is claimed by the public flow."
+  },
+  {
+    "id": "d600000000000002",
+    "type": "comment",
+    "z": "d600000000000001",
+    "name": "DEMO ONLY — not device data",
+    "info": "Requires Node-RED 5.0.7 and @flowfuse/node-red-dashboard 1.31.0.\n\nEach Inject creates the Part 3 eight-field telemetry schema:\n{v, device, seq, ts, temp, humi, light, status}\n\nVALID reaches the gauges and chart. INVALID and STALE are blocked and shown as data-quality states. The lesson 05 Link path preserves DEMO marking and only labels non-DEMO, accepted input as LIVE. A 45-second watchdog accommodates the Part 3 30-second publish interval and marks loss of fresh LIVE data as OFFLINE. Gauge and chart values are last accepted history, so the state text must always be read with them.",
+    "x": 230,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "d600000000000003",
+    "type": "inject",
+    "z": "d600000000000001",
+    "name": "DEMO ONLY: valid sample",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "valid",
+    "payloadType": "str",
+    "x": 190,
+    "y": 140,
+    "wires": [
+      [
+        "d600000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000004",
+    "type": "inject",
+    "z": "d600000000000001",
+    "name": "DEMO ONLY: invalid sample",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "invalid",
+    "payloadType": "str",
+    "x": 190,
+    "y": 200,
+    "wires": [
+      [
+        "d600000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000005",
+    "type": "inject",
+    "z": "d600000000000001",
+    "name": "DEMO ONLY: stale sample",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "stale",
+    "payloadType": "str",
+    "x": 190,
+    "y": 260,
+    "wires": [
+      [
+        "d600000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000006",
+    "type": "function",
+    "z": "d600000000000001",
+    "name": "Build DEMO Part 3 schema",
+    "func": "const kind = String(msg.payload);\nconst now = Math.floor(Date.now() / 1000);\nlet seq = flow.get(\"part4DemoSeq\") || 0;\nseq += 1;\nflow.set(\"part4DemoSeq\", seq);\n\nconst sample = {\n    v: 1,\n    device: \"DEMO-ONLY-DEVICE\",\n    seq,\n    ts: now,\n    temp: 26.4,\n    humi: 63.0,\n    light: 2048,\n    status: \"ok\"\n};\n\nif (kind === \"invalid\") {\n    sample.temp = \"26.4\";\n    sample.humi = 130;\n}\nif (kind === \"stale\") {\n    sample.ts = now - 300;\n}\n\nmsg.payload = sample;\nmsg.demo = true;\nmsg.demoCase = kind;\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 480,
+    "y": 200,
+    "wires": [
+      [
+        "d600000000000007"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000007",
+    "type": "function",
+    "z": "d600000000000001",
+    "name": "Validate schema + freshness",
+    "func": "const required = [\"v\", \"device\", \"seq\", \"ts\", \"temp\", \"humi\", \"light\", \"status\"];\nconst p = msg.payload;\nconst errors = [];\n\nif (!p || typeof p !== \"object\" || Array.isArray(p)) {\n    errors.push(\"payload is not an object\");\n} else {\n    const keys = Object.keys(p);\n    if (keys.length !== required.length || required.some((key) => !Object.prototype.hasOwnProperty.call(p, key))) {\n        errors.push(\"fields must match the Part 3 schema exactly\");\n    }\n    if (p.v !== 1) errors.push(\"v must be 1\");\n    if (typeof p.device !== \"string\" || !/^[A-Za-z0-9-]{1,23}$/.test(p.device)) errors.push(\"invalid device alias\");\n    if (!Number.isSafeInteger(p.seq) || p.seq < 1 || p.seq > 4294967295) errors.push(\"seq must be integer 1..4294967295\");\n    if (!Number.isSafeInteger(p.ts) || p.ts <= 1700000000) errors.push(\"invalid Unix timestamp\");\n    if (typeof p.temp !== \"number\" || !Number.isFinite(p.temp) || p.temp < -20 || p.temp > 80) errors.push(\"temp out of range/type\");\n    if (typeof p.humi !== \"number\" || !Number.isFinite(p.humi) || p.humi < 0 || p.humi > 100) errors.push(\"humi out of range/type\");\n    if (!Number.isInteger(p.light) || p.light < 0 || p.light > 4095) errors.push(\"light out of range/type\");\n    if (p.status !== \"ok\") errors.push(\"status must be ok\");\n    if (Buffer.byteLength(JSON.stringify(p), \"utf8\") > 384) errors.push(\"payload exceeds 384 bytes\");\n}\n\nif (errors.length) {\n    const quality = { payload: `DEMO ONLY | INVALID | ${errors.join(\"; \")} | widgets not updated` };\n    node.status({ fill: \"red\", shape: \"ring\", text: \"INVALID\" });\n    return [null, quality];\n}\n\nconst now = Math.floor(Date.now() / 1000);\nconst age = now - p.ts;\nif (age < -5) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"FUTURE TS\" });\n    return [null, { payload: `DEMO ONLY | INVALID | timestamp is ${-age}s in the future | widgets not updated` }];\n}\nif (age > 10) {\n    node.status({ fill: \"yellow\", shape: \"ring\", text: `STALE ${age}s` });\n    return [null, { payload: `DEMO ONLY | STALE | age ${age}s exceeds 10s | widgets show last accepted history` }];\n}\n\nmsg.dashboardMode = \"DEMO\";\nmsg.telemetryAge = age;\nnode.status({ fill: \"green\", shape: \"dot\", text: `VALID age ${age}s` });\nreturn [msg, { payload: `DEMO ONLY | VALID | age ${age}s | not hardware data` }];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 740,
+    "y": 200,
+    "wires": [
+      [
+        "d600000000000008"
+      ],
+      [
+        "d600000000000013"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000008",
+    "type": "function",
+    "z": "d600000000000001",
+    "name": "Format dashboard widgets",
+    "func": "const p = msg.payload;\nconst mode = msg.dashboardMode === \"LIVE\" ? \"LIVE\" : \"DEMO ONLY\";\nconst at = p.ts * 1000;\nconst temp = { payload: p.temp };\nconst humi = { payload: p.humi };\nconst light = { payload: p.light };\nconst chartTemp = { topic: \"temperature\", payload: p.temp, timestamp: at };\nconst chartHumi = { topic: \"humidity\", payload: p.humi, timestamp: at };\nconst summary = { payload: `${mode} | ${p.device} | seq ${p.seq} | age ${msg.telemetryAge}s` };\nreturn [temp, humi, light, [chartTemp, chartHumi], summary];",
+    "outputs": 5,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1010,
+    "y": 200,
+    "wires": [
+      [
+        "d600000000000009"
+      ],
+      [
+        "d600000000000010"
+      ],
+      [
+        "d600000000000011"
+      ],
+      [
+        "d600000000000012"
+      ],
+      [
+        "d600000000000014"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000009",
+    "type": "ui-gauge",
+    "z": "d600000000000001",
+    "name": "Validated temperature",
+    "group": "d600000000000022",
+    "order": 1,
+    "value": "payload",
+    "valueType": "msg",
+    "width": 4,
+    "height": 4,
+    "gtype": "gauge-half",
+    "gstyle": "needle",
+    "title": "溫度（先看狀態）",
+    "alwaysShowTitle": false,
+    "floatingTitlePosition": "top-left",
+    "units": "°C",
+    "icon": "",
+    "prefix": "",
+    "suffix": "",
+    "segments": [
+      {
+        "from": "-20",
+        "color": "#5bc0eb"
+      },
+      {
+        "from": "30",
+        "color": "#f5a623"
+      },
+      {
+        "from": "45",
+        "color": "#d0021b"
+      }
+    ],
+    "min": "-20",
+    "max": "80",
+    "sizeThickness": 16,
+    "sizeGap": 4,
+    "sizeKeyThickness": 8,
+    "styleRounded": true,
+    "styleGlow": false,
+    "className": "",
+    "x": 1300,
+    "y": 100,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d600000000000010",
+    "type": "ui-gauge",
+    "z": "d600000000000001",
+    "name": "Validated humidity",
+    "group": "d600000000000022",
+    "order": 2,
+    "value": "payload",
+    "valueType": "msg",
+    "width": 4,
+    "height": 4,
+    "gtype": "gauge-half",
+    "gstyle": "needle",
+    "title": "濕度（先看狀態）",
+    "alwaysShowTitle": false,
+    "floatingTitlePosition": "top-left",
+    "units": "%",
+    "icon": "",
+    "prefix": "",
+    "suffix": "",
+    "segments": [
+      {
+        "from": "0",
+        "color": "#f5a623"
+      },
+      {
+        "from": "40",
+        "color": "#4caf50"
+      },
+      {
+        "from": "80",
+        "color": "#5bc0eb"
+      }
+    ],
+    "min": "0",
+    "max": "100",
+    "sizeThickness": 16,
+    "sizeGap": 4,
+    "sizeKeyThickness": 8,
+    "styleRounded": true,
+    "styleGlow": false,
+    "className": "",
+    "x": 1290,
+    "y": 160,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d600000000000011",
+    "type": "ui-gauge",
+    "z": "d600000000000001",
+    "name": "Validated light",
+    "group": "d600000000000022",
+    "order": 3,
+    "value": "payload",
+    "valueType": "msg",
+    "width": 4,
+    "height": 4,
+    "gtype": "gauge-half",
+    "gstyle": "needle",
+    "title": "光敏 ADC（先看狀態）",
+    "alwaysShowTitle": false,
+    "floatingTitlePosition": "top-left",
+    "units": "",
+    "icon": "",
+    "prefix": "",
+    "suffix": "",
+    "segments": [
+      {
+        "from": "0",
+        "color": "#263238"
+      },
+      {
+        "from": "1365",
+        "color": "#5bc0eb"
+      },
+      {
+        "from": "2730",
+        "color": "#f8e71c"
+      }
+    ],
+    "min": "0",
+    "max": "4095",
+    "sizeThickness": 16,
+    "sizeGap": 4,
+    "sizeKeyThickness": 8,
+    "styleRounded": true,
+    "styleGlow": false,
+    "className": "",
+    "x": 1280,
+    "y": 220,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d600000000000012",
+    "type": "ui-chart",
+    "z": "d600000000000001",
+    "group": "d600000000000023",
+    "name": "Validated temperature and humidity history",
+    "label": "已驗證溫濕度趨勢（歷史值）",
+    "order": 1,
+    "chartType": "line",
+    "category": "topic",
+    "categoryType": "msg",
+    "xAxisLabel": "",
+    "xAxisProperty": "timestamp",
+    "xAxisPropertyType": "msg",
+    "xAxisType": "time",
+    "xAxisFormat": "",
+    "xAxisFormatType": "auto",
+    "xmin": "",
+    "xmax": "",
+    "yAxisLabel": "",
+    "yAxisProperty": "payload",
+    "yAxisPropertyType": "msg",
+    "ymin": "",
+    "ymax": "",
+    "bins": 10,
+    "action": "append",
+    "stackSeries": false,
+    "pointShape": "circle",
+    "pointRadius": 3,
+    "showLegend": true,
+    "removeOlder": 10,
+    "removeOlderUnit": "60",
+    "removeOlderPoints": "100",
+    "colors": [
+      "#e74c3c",
+      "#3498db",
+      "#ff7f0e",
+      "#2ca02c",
+      "#a347e1",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "textColor": [
+      "#666666"
+    ],
+    "textColorDefault": true,
+    "gridColor": [
+      "#e5e5e5"
+    ],
+    "gridColorDefault": true,
+    "width": 12,
+    "height": 6,
+    "className": "",
+    "interpolation": "linear",
+    "x": 1350,
+    "y": 280,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d600000000000013",
+    "type": "ui-text",
+    "z": "d600000000000001",
+    "group": "d600000000000021",
+    "order": 1,
+    "width": 12,
+    "height": 2,
+    "name": "Telemetry data quality",
+    "label": "資料品質",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 1030,
+    "y": 320,
+    "wires": []
+  },
+  {
+    "id": "d600000000000014",
+    "type": "ui-text",
+    "z": "d600000000000001",
+    "group": "d600000000000021",
+    "order": 2,
+    "width": 12,
+    "height": 1,
+    "name": "Latest accepted sample",
+    "label": "最新有效樣本",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 1290,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "d600000000000015",
+    "type": "link in",
+    "z": "d600000000000001",
+    "name": "來自 05 的清理後驗證結果",
+    "links": [
+      "405000000000000e"
+    ],
+    "x": 175,
+    "y": 380,
+    "wires": [
+      [
+        "d600000000000016"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000016",
+    "type": "function",
+    "z": "d600000000000001",
+    "name": "接受 05 契約／保留 DEMO 標記",
+    "func": "function reject(code) {\n    const source = msg.demo === true ? \"DEMO\" : \"INPUT\";\n    node.status({ fill: \"red\", shape: \"ring\", text: code });\n    return [null, { payload: `${source} | ${code} | widgets not updated` }, null];\n}\n\nconst validation = msg.validation;\nif (!validation || validation.ok !== true || validation.code !== \"OK\" || !Number.isInteger(validation.age_s)) {\n    const code = typeof validation?.code === \"string\" && /^[A-Z0-9_]{1,24}$/.test(validation.code)\n        ? validation.code\n        : \"VALIDATION_REQUIRED\";\n    return reject(code);\n}\n\nconst p = msg.payload;\nconst expected = [\"device\", \"humi\", \"light\", \"seq\", \"status\", \"temp\", \"ts\", \"v\"];\nif (!p || typeof p !== \"object\" || Array.isArray(p) ||\n    Object.keys(p).sort().join(\",\") !== expected.join(\",\")) {\n    return reject(\"EIGHT_FIELD_PAYLOAD_REQUIRED\");\n}\nif (validation.age_s < -5 || validation.age_s > 10) {\n    return reject(validation.age_s > 10 ? \"STALE\" : \"TIME_FUTURE\");\n}\n\nconst isDemo = msg.demo === true;\nmsg.dashboardMode = isDemo ? \"DEMO\" : \"LIVE\";\nmsg.telemetryAge = validation.age_s;\nconst label = isDemo ? \"DEMO ONLY\" : \"LIVE\";\nconst quality = { payload: `${label} | VALID | age ${validation.age_s}s${isDemo ? \" | not hardware data\" : \"\"}` };\nconst livePulse = isDemo ? null : { payload: `LIVE | fresh validated telemetry | age ${validation.age_s}s` };\nnode.status({ fill: isDemo ? \"blue\" : \"green\", shape: \"dot\", text: `${label} age ${validation.age_s}s` });\nreturn [msg, quality, livePulse];",
+    "outputs": 3,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 490,
+    "y": 380,
+    "wires": [
+      [
+        "d600000000000008"
+      ],
+      [
+        "d600000000000013"
+      ],
+      [
+        "d600000000000018",
+        "d600000000000017"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000017",
+    "type": "trigger",
+    "z": "d600000000000001",
+    "name": "45s 無 LIVE 資料則 OFFLINE",
+    "op1": "",
+    "op2": "OFFLINE | no LIVE telemetry accepted for 45s | gauges show last accepted history",
+    "op1type": "nul",
+    "op2type": "str",
+    "duration": "45",
+    "extend": true,
+    "overrideDelay": false,
+    "units": "s",
+    "reset": "",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 820,
+    "y": 440,
+    "wires": [
+      [
+        "d600000000000018"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000019",
+    "type": "inject",
+    "z": "d600000000000001",
+    "name": "啟動時 LIVE 狀態為 OFFLINE",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.5,
+    "topic": "",
+    "payload": "OFFLINE | no LIVE telemetry accepted yet | DEMO remains separate",
+    "payloadType": "str",
+    "x": 230,
+    "y": 480,
+    "wires": [
+      [
+        "d600000000000018"
+      ]
+    ]
+  },
+  {
+    "id": "d600000000000018",
+    "type": "ui-text",
+    "z": "d600000000000001",
+    "group": "d600000000000021",
+    "order": 3,
+    "width": 12,
+    "height": 2,
+    "name": "LIVE telemetry state",
+    "label": "LIVE 通道狀態",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "style": false,
+    "font": "Helvetica",
+    "fontSize": 16,
+    "color": "#717171",
+    "wrapText": true,
+    "className": "",
+    "value": "payload",
+    "valueType": "msg",
+    "x": 1110,
+    "y": 440,
+    "wires": []
+  },
+  {
+    "id": "d600000000000020",
+    "type": "ui-base",
+    "name": "Part 4 lesson dashboard",
+    "path": "/dashboard",
+    "appIcon": "",
+    "includeClientData": true,
+    "acceptsClientConfig": [
+      "ui-notification",
+      "ui-control"
+    ],
+    "showPathInSidebar": false,
+    "headerContent": "page",
+    "navigationStyle": "default",
+    "titleBarStyle": "default",
+    "showReconnectNotification": true,
+    "notificationDisplayTime": 1,
+    "showDisconnectNotification": true,
+    "allowInstall": false
+  },
+  {
+    "id": "d600000000000024",
+    "type": "ui-theme",
+    "name": "ESP32 course theme",
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#1565c0",
+      "bgPage": "#f3f5f7",
+      "groupBg": "#ffffff",
+      "groupOutline": "#d9e1e8"
+    },
+    "sizes": {
+      "density": "default",
+      "pagePadding": "12px",
+      "groupGap": "12px",
+      "groupBorderRadius": "4px",
+      "widgetGap": "12px"
+    }
+  },
+  {
+    "id": "d600000000000025",
+    "type": "ui-page",
+    "name": "06 Telemetry Dashboard",
+    "ui": "d600000000000020",
+    "path": "/part4-demo",
+    "icon": "dashboard",
+    "layout": "grid",
+    "theme": "d600000000000024",
+    "breakpoints": [
+      {
+        "name": "Default",
+        "px": "0",
+        "cols": "3"
+      },
+      {
+        "name": "Tablet",
+        "px": "576",
+        "cols": "6"
+      },
+      {
+        "name": "Small Desktop",
+        "px": "768",
+        "cols": "9"
+      },
+      {
+        "name": "Desktop",
+        "px": "1024",
+        "cols": "12"
+      }
+    ],
+    "order": 1,
+    "className": "",
+    "visible": "true",
+    "disabled": "false"
+  },
+  {
+    "id": "d600000000000021",
+    "type": "ui-group",
+    "name": "資料狀態（先看這裡）",
+    "page": "d600000000000025",
+    "width": 12,
+    "height": 1,
+    "order": 1,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  },
+  {
+    "id": "d600000000000022",
+    "type": "ui-group",
+    "name": "已驗證數值（狀態可能為 DEMO／LIVE／OFFLINE）",
+    "page": "d600000000000025",
+    "width": 12,
+    "height": 1,
+    "order": 2,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  },
+  {
+    "id": "d600000000000023",
+    "type": "ui-group",
+    "name": "已驗證趨勢（歷史值）",
+    "page": "d600000000000025",
+    "width": 12,
+    "height": 1,
+    "order": 3,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false",
+    "groupType": "default"
+  }
+]

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- 完成第四篇 Node-RED 7 章與 6 份公開 Flow，鎖定 Node.js 24、Node-RED 5.0.7、FlowFuse Dashboard 1.31.0 及 npm lockfile。
+- 補齊本機 Editor、Debug、設定視窗、Safe mode、Dashboard 正常／錯誤／過期及控制阻擋畫面，記錄來源與檔案 SHA-256。
+- 增加 clean Runtime、跨章 Link、45 秒 OFFLINE、控制阻擋與持久序號重啟測試，納入 GitHub Actions；Arduino CI 仍涵蓋全部 31 個 Sketch。
+- 修正 Flow 連線目標驗證，防止無效 Wire／Link 被忽略；截圖證據過期時自動檢查會失敗。
+- 補記第三篇全部 31 個 Sketch 的既有 CI 成功截圖；實體板與外部服務驗收仍另列。
+
 - 建立 AB143 ESP32 Wrover 物聯網與能源監測教材的 GitHub 骨架。
 - 統一 Arduino CLI FQBN 為 `esp32:esp32:esp32wrover`。
 - 建立六篇教材分類、安全邊界與交接文件。
