@@ -76,7 +76,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照與衝突邊界
 - [x] 完成第三篇全部 11 章：ThingSpeak、教師既有 GAS、MQTT TLS／PubSub／JSON／安全控制；[GitHub Actions Run 34484466016](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34484466016) 已編譯通過全部 31 個 Sketch
 - [x] 完成第四篇 7 章、6 份 Node-RED Flow、操作截圖與本機 Runtime 驗證；外部 Broker／ESP32 實測另列
-- [ ] 第五篇 8 章／9 個 Sketch 已撰寫，正式編譯正在驗證；相機與替代 OLED 共存仍待指定板實測
+- [x] 完成第五篇 8 章／9 個 Sketch 的教材與軟體驗證；[CI Run 34686731748](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34686731748) 通過全部 40 個 Sketch、3 個相機啟用分支與 Node-RED Runtime。相機與替代 OLED 共存仍待指定板實測
 - [ ] 整併能源監測專題
 - [ ] 對所有範例完成實體板驗證；目前 CI 編譯不等於燒錄或硬體成功
 

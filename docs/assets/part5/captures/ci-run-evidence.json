@@ -1,0 +1,89 @@
+{
+  "run_id": 34686731748,
+  "run_url": "https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34686731748",
+  "tested_commit": "f290ccb5d753b0a8f57020d439cb4a3b7c2b3dc9",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-09-12T09:46:51Z",
+  "updated_at": "2026-09-12T09:58:53Z",
+  "toolchain": {
+    "arduino_cli": "1.5.1",
+    "esp32_core": "3.3.11",
+    "fqbn": "esp32:esp32:esp32wrover"
+  },
+  "jobs": [
+    {
+      "name": "compile",
+      "conclusion": "success",
+      "startedAt": "2026-09-12T09:46:53Z",
+      "completedAt": "2026-09-12T09:58:52Z"
+    },
+    {
+      "name": "nodered",
+      "conclusion": "success",
+      "startedAt": "2026-09-12T09:46:53Z",
+      "completedAt": "2026-09-12T09:47:59Z"
+    }
+  ],
+  "compiled_sketches": [
+    "examples/01_basics/01_hello",
+    "examples/01_basics/02_led",
+    "examples/01_basics/03_button_led",
+    "examples/01_basics/04_button_toggle",
+    "examples/01_basics/05_traffic_light",
+    "examples/01_basics/06_pwm_fade",
+    "examples/01_basics/07_rgb_led",
+    "examples/01_basics/08_ws2812",
+    "examples/02_sensors_display/01_oled_self_test",
+    "examples/02_sensors_display/02_oled_basics",
+    "examples/02_sensors_display/03_oled_diagnostics",
+    "examples/02_sensors_display/04_sensor_input_basics",
+    "examples/02_sensors_display/05_pir_oled",
+    "examples/02_sensors_display/06_light_oled",
+    "examples/02_sensors_display/07_mq2_oled",
+    "examples/02_sensors_display/08_ultrasonic_oled",
+    "examples/02_sensors_display/09_parking_radar",
+    "examples/02_sensors_display/10_dht11_oled",
+    "examples/02_sensors_display/11_lcd1602_dht",
+    "examples/02_sensors_display/12_multisensor_display",
+    "examples/03_network_cloud_mqtt/01_wifi_oled",
+    "examples/03_network_cloud_mqtt/02_ntp_clock_oled",
+    "examples/03_network_cloud_mqtt/03_https_get_oled",
+    "examples/03_network_cloud_mqtt/04_air_quality_json_oled",
+    "examples/03_network_cloud_mqtt/05_webserver_oled",
+    "examples/03_network_cloud_mqtt/06_thingspeak_oled",
+    "examples/03_network_cloud_mqtt/07_google_sheets_oled",
+    "examples/03_network_cloud_mqtt/08_mqtt_basics_oled",
+    "examples/03_network_cloud_mqtt/09_mqtt_pubsub_oled",
+    "examples/03_network_cloud_mqtt/10_mqtt_json_oled",
+    "examples/03_network_cloud_mqtt/11_mqtt_control_oled",
+    "examples/05_camera_ble_multitasking/01_bluetooth_text",
+    "examples/05_camera_ble_multitasking/02_bluetooth_control",
+    "examples/05_camera_ble_multitasking/03_ble_scan",
+    "examples/05_camera_ble_multitasking/04_ble_beacon",
+    "examples/05_camera_ble_multitasking/05_freertos_tasks",
+    "examples/05_camera_ble_multitasking/06_dual_core",
+    "examples/05_camera_ble_multitasking/07_camera_preflight",
+    "examples/05_camera_ble_multitasking/08_camera_web",
+    "examples/05_camera_ble_multitasking/09_camera_mqtt"
+  ],
+  "enabled_camera_branches": [
+    "07_camera_preflight",
+    "08_camera_web",
+    "09_camera_mqtt"
+  ],
+  "passed_checks": [
+    "Part 5 C++ contracts passed",
+    "Camera receiver contracts passed: bounded size, order, duplicates, timeout, retain, checksum and completion",
+    "Camera receiver CLI passed: isolated output, overflow rejection and incomplete-frame discard",
+    "Public camera configuration gates passed",
+    "Node-RED runtime tests passed: six public Flows, 45s watchdog, fail-closed gate and persisted sequence."
+  ],
+  "capture": {
+    "browser": "152.0.7977.84",
+    "playwright": "1.62.1",
+    "url": "https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34686731748",
+    "viewport": "1600x1100",
+    "createdAt": "2026-09-12T09:59:42.133Z"
+  }
+}

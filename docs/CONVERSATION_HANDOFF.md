@@ -60,7 +60,7 @@
 
 ## 第五篇本次續作
 
-8 章、9 個 Sketch、相機設定預檢、PIR／MQTT 分段接收器與主機合約測試已撰寫；正式編譯驗證中，最終結果見 `docs/part5/verification.md`。相機與 OLED 共存、PIR 替代腳位、手機／BLE／實體板仍未驗證。
+8 章、9 個 Sketch、相機設定預檢、PIR／MQTT 分段接收器與主機合約測試已完成軟體驗證。[CI Run 34686731748](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34686731748) 在 Commit `f290ccb5d753b0a8f57020d439cb4a3b7c2b3dc9` 通過全部 40 個 Sketch、3 個相機啟用分支與 Node-RED Runtime；真實截圖與來源已存檔。最終結果見 `docs/part5/verification.md`。相機與 OLED 共存、PIR 替代腳位、手機／BLE／實體板仍未驗證。
 
 ## 下一步
 
