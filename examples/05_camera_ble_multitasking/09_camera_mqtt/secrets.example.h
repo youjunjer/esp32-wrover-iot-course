@@ -1,0 +1,10 @@
+#pragma once
+constexpr char WIFI_SSID[] = "REPLACE_WITH_WIFI_SSID";
+constexpr char WIFI_PASSWORD[] = "REPLACE_WITH_WIFI_PASSWORD";
+constexpr char MQTT_HOST[] = "REPLACE_WITH_BROKER_HOST";
+constexpr uint16_t MQTT_PORT = 8883;
+constexpr char MQTT_USERNAME[] = "REPLACE_WITH_MQTT_USERNAME";
+constexpr char MQTT_PASSWORD[] = "REPLACE_WITH_MQTT_PASSWORD";
+constexpr char MQTT_CLIENT_ID[] = "REPLACE_WITH_CLIENT_ID";
+constexpr char MQTT_TOPIC_ROOT[] = "REPLACE_WITH_CAMERA_TOPIC_ROOT";
+constexpr char MQTT_ROOT_CA[] = "REPLACE_WITH_BROKER_ROOT_CA_PEM";

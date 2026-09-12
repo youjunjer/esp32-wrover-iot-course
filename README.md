@@ -53,7 +53,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 
 重啟後 GPIO 2 狀態 LED 會先快速閃爍三次，再每兩秒顯示一次短心跳。如果指定課程板沒有 GPIO 2 板載 LED，請依第一篇首頁的課程接線方式接上 LED。
 
-第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED、感測器與顯示器請見 [docs/part2/README.md](docs/part2/README.md)；第三篇 Wi-Fi、雲端與 MQTT 請見 [docs/part3/README.md](docs/part3/README.md)；第四篇 Node-RED 請見 [docs/part4/README.md](docs/part4/README.md)。完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
+第一篇正式教材與驗收表請見 [docs/part1/README.md](docs/part1/README.md)；第二篇 OLED、感測器與顯示器請見 [docs/part2/README.md](docs/part2/README.md)；第三篇 Wi-Fi、雲端與 MQTT 請見 [docs/part3/README.md](docs/part3/README.md)；第四篇 Node-RED 請見 [docs/part4/README.md](docs/part4/README.md)。第五篇 Bluetooth／BLE、FreeRTOS 與相機請見 [docs/part5/README.md](docs/part5/README.md)。完整章節順序請見 [docs/course-map.md](docs/course-map.md)；環境說明請見 [docs/environment-cli.md](docs/environment-cli.md)；一般模式與相機模式的腳位邊界請見 [docs/hardware-pin-modes.md](docs/hardware-pin-modes.md)。
 
 ## 可視化診斷原則
 
@@ -76,7 +76,7 @@ arduino-cli --config-file arduino-cli.yaml upload \
 - [x] 建立 Wrover 一般模式／AI Thinker 相機模式腳位對照與衝突邊界
 - [x] 完成第三篇全部 11 章：ThingSpeak、教師既有 GAS、MQTT TLS／PubSub／JSON／安全控制；[GitHub Actions Run 34484466016](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34484466016) 已編譯通過全部 31 個 Sketch
 - [x] 完成第四篇 7 章、6 份 Node-RED Flow、操作截圖與本機 Runtime 驗證；外部 Broker／ESP32 實測另列
-- [ ] 整併相機、BLE 與多工範例
+- [ ] 第五篇 8 章／9 個 Sketch 已撰寫，正式編譯正在驗證；相機與替代 OLED 共存仍待指定板實測
 - [ ] 整併能源監測專題
 - [ ] 對所有範例完成實體板驗證；目前 CI 編譯不等於燒錄或硬體成功
 

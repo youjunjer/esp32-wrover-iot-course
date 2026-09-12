@@ -61,6 +61,8 @@
 
 ## 第五篇：相機、Bluetooth 與多工
 
+正式課文與 9 個範例：[第五篇首頁](part5/README.md)。相機／替代 OLED 共存仍待指定課程板實測。
+
 1. Bluetooth Classic：文字傳輸、手機連線與序列通訊。
 2. Bluetooth 感測與控制：溫濕度、雙向指令、LED 與 SG90。
 3. BLE 與 Beacon：掃描、裝置資訊、距離判斷與點名應用。

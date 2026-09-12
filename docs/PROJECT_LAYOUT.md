@@ -15,6 +15,7 @@ esp32-wrover-iot-course/
 │   ├── part2/
 │   ├── part3/
 │   ├── part4/
+│   ├── part5/
 │   └── ...
 ├── examples/
 │   ├── 01_basics/
@@ -47,6 +48,8 @@ cd /path/to/esp32-wrover-iot-course
 - `examples/`：依教材六篇分類的 Arduino Sketch。
 - `docs/part4/`：Node-RED 7 章、來源與驗證紀錄；操作圖在 `docs/assets/part4/captures/`。
 - `nodered/`：6 份可公開 Flow、套件版本與 lockfile；Runtime／credentials／context 留在專用 userDir。
+- `docs/part5/`：Bluetooth／BLE、多工與有預檢條件的相機 8 章；9 個 Sketch、MQTT 影像接收器與軟體／實機驗收界線。
+- `tests/`：純 C++ 指令與相機分段合約測試，不連接硬體或外部 Broker。
 - `scripts/`：ESP32 Core、函式庫、編譯與驗證輔助工具。
 
 `secrets.h`、`.env`、Token、API Key、本機編譯輸出與原始出版檔不得提交。

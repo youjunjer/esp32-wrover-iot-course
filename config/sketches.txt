@@ -29,3 +29,14 @@ examples/03_network_cloud_mqtt/08_mqtt_basics_oled
 examples/03_network_cloud_mqtt/09_mqtt_pubsub_oled
 examples/03_network_cloud_mqtt/10_mqtt_json_oled
 examples/03_network_cloud_mqtt/11_mqtt_control_oled
+
+# Part 05: Bluetooth, BLE, FreeRTOS and gated camera labs
+examples/05_camera_ble_multitasking/01_bluetooth_text
+examples/05_camera_ble_multitasking/02_bluetooth_control
+examples/05_camera_ble_multitasking/03_ble_scan
+examples/05_camera_ble_multitasking/04_ble_beacon
+examples/05_camera_ble_multitasking/05_freertos_tasks
+examples/05_camera_ble_multitasking/06_dual_core
+examples/05_camera_ble_multitasking/07_camera_preflight
+examples/05_camera_ble_multitasking/08_camera_web
+examples/05_camera_ble_multitasking/09_camera_mqtt

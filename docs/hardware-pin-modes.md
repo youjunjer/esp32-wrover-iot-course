@@ -87,3 +87,11 @@ esp32:esp32:esp32wrover
 - 實機測試後再決定 PZEM UART 的最終腳位。
 
 本文件會在硬體驗證後補上完整的一般模式腳位表。
+
+## 第五篇的新增模式
+
+- Bluetooth 控制：一般 OLED 21／22、DHT11 14、LED 4、允許按鈕 13、SG90 5。按鈕放開、斷線或 5 秒無有效控制指令即停止輸出；仍須逐章斷電換線。
+- BLE／FreeRTOS／雙核心章只接一般 OLED，未啟用相機。
+- 相機第 6～8 章不預填替代 OLED 或 PIR pins；使用本機 `camera_config.h`。靜態排除相機占用、Flash、PSRAM、UART、GPIO 2 和輸入限定腳只是必要檢查，不能代替指定課程板實測。
+- 相機仍使用 `CAMERA_MODEL_AI_THINKER` 與 Wrover FQBN，不啟用 microSD 或閃光燈；原相機 pin map 不因此改動。範例 GPIO 2 LED 備援也不得和其他外設混接。
+- 編譯測試腳本裡的合成腳位僅用於觸發編譯分支，不是接線推薦。相機與 OLED 共存、PIR 第三個可用腳及供電仍未驗證；流程見[第五篇第 6 章](part5/06_camera_pins.md)。

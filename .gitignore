@@ -15,6 +15,7 @@ build-*/
 # Local credentials and configuration
 **/secrets.h
 **/credentials.h
+**/camera_config.h
 .env
 .env.*
 !.env.example

@@ -39,6 +39,9 @@ jobs:
       - name: Compile examples
         run: ./scripts/compile-all.sh
 
+      - name: Compile enabled camera branches with synthetic configuration
+        run: ./scripts/compile-camera-branches.sh
+
   nodered:
     runs-on: ubuntu-latest
     steps:

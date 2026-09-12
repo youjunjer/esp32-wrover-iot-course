@@ -1,0 +1,5 @@
+#pragma once
+constexpr char WIFI_SSID[] = "REPLACE_WITH_WIFI_SSID";
+constexpr char WIFI_PASSWORD[] = "REPLACE_WITH_WIFI_PASSWORD";
+constexpr char CAMERA_WEB_USER[] = "REPLACE_WITH_WEB_USER";
+constexpr char CAMERA_WEB_PASSWORD[] = "REPLACE_WITH_WEB_PASSWORD";

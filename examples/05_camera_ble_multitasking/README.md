@@ -1,29 +1,7 @@
-# 第五篇：相機、藍牙與多工
+# 第五篇：相機、Bluetooth／BLE 與多工
 
-本篇使用的開發板設定仍然是：
+正式教材：[8 章課文與範例索引](../../docs/part5/README.md)。本篇包含 9 個 Sketch，仍統一使用 `esp32:esp32:esp32wrover`；相機程式指定 `CAMERA_MODEL_AI_THINKER`。
 
-```text
-esp32:esp32:esp32wrover
-```
+一般模式使用 OLED GPIO 21／22；相機模式需經指定課程板實測的替代 I²C 設定。相機範例預設鎖定，先完成第 6 章預檢；不能只改旗標就宣稱相機與 OLED 共存已驗證。
 
-啟用板載相機時，程式內使用：
-
-```cpp
-#define CAMERA_MODEL_AI_THINKER
-```
-
-不將開發板 FQBN 改成 AI Thinker。
-
-本篇所有 ESP32 狀態仍須顯示在 OLED。相機會占用一般 OLED 使用的 GPIO 21/22，因此相機範例必須改用指定課程板上經實測、不與 AI Thinker 相機衝突的替代 I²C 腳位；完成實測前不得標示相機與 OLED 已可同時運作。
-
-規劃收錄：
-
-- Bluetooth Classic
-- BLE 掃描與 Beacon
-- FreeRTOS Task 與雙核執行
-- AI Thinker 相機腳位配置
-- CameraWebServer
-- 拍照與 Base64
-- MQTT 影像傳輸
-- 感測器觸發拍照
-- 相機、網路與背景工作的多工整合
+下載時保留整個 Repository，Sketch 會引用同篇 `support/`。編譯、燒錄、接線、OLED 訊息和錯誤驗收都在逐例 README 與課文；[驗證紀錄](../../docs/part5/verification.md)區分軟體編譯與硬體待辦。

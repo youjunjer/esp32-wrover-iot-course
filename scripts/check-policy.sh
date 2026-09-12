@@ -20,7 +20,7 @@ fi
 
 if rg -l -U --pcre2 --glob '*.ino' --glob '*.h' --glob '*.hpp' --glob '*.cpp' \
   --glob '!**/secrets.h' --glob '!**/credentials.h' \
-  '(WIFI_SSID|WIFI_PASSWORD|MQTT_USERNAME|MQTT_PASSWORD|THINGSPEAK_WRITE_API_KEY|GOOGLE_SHEETS_GAS_URL|GOOGLE_SHEET_ID|GOOGLE_SHEET_TAG)[^=\n]*=[[:space:]]*"(?![^"\n]*(?:REPLACE_WITH_|YOUR_))[^"\n]+"' \
+  '(WIFI_SSID|WIFI_PASSWORD|MQTT_USERNAME|MQTT_PASSWORD|THINGSPEAK_WRITE_API_KEY|GOOGLE_SHEETS_GAS_URL|GOOGLE_SHEET_ID|GOOGLE_SHEET_TAG|CAMERA_WEB_USER|CAMERA_WEB_PASSWORD)[^=\n]*=[[:space:]]*"(?![^"\n]*(?:REPLACE_WITH_|YOUR_))[^"\n]+"' \
   examples; then
   echo "Non-placeholder credential assignment detected." >&2
   failed=1
@@ -137,6 +137,10 @@ if find . -type d \( -name .git -o -name node_modules -o -name .node-red-course 
 fi
 
 if [[ -x scripts/check-nodered.sh ]] && ! scripts/check-nodered.sh; then
+  failed=1
+fi
+
+if ! scripts/check-part5.sh; then
   failed=1
 fi
 

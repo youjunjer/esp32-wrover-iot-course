@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- 新增第五篇 8 章、9 個 OLED-first Sketch：Classic SPP、DHT／按鈕允許控制、BLE Beacon、FreeRTOS／雙核心、相機預檢、短串流／Base64 與 PIR／TLS MQTT 影像分段。
+- 相機預設關閉，替代 OLED／PIR 使用忽略提交的本機設定；另測試啟用分支，硬體共存驗證維持待辦。
+- 加入有上限的 MQTT 影像接收器、C++ 指令／腳位測試與 Node.js 分段完整性測試，CI 清單擴為 40 個 Sketch。
+
 - 完成第四篇 Node-RED 7 章與 6 份公開 Flow，鎖定 Node.js 24、Node-RED 5.0.7、FlowFuse Dashboard 1.31.0 及 npm lockfile。
 - 補齊本機 Editor、Debug、設定視窗、Safe mode、Dashboard 正常／錯誤／過期及控制阻擋畫面，記錄來源與檔案 SHA-256。
 - 增加 clean Runtime、跨章 Link、45 秒 OFFLINE、控制阻擋與持久序號重啟測試，納入 GitHub Actions；Arduino CI 仍涵蓋全部 31 個 Sketch。

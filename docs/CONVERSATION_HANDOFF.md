@@ -1,6 +1,6 @@
 # Conversation Handoff
 
-最後更新：2026-09-11（Asia/Taipei）
+最後更新：2026-09-12（Asia/Taipei）
 
 ## 目前原則
 
@@ -58,18 +58,23 @@
 - 第四篇 CI：[Run 34605058274](https://github.com/youjunjer/esp32-wrover-iot-course/actions/runs/34605058274) 已在 Commit `200f84a` 通過 Node-RED Runtime 測試（Runner Node.js 24.20.0）與全部 31 個 Arduino Sketch 編譯；18 張本機操作截圖、6 份 Flow 與 CLI 紀錄共 25 個證據檔案的雜湊檢查通過。
 - 舊來源安全待辦：公開的 `esp32-mqtt-energy-meter` 歷史中仍有曾提交的 AQI query credential 與 MQTT credential。新版未複製其值；專案負責人應撤銷／輪替，清除目前檔案不等於清除 Git 歷史
 
+## 第五篇本次續作
+
+8 章、9 個 Sketch、相機設定預檢、PIR／MQTT 分段接收器與主機合約測試已撰寫；正式編譯驗證中，最終結果見 `docs/part5/verification.md`。相機與 OLED 共存、PIR 替代腳位、手機／BLE／實體板仍未驗證。
+
 ## 下一步
 
 1. 以指定課程板依序實測 OLED、GPIO 14 PIR／DHT11、GPIO 33 光敏／MQ-2、HC-SR04、蜂鳴器及 1602，補正面、接線、錯誤碼與校正照片。
 2. 實測 OLED 基礎後再決定共用狀態介面；不同模組仍以逐章斷電換線方式驗證，不一次全部整合。
 3. 進行 ThingSpeak、既有 GAS、MQTT Broker／ACL 與第 11 章無負載控制實測；此驗收不能由已成功的 CI 取代。
-4. 接續第五篇 Bluetooth／BLE、FreeRTOS 與相機教材；相機與 OLED 共存仍須先驗證替代 I²C 腳位。第四篇的實體 Broker／ESP32 對接依驗收清單另行測試。
+4. 第五篇依 `docs/part5/verification.md` 完成一般藍牙／BLE／Task 實測，再走相機第 6 章的替代 OLED 預檢；不得用 CI 合成腳位燒錄或宣稱共存已驗證。
+5. 下一個尚未整理的篇章是第六篇能源監測；PZEM UART／PSRAM 與市電安全仍須先確認。第四篇的實體 Broker／ESP32 對接依驗收清單另行測試。
 
 ## 已知驗證關卡
 
 - 原能源專案使用 GPIO 16/17 作為 PZEM UART2；必須先以指定課程板確認 PSRAM 與實際腳位狀態。
 - AI Thinker 相機腳位會與 OLED、WS2812、SG90、繼電器及部分舊感測器接線衝突；新版光敏一般模式改用 GPIO 33，但仍不宣稱可與相機及 GPIO 21／22 OLED 同時運作。
-- 本機目前沒有 Arduino CLI 與 ESP32 Core，第一次完整編譯由 GitHub Actions 執行，之後再補本機與實體板驗證。
+- 2026-09-12 已下載本機 Arduino CLI 1.5.1（臨時工具路徑）及安裝 ESP32 Core 3.3.11／鎖定函式庫。此 Apple Silicon 環境的官方舊 ctags 為不相容 CPU；本次使用同版來源的 ARM64 暫存編譯版輔助驗證，未覆寫正式 ctags。正式 GitHub Actions 仍使用官方工具預設值；詳見第五篇驗證紀錄。
 - verified HTTPS 使用的根憑證是公開信任錨，不是秘密；但伺服器憑證鏈可能變更，若 OLED 顯示 TLS 錯誤，需先核對時間已同步且合理，以及服務端最新憑證鏈，不能改用 `setInsecure()`。一般 SNTP 不等於密碼學認證時間。
 - Open-Meteo Air Quality API 是 CAMS 模式預報／估算資料，不是課程板或現地測站的即時量測；需保留來源標示、控制請求頻率，且不得用該值直接驅動安全關鍵設備。
 - 教室 WebServer 使用明文 HTTP，只能放在隔離或可信任區網。Digest 與 CSRF 可降低誤操作，但不等於傳輸加密。
